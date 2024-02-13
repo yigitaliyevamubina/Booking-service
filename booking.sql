@@ -65,13 +65,14 @@ CREATE TABLE archive (
   consultation_type ENUM('online', 'offline'),
   booked_date DATE,
   booked_time TIME,
-  appointment_id INT REFERENCES booked_appointments(id),
+  appointment_id INT,
   visits_count INT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP
 );
 
+CREATE INDEX appointment_id_idx ON archive(appointment_id);
 
 /*any files patient uploaded*/
 CREATE TABLE uploaded_files (
