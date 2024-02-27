@@ -1,0 +1,464 @@
+syntax = "proto3";
+
+package booking_service;
+
+option go_package = "booking_service";
+
+
+// Services
+
+// Doctor's availability
+service DoctorAvailabilityService {
+  rpc CreateDoctorAvailability(CreateDoctorAvailabilityRequest) returns (DoctorAvailability) {}
+  rpc GetDoctorAvailability(GetDoctorAvailabilityRequest1) returns (DoctorAvailability) {}
+  rpc UpdateDoctorAvailability(UpdateDoctorAvailabilityRequest) returns (DoctorAvailability) {}
+  rpc DeleteDoctorAvailability(DeleteDoctorAvailabilityRequest) returns (DoctorAvailability) {}
+}
+
+// Patients
+service PatientService {
+  rpc CreatePatient(CreatePatientRequest) returns (Patient) {}
+  rpc GetPatient(GetPatientRequest) returns (Patient) {}
+  rpc UpdatePatient(UpdatePatientRequest) returns (Patient) {}
+  rpc DeletePatient(DeletePatientRequest) returns (Patient) {}
+}
+
+// Booked appointments
+service BookedAppointmentService {
+  rpc CreateBookedAppointment(CreateBookedAppointmentRequest) returns (BookedAppointment) {}
+  rpc GetBookedAppointment(GetBookedAppointmentRequest) returns (BookedAppointment) {}
+  rpc UpdateBookedAppointment(UpdateBookedAppointmentRequest) returns (BookedAppointment) {}
+  rpc DeleteBookedAppointment(DeleteBookedAppointmentRequest) returns (BookedAppointment) {}
+}
+
+// Archive
+service ArchiveService {
+  rpc CreateArchive(CreateArchiveRequest) returns (Archive) {}
+  rpc GetArchive(GetArchiveRequest) returns (Archive) {}
+  rpc UpdateArchive(UpdateArchiveRequest) returns (Archive) {}
+  rpc DeleteArchive(DeleteArchiveRequest) returns (Archive) {}
+}
+
+// Uploaded files
+service UploadedFileService {
+  rpc UploadFile(UploadFileRequest) returns (UploadedFile) {}
+  rpc GetFile(GetFileRequest) returns (UploadedFile) {}
+  rpc UpdateFile(UpdateFileRequest) returns (UploadedFile) {}
+  rpc DeleteFile(DeleteFileRequest) returns (UploadedFile) {}
+}
+
+// Patient payment
+service PatientPaymentService {
+  rpc MakePayment(MakePaymentRequest) returns (PatientPayment) {}
+  rpc GetPayment(GetPaymentRequest) returns (PatientPayment) {}
+  rpc UpdatePayment(UpdatePaymentRequest) returns (PatientPayment) {}
+  rpc DeletePayment(DeletePaymentRequest) returns (PatientPayment) {}
+}
+
+// Doctor notes
+service DoctorNoteService {
+  rpc CreateDoctorNote(CreateDoctorNoteRequest) returns (DoctorNote) {}
+  rpc GetDoctorNote(GetDoctorNoteRequest) returns (DoctorNote) {}
+  rpc UpdateDoctorNote(UpdateDoctorNoteRequest) returns (DoctorNote) {}
+  rpc DeleteDoctorNote(DeleteDoctorNoteRequest) returns (DoctorNote) {}
+}
+
+// Additional services
+
+// Authentication
+service AuthenticationService {
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {}
+}
+
+// Search
+service SearchService {
+  rpc SearchDoctors(SearchDoctorsRequest) returns (SearchDoctorsResponse) {}
+  rpc SearchPatients(SearchPatientsRequest) returns (SearchPatientsResponse) {}
+  rpc SearchAppointments(SearchAppointmentsRequest) returns (SearchAppointmentsResponse) {}
+}
+
+// Notification
+service NotificationService {
+  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse) {}
+}
+
+// Reporting
+service ReportingService {
+  rpc GenerateReport(GenerateReportRequest) returns (GenerateReportResponse) {}
+}
+
+// Analytics
+service AnalyticsService {
+  rpc GetAnalytics(GetAnalyticsRequest) returns (GetAnalyticsResponse) {}
+}
+
+// Billing
+service BillingService {
+  rpc GenerateInvoice(GenerateInvoiceRequest) returns (GenerateInvoiceResponse) {}
+  rpc ProcessPayment(ProcessPaymentRequest) returns (ProcessPaymentResponse) {}
+}
+
+// Feedback
+service FeedbackService {
+  rpc SubmitFeedback(SubmitFeedbackRequest) returns (SubmitFeedbackResponse) {}
+}
+
+// Doctor's availability
+message DoctorAvailability {
+    int32 id = 1;
+    string doctor_id = 2;
+    string department_id = 3;
+    string availability_date = 4;
+    string availability_time = 5;
+    bool status = 6;
+  }
+  
+  // Patients
+  message Patient {
+    string id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string birth_date = 4;
+    string gender = 5;
+    string city = 6;
+    string phone_number = 7;
+  }
+  
+  
+  // Booked appointments
+  message BookedAppointment {
+    int32 id = 1;
+    string department_id = 2;
+    string doctor_id = 3;
+    string patient_id = 4;
+    string appointment_date = 5;
+    string appointment_time = 6;
+    string type = 7;
+    string duration = 8;
+    string expires_at = 9;
+    string token = 10;
+    bool patient_status = 11;
+    string status = 12;
+  }
+  
+  // Archive
+  message Archive {
+    int32 id = 1;
+    string department_id = 2;
+    string doctor_id = 3;
+    string patient_id = 4;
+    string patient_token = 5;
+    string patient_problem = 6;
+    string consultation_type = 7;
+    string booked_date = 8;
+    string booked_time = 9;
+    int32 appointment_id = 10;
+    int32 visits_count = 11;
+  }
+  
+  // Uploaded files
+  message UploadedFile {
+    string file_id = 1;
+    string patient_id = 2;
+    int32 request_id = 3;
+    bytes file = 4;
+  }
+  
+  // Patient payment
+  message PatientPayment {
+    int32 id = 1;
+    int32 appointment_id = 2;
+    string patient_id = 3;
+    string type = 4;
+    float amount = 5;
+    string status = 6;
+    bool paid = 7;
+  }
+  
+  // Doctor notes
+  message DoctorNote {
+    int32 id = 1;
+    int32 appointment_id = 2;
+    string doctor_id = 3;
+    string patient_id = 4;
+    string note_type = 5;
+    string note_text = 6;
+  }
+  
+  // Authentication
+  message LoginRequest {
+    string username = 1;
+    string password = 2;
+  }
+  
+  message LoginResponse {
+    string token = 1;
+  }
+  
+  message LogoutRequest {
+    string token = 1;
+  }
+  
+  message LogoutResponse {
+    bool success = 1;
+  }
+  
+  // Search
+  message SearchDoctorsRequest {
+    string query = 1;
+    int32 max_results = 2;
+  }
+  
+  message SearchDoctorsResponse {
+    message Doctor {
+      int32 id = 1;
+      string first_name = 2;
+      string last_name = 3;
+      string department_id = 4;
+    }
+  
+    repeated Doctor doctors = 1;
+  }
+  
+  message SearchPatientsRequest {
+    string query = 1;
+    int32 max_results = 2;
+  }
+  
+  message SearchPatientsResponse {
+    message Patient {
+      string id = 1;
+      string first_name = 2;
+      string last_name = 3;
+      string gender = 4;
+    }
+  
+    repeated Patient patients = 1;
+  }
+  
+  message SearchAppointmentsRequest {
+    string query = 1;
+    int32 max_results = 2;
+  }
+  
+  message SearchAppointmentsResponse {
+    message BookedAppointment {
+      int32 id = 1;
+      string department_id = 2;
+      string doctor_id = 3;
+      string patient_id = 4;
+      string appointment_date = 5;
+      string appointment_time = 6;
+      string type = 7;
+    }
+  
+    repeated BookedAppointment appointments = 1;
+  }
+  
+  // Notification
+  message SendNotificationRequest {
+    string recipient_id = 1;
+    string message = 2;
+  }
+  
+  message SendNotificationResponse {
+    bool success = 1;
+  }
+  
+  // Reporting
+  message GenerateReportRequest {
+    string report_type = 1;
+  }
+  
+  message GenerateReportResponse {
+    bytes report_data = 1;
+  }
+  
+  // Analytics
+  message GetAnalyticsRequest {
+    string metric_type = 1;
+  }
+  
+  message GetAnalyticsResponse {
+    float metric_value = 1;
+  }
+  
+  // Billing
+  message GenerateInvoiceRequest {
+    int32 appointment_id = 1;
+  }
+  
+  message GenerateInvoiceResponse {
+    string invoice_url = 1;
+  }
+  
+  message ProcessPaymentRequest {
+    int32 invoice_id = 1;
+    float amount = 2;
+  }
+  
+  message ProcessPaymentResponse {
+    bool success = 1;
+  }
+  
+  // Feedback
+  message SubmitFeedbackRequest {
+    string feedback_text = 1;
+  }
+  
+  message SubmitFeedbackResponse {
+    bool success = 1;
+  }
+
+  // Request message for creating a doctor's availability
+  message CreateDoctorAvailabilityRequest {
+    DoctorAvailability doctor_availability = 1;
+  }
+  
+  // Request message for getting doctor's availability
+  message GetDoctorAvailabilityRequest {
+    int32 id = 1;
+  }
+  
+  message GetDoctorAvailabilityRequest1 {
+    string id = 1;
+  }
+  // Request message for updating doctor's availability
+  message UpdateDoctorAvailabilityRequest {
+    string id = 1;
+    DoctorAvailability doctor_availability = 2;
+  }
+  
+  // Request message for deleting doctor's availability
+  message DeleteDoctorAvailabilityRequest {
+    string id = 1;
+  }
+  
+  // Request message for creating a patient
+  message CreatePatientRequest {
+    Patient patient = 1;
+  }
+  
+  // Request message for getting a patient
+  message GetPatientRequest {
+    string id = 1;
+  }
+  
+  // Request message for updating a patient
+  message UpdatePatientRequest {
+    string id = 1;
+    Patient patient = 2;
+  }
+  
+  // Request message for deleting a patient
+  message DeletePatientRequest {
+    string id = 1;
+  }
+  
+  // Request message for creating a booked appointment
+  message CreateBookedAppointmentRequest {
+    BookedAppointment booked_appointment = 1;
+  }
+  
+  // Request message for getting a booked appointment
+  message GetBookedAppointmentRequest {
+    string id = 1;
+  }
+  
+  // Request message for updating a booked appointment
+  message UpdateBookedAppointmentRequest {
+    string id = 1;
+    BookedAppointment booked_appointment = 2;
+  }
+  
+  // Request message for deleting a booked appointment
+  message DeleteBookedAppointmentRequest {
+    string id = 1;
+  }
+  
+  // Request message for creating an archive entry
+  message CreateArchiveRequest {
+    Archive archive = 1;
+  }
+  
+  // Request message for getting an archive entry
+  message GetArchiveRequest {
+    int32 id = 1;
+  }
+  
+  // Request message for updating an archive entry
+  message UpdateArchiveRequest {
+    int32 id = 1;
+    Archive archive = 2;
+  }
+  
+  // Request message for deleting an archive entry
+  message DeleteArchiveRequest {
+    int32 id = 1;
+  }
+  
+  // Request message for uploading a file
+  message UploadFileRequest {
+    UploadedFile uploaded_file = 1;
+  }
+  
+  // Request message for getting a file
+  message GetFileRequest {
+    string file_id = 1;
+  }
+  
+  // Request message for updating a file
+  message UpdateFileRequest {
+    string file_id = 1;
+    UploadedFile uploaded_file = 2;
+  }
+  
+  // Request message for deleting a file
+  message DeleteFileRequest {
+    string file_id = 1;
+  }
+  
+  // Request message for making a patient payment
+  message MakePaymentRequest {
+    PatientPayment payment = 1;
+  }
+  
+  // Request message for getting a patient payment
+  message GetPaymentRequest {
+    int32 id = 1;
+  }
+  
+  // Request message for updating a patient payment
+  message UpdatePaymentRequest {
+    int32 id = 1;
+    PatientPayment payment = 2;
+  }
+  
+  // Request message for deleting a patient payment
+  message DeletePaymentRequest {
+    int32 id = 1;
+  }
+  
+  // Request message for creating a doctor note
+  message CreateDoctorNoteRequest {
+    DoctorNote doctor_note = 1;
+  }
+  
+  // Request message for getting a doctor note
+  message GetDoctorNoteRequest {
+    int32 id = 1;
+  }
+  
+  // Request message for updating a doctor note
+  message UpdateDoctorNoteRequest {
+    int32 id = 1;
+    DoctorNote doctor_note = 2;
+  }
+  
+  // Request message for deleting a doctor note
+  message DeleteDoctorNoteRequest {
+    int32 id = 1;
+  }
+  
+  

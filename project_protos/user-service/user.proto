@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package user;
+
+import "google/protobuf/empty.proto";
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string birth_date = 4;
+  string email = 5;
+  string password = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  string deleted_at = 9;
+  string access_token = 10;
+  string refresh_token = 11;
+  bool is_verified = 12;
+}
+
+message CheckFieldReq {
+  string value = 1;
+  string field = 2;
+}
+
+message CheckFieldResp {
+  bool status = 1;
+}
+
+message GetUserReqById {
+  string user_id = 1;
+}
+
+message GetUserByEmailReq {
+  string email = 1;
+}
+
+message GetUserByEmailResp {
+  User user = 1;
+}
+
+message ChangeUserPassword {
+  string user_id = 1;
+}
+
+message CheckEmailReq {
+  string email = 1;
+}
+
+message CheckEmailResp {
+  bool status = 1;
+}
+
+message DeleteUserReq {
+  string user_id = 1;
+}
+
+message ListUsersReq {
+  int64 limit = 1;
+  int64 page = 2;
+  string filter = 3;
+}
+
+message ListUsersResp {
+  repeated User users = 1;
+  int64 count = 2;
+}
+
+message LoginReq {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResp {
+  User user = 1;
+}
+
+message Empty {
+  
+}
+
+service UserService {
+  rpc CreateUser(User) returns (User) {}
+  rpc UpdateUser(User) returns (User) {}
+  rpc GetUserById(GetUserReqById) returns (User) {}
+  rpc GetUserByEmail(GetUserByEmailReq) returns (GetUserByEmailResp) {}
+  rpc GetAllUsers(ListUsersReq) returns (ListUsersResp) {}
+  rpc DeleteUser(DeleteUserReq) returns (google.protobuf.Empty) {}
+  rpc CheckEmail(CheckEmailReq) returns (CheckEmailResp) {}
+  rpc CheckField(CheckFieldReq) returns (CheckFieldResp) {}
+  rpc Login(LoginReq) returns (LoginResp) {}
+}
+
+
+
