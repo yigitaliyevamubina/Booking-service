@@ -59,7 +59,7 @@ CREATE TABLE booked_appointments (
   appointment_time TIME NOT NULL,
   type type_enum NOT NULL,
   duration INTERVAL,
-  expires_at TIMESTAMP,
+  expires_at DATE,
   token VARCHAR(10) NOT NULL,
   patient_status BOOLEAN NOT NULL,
   status status_enum,
@@ -84,6 +84,7 @@ CREATE INDEX patient_status_idx ON booked_appointments(patient_status);
 -- maslahat turi haqidagi ma'lumotlar saqlanadi.
 -- Archive Table
 CREATE TYPE consultation_type_enum AS ENUM ('online', 'offline');
+CREATE TYPE status_archive AS ENUM('completed', 'missed');
 CREATE TABLE archive (
   id SERIAL PRIMARY KEY,
   department_id UUID NOT NULL,
@@ -94,7 +95,8 @@ CREATE TABLE archive (
   consultation_type consultation_type_enum,
   booked_date DATE,
   booked_time TIME,
-  appointment_id INT NOT NULL,
+  appointment_id SERIAL NOT NULL,
+  status status_archive,
   visits_count INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,
@@ -165,7 +167,6 @@ CREATE INDEX doctor_patient_id_idx ON doctor_notes(doctor_id, patient_id);
 
 ------------------------------------------------------------------------------
 
--- Create a function to archive completed or missed appointments
 CREATE OR REPLACE FUNCTION archive_completed_or_missed_appointments()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -179,7 +180,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Create a trigger to invoke the archiving function after an appointment update
 CREATE TRIGGER trigger_archive_completed_or_missed
 AFTER UPDATE ON booked_appointments
 FOR EACH ROW

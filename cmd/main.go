@@ -5,7 +5,7 @@ import (
 	pb "Booking-service/genproto/booking-service"
 	"Booking-service/pkg/db"
 	"Booking-service/pkg/logger"
-	"Booking-service/service"
+	"Booking-service/service/services"
 	"net"
 
 	"google.golang.org/grpc"
@@ -17,7 +17,7 @@ func main() {
 	log := logger.New(cfg.LogLevel, "USER_SERVICE")
 	defer logger.Cleanup(log)
 
-	log.Info("main: sqlxConfig",
+	log.Info("main: sqlConfig",
 		logger.String("host", cfg.PostgresHost),
 		logger.Int("port", cfg.PostgresPort),
 		logger.String("database", cfg.PostgresDatabase))
@@ -27,8 +27,8 @@ func main() {
 		log.Fatal("sqlx connection to postgres error", logger.Error(err))
 	}
 
-	userService := service.NewBookingService(connDB, log)
-
+	userService := services.NewBookingService(connDB, log)
+	
 	lis, err := net.Listen("tcp", cfg.RPCPort)
 	if err != nil {
 		log.Fatal("Error while listening: %v", logger.Error(err))
@@ -38,6 +38,7 @@ func main() {
 	pb.RegisterPatientServiceServer(s, userService)
 	pb.RegisterDoctorAvailabilityServiceServer(s, userService)
 	pb.RegisterBookedAppointmentServiceServer(s, userService)
+	pb.RegisterArchiveServiceServer(s, userService)
 	log.Info("main: server running",
 		logger.String("port", cfg.RPCPort))
 

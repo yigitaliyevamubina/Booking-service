@@ -60,9 +60,9 @@ func (r *bookingRepo) UpdatePatient(ctx context.Context, req *pb.UpdatePatientRe
 }
 
 // DeletePatient deletes a patient record based on the provided patient ID.
-func (r *bookingRepo) DeletePatient(ctx context.Context, req *pb.DeletePatientRequest) (*pb.Patient, error) {
+func (r *bookingRepo) DeletePatient(ctx context.Context, req *pb.DeletePatientRequest) (del *pb.IsDeleted, err error) {
 
-	patient, err := r.GetPatient(ctx, &pb.GetPatientRequest{Id: req.Id})
+	_, err = r.GetPatient(ctx, &pb.GetPatientRequest{Id: req.Id})
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch patient before deletion: %v", err)
 	}
@@ -73,5 +73,5 @@ func (r *bookingRepo) DeletePatient(ctx context.Context, req *pb.DeletePatientRe
 	if err != nil {
 		return nil, fmt.Errorf("failed to delete patient: %v", err)
 	}
-	return patient, nil
+	return del, nil
 }
