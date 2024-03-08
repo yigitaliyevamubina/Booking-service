@@ -8,25 +8,31 @@ import (
 
 type BookingStorageI interface {
 	// PatientService Methods
-	CreatePatient(ctx context.Context, req *pb.CreatePatientRequest) (*pb.Patient, error)
-	GetPatient(ctx context.Context, req *pb.GetPatientRequest) (*pb.Patient, error)
-	UpdatePatient(ctx context.Context, req *pb.UpdatePatientRequest) (*pb.Patient, error)
-	DeletePatient(ctx context.Context, req *pb.DeletePatientRequest) (*pb.IsDeleted, error)
+	CreatePatient(*pb.Patient) (*pb.Patient, error)
+	GetPatient(*pb.GetPatientRequest) (*pb.Patient, error)
+	GetPatients(*pb.PatientsReq) (*pb.Patients, error)
+	UpdatePatient(*pb.UpdatePatientRequest) (*pb.Patient, error)
+	DeletePatient(*pb.GetPatientRequest) (bool, error)
 	//DoctorAvailabilityService Methods
-	CreateDoctorAvailability(ctx context.Context, req *pb.CreateDoctorAvailabilityRequest) (resp *pb.DoctorAvailability,err error)
-	GetDoctorAvailability(ctx context.Context, req *pb.GetDoctorAvailabilityRequest1) (resp *pb.DoctorAvailability, err error)
-	UpdateDoctorAvailability(ctx context.Context, req *pb.UpdateDoctorAvailabilityRequest) (*pb.DoctorAvailability, error)
-	DeleteDoctorAvailability(ctx context.Context, req *pb.DeleteDoctorAvailabilityRequest) (resp *pb.IsDeleted, err error)
+	CreateDoctorAvailability(*pb.CreateDoctorAvailabilitys) (*pb.DoctorAvailability, error)
+	GetDoctorAvailability(*pb.GetDoctorAvailabilityById) (*pb.DoctorAvailability, error)
+	GetDoctorAvailabilityByDoctorId(*pb.GetDoctorAvailabilityById) (*pb.DoctorAvailabilitys, error)
+	UpdateDoctorAvailability(*pb.UpdateDoctorAvailabilityById) (*pb.DoctorAvailability, error)
+	DeleteDoctorAvailability(*pb.GetDoctorAvailabilityById) (bool, error)
 	// BookedAppointmentService Methods
 	CreateBookedAppointment(ctx context.Context, req *pb.CreateBookedAppointmentRequest) (*pb.BookedAppointment, error)
 	GetBookedAppointment(ctx context.Context, req *pb.GetBookedAppointmentRequest) (*pb.BookedAppointment, error)
+	GetBookedAppointmentsByPatientID(ctx context.Context, patientID *pb.PatientID) (*pb.GetBookedAppointmentsByPatientIDResponse, error)
+	GetBookedAppointmentsByDoctorID(ctx context.Context, doctorID *pb.GetBookedAppointmentRequest) (*pb.GetBookedAppointmentsByPatientIDResponse, error)
 	UpdateBookedAppointment(ctx context.Context, req *pb.UpdateBookedAppointmentRequest) (*pb.BookedAppointment, error)
-	DeleteBookedAppointment(ctx context.Context, req *pb.DeleteBookedAppointmentRequest) (*pb.IsDeleted, error)
+	DeleteBookedAppointment(ctx context.Context, req *pb.DeleteBookedAppointmentRequest) (*pb.Status, error)
 	// ArchiveService Methods
 	CreateArchive(ctx context.Context, req *pb.InsertArchive) (*pb.Archive, error)
 	GetArchive(ctx context.Context, req *pb.GetArchiveRequest) (*pb.Archive, error)
+	GetArchiveByPatientID(ctx context.Context, req *pb.GetArchiveRequest) (*pb.Archives, error)
 	UpdateArchive(ctx context.Context, req *pb.UpdateArchiveRequest) (*pb.Archive, error)
-	DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRequest) (*pb.IsDeleted, error)
+	DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRequest) (*pb.Status, error)
+
 	// PatientPaymentService Methods
 	// MakePayment(ctx context.Context, req *pb.MakePaymentRequest) (*pb.PatientPayment, error)
 	// GetPayment(ctx context.Context, req *pb.GetPaymentRequest) (*pb.PatientPayment, error)

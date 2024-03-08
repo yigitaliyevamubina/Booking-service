@@ -9,8 +9,12 @@ CREATE TABLE doctor_availability (
   department_id UUID NOT NULL,
   availability_date DATE NOT NULL,
   availability_time TIME NOT NULL,
-  status BOOLEAN NOT NULL
+  status BOOLEAN NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
+  deleted_at TIMESTAMP
 );
+
 
 CREATE UNIQUE INDEX unique_availability_idx 
 ON doctor_availability(doctor_id, availability_date, availability_time);
@@ -34,8 +38,12 @@ CREATE TABLE patients (
   gender gender_enum,
   city VARCHAR(50),
   country VARCHAR(50),
-  phone_number VARCHAR(15) NOT NULL 
+  phone_number VARCHAR(15) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
+  deleted_at TIMESTAMP
 );
+
 
 CREATE INDEX first_name_idx ON patients(last_name, first_name);
 

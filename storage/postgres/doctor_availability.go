@@ -1,7 +1,6 @@
 package postgres
 
 import (
-	"context"
 	"database/sql"
 	"errors"
 	"fmt"
@@ -12,7 +11,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func (r *bookingRepo) CreateDoctorAvailability(ctx context.Context, req *pb.CreateDoctorAvailabilityRequest) (resp *pb.DoctorAvailability, err error) {
+func (r *bookingRepo) CreateDoctorAvailability(req *pb.CreateDoctorAvailabilitys) (resp *pb.DoctorAvailability, err error) {
 
 	query := `
 		INSERT INTO doctor_availability (
@@ -31,11 +30,11 @@ func (r *bookingRepo) CreateDoctorAvailability(ctx context.Context, req *pb.Crea
 			status
 	`
 	resp = &pb.DoctorAvailability{}
-	err = r.db.QueryRowContext(ctx, query, req.DoctorAvailability.DoctorId,
-		req.DoctorAvailability.DepartmentId,
-		req.DoctorAvailability.AvailabilityDate,
-		req.DoctorAvailability.AvailabilityTime,
-		req.DoctorAvailability.Status).Scan(
+	err = r.db.QueryRow(query, req.DoctorId,
+		req.DepartmentId,
+		req.AvailabilityDate,
+		req.AvailabilityTime,
+		req.Status).Scan(
 		&resp.Id, &resp.DoctorId, &resp.DepartmentId,
 		&resp.AvailabilityDate, &resp.AvailabilityTime, &resp.Status)
 	if err != nil {
@@ -45,9 +44,9 @@ func (r *bookingRepo) CreateDoctorAvailability(ctx context.Context, req *pb.Crea
 	return resp, nil
 }
 
-func (r *bookingRepo) GetDoctorAvailability(ctx context.Context, req *pb.GetDoctorAvailabilityRequest1) (*pb.DoctorAvailability, error) {
+func (r *bookingRepo) GetDoctorAvailability(req *pb.GetDoctorAvailabilityById) (*pb.DoctorAvailability, error) {
 	var availability pb.DoctorAvailability
-	err := r.db.QueryRowContext(ctx, `
+	err := r.db.QueryRow(`
 		SELECT	id, 
 				doctor_id, 
 				department_id, 
@@ -72,9 +71,54 @@ func (r *bookingRepo) GetDoctorAvailability(ctx context.Context, req *pb.GetDoct
 	return &availability, nil
 }
 
-func (r *bookingRepo) UpdateDoctorAvailability(ctx context.Context, req *pb.UpdateDoctorAvailabilityRequest) (*pb.DoctorAvailability, error) {
+func (r *bookingRepo) GetDoctorAvailabilityByDoctorId(req *pb.GetDoctorAvailabilityById) (*pb.DoctorAvailabilitys, error) {
+	rows, err := r.db.Query(`
+        SELECT 
+            id, 
+            doctor_id, 
+            department_id, 
+            availability_date, 
+            availability_time, 
+            status
+        FROM 
+            doctor_availability
+        WHERE 
+            doctor_id = $1
+    `, req.Id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
 
-	_, err := r.db.ExecContext(ctx, `
+	var availabilities []*pb.DoctorAvailability
+	for rows.Next() {
+		var availability pb.DoctorAvailability
+		err := rows.Scan(
+			&availability.Id,
+			&availability.DoctorId,
+			&availability.DepartmentId,
+			&availability.AvailabilityDate,
+			&availability.AvailabilityTime,
+			&availability.Status,
+		)
+		if err != nil {
+			return nil, err
+		}
+		availabilities = append(availabilities, &availability)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	response := &pb.DoctorAvailabilitys{
+		DoctorAvailability: availabilities,
+	}
+	return response, nil
+}
+
+func (r *bookingRepo) UpdateDoctorAvailability(req *pb.UpdateDoctorAvailabilityById) (*pb.DoctorAvailability, error) {
+
+	_, err := r.db.Exec(`
 		UPDATE doctor_availability
 			SET id = $2, 
 			doctor_id = $3, 
@@ -94,7 +138,7 @@ func (r *bookingRepo) UpdateDoctorAvailability(ctx context.Context, req *pb.Upda
 		return nil, fmt.Errorf("failed to update doctor availability: %v", err)
 	}
 
-	updatedAvailability, err := r.GetDoctorAvailability(ctx, &pb.GetDoctorAvailabilityRequest1{Id: req.DoctorAvailability.DoctorId})
+	updatedAvailability, err := r.GetDoctorAvailability(&pb.GetDoctorAvailabilityById{Id: req.DoctorAvailability.DoctorId})
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch updated doctor availability: %v", err)
 	}
@@ -102,23 +146,23 @@ func (r *bookingRepo) UpdateDoctorAvailability(ctx context.Context, req *pb.Upda
 	return updatedAvailability, nil
 }
 
-func (r *bookingRepo) DeleteDoctorAvailability(ctx context.Context, req *pb.DeleteDoctorAvailabilityRequest) (del *pb.IsDeleted, err error) {
+func (r *bookingRepo) DeleteDoctorAvailability(req *pb.GetDoctorAvailabilityById) (bool, error) {
 
-	_, err = r.GetDoctorAvailability(ctx, &pb.GetDoctorAvailabilityRequest1{Id: req.Id})
-	if err != nil {
-		return nil, fmt.Errorf("failed to fetch doctor availability before deletion: %v", err)
-	}
-
-	_, err = r.db.ExecContext(ctx, `
+	result, err := r.db.Exec(`
 		UPDATE doctor_availability
         SET deleted_at = $1
-        WHERE patient_id = $2
+        WHERE patient_id = $2 AND deleted_at IS NULL
 	`, time.Now(), req.Id)
 	if err != nil {
-		del.IsDeleted = false
-		return del, fmt.Errorf("failed to delete doctor availability: %v", err)
+		if errors.Is(err, sql.ErrNoRows) {
+			return false, err
+		}
+		return false, err
 	}
-	del.IsDeleted = true
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		return false, err
+	}
 
-	return del, nil
+	return true, nil
 }

@@ -1,8 +1,8 @@
 package services
 
 import (
-	"context"
 	pb "Booking-service/genproto/booking-service"
+	"context"
 )
 
 // GetArchive retrieves an archive entry
@@ -13,6 +13,17 @@ func (s *BookingService) GetArchive(ctx context.Context, req *pb.GetArchiveReque
 	}
 
 	return archive, nil
+}
+
+func (s *BookingService) GetArchiveByPatientID(ctx context.Context, req *pb.GetArchiveRequest) (*pb.Archives, error) {
+
+	archive, err := s.storage.Booking().GetArchiveByPatientID(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	return archive, nil
+
 }
 
 // UpdateArchive updates an existing archive entry
@@ -26,12 +37,11 @@ func (s *BookingService) UpdateArchive(ctx context.Context, req *pb.UpdateArchiv
 }
 
 // DeleteArchive deletes an archive entry
-func (s *BookingService) DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRequest) (del *pb.IsDeleted, err error) {
+func (s *BookingService) DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRequest) (del *pb.Status, err error) {
 	if _, err := s.storage.Booking().DeleteArchive(ctx, req); err != nil {
-		del.IsDeleted = false
-		return del, err
+		return nil, err
 	}
-	del.IsDeleted = true
+	del.Status = true
 
 	return del, nil
 }

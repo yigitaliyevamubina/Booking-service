@@ -27,31 +27,25 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// Doctor's availability
-type DoctorAvailability struct {
-	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	DoctorId             string   `protobuf:"bytes,2,opt,name=doctor_id,json=doctorId,proto3" json:"doctor_id"`
-	DepartmentId         string   `protobuf:"bytes,3,opt,name=department_id,json=departmentId,proto3" json:"department_id"`
-	AvailabilityDate     string   `protobuf:"bytes,4,opt,name=availability_date,json=availabilityDate,proto3" json:"availability_date"`
-	AvailabilityTime     string   `protobuf:"bytes,5,opt,name=availability_time,json=availabilityTime,proto3" json:"availability_time"`
-	Status               bool     `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
+type GetPatientRequest struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *DoctorAvailability) Reset()         { *m = DoctorAvailability{} }
-func (m *DoctorAvailability) String() string { return proto.CompactTextString(m) }
-func (*DoctorAvailability) ProtoMessage()    {}
-func (*DoctorAvailability) Descriptor() ([]byte, []int) {
+func (m *GetPatientRequest) Reset()         { *m = GetPatientRequest{} }
+func (m *GetPatientRequest) String() string { return proto.CompactTextString(m) }
+func (*GetPatientRequest) ProtoMessage()    {}
+func (*GetPatientRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_f88f1b71b7ab32dc, []int{0}
 }
-func (m *DoctorAvailability) XXX_Unmarshal(b []byte) error {
+func (m *GetPatientRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *DoctorAvailability) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetPatientRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_DoctorAvailability.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetPatientRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -61,61 +55,229 @@ func (m *DoctorAvailability) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return b[:n], nil
 	}
 }
-func (m *DoctorAvailability) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DoctorAvailability.Merge(m, src)
+func (m *GetPatientRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetPatientRequest.Merge(m, src)
 }
-func (m *DoctorAvailability) XXX_Size() int {
+func (m *GetPatientRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *DoctorAvailability) XXX_DiscardUnknown() {
-	xxx_messageInfo_DoctorAvailability.DiscardUnknown(m)
+func (m *GetPatientRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetPatientRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_DoctorAvailability proto.InternalMessageInfo
+var xxx_messageInfo_GetPatientRequest proto.InternalMessageInfo
 
-func (m *DoctorAvailability) GetId() int32 {
+func (m *GetPatientRequest) GetId() string {
 	if m != nil {
 		return m.Id
 	}
-	return 0
+	return ""
 }
 
-func (m *DoctorAvailability) GetDoctorId() string {
+type GetPatientsRequest struct {
+	Limit                string   `protobuf:"bytes,1,opt,name=limit,proto3" json:"limit"`
+	Page                 string   `protobuf:"bytes,2,opt,name=page,proto3" json:"page"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetPatientsRequest) Reset()         { *m = GetPatientsRequest{} }
+func (m *GetPatientsRequest) String() string { return proto.CompactTextString(m) }
+func (*GetPatientsRequest) ProtoMessage()    {}
+func (*GetPatientsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{1}
+}
+func (m *GetPatientsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetPatientsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetPatientsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetPatientsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetPatientsRequest.Merge(m, src)
+}
+func (m *GetPatientsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetPatientsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetPatientsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetPatientsRequest proto.InternalMessageInfo
+
+func (m *GetPatientsRequest) GetLimit() string {
 	if m != nil {
-		return m.DoctorId
+		return m.Limit
 	}
 	return ""
 }
 
-func (m *DoctorAvailability) GetDepartmentId() string {
+func (m *GetPatientsRequest) GetPage() string {
 	if m != nil {
-		return m.DepartmentId
+		return m.Page
 	}
 	return ""
 }
 
-func (m *DoctorAvailability) GetAvailabilityDate() string {
+type UpdatePatientRequest struct {
+	Id                   string         `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	Patient              *PatientUpdate `protobuf:"bytes,2,opt,name=patient,proto3" json:"patient"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *UpdatePatientRequest) Reset()         { *m = UpdatePatientRequest{} }
+func (m *UpdatePatientRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdatePatientRequest) ProtoMessage()    {}
+func (*UpdatePatientRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{2}
+}
+func (m *UpdatePatientRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdatePatientRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdatePatientRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdatePatientRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdatePatientRequest.Merge(m, src)
+}
+func (m *UpdatePatientRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdatePatientRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdatePatientRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdatePatientRequest proto.InternalMessageInfo
+
+func (m *UpdatePatientRequest) GetId() string {
 	if m != nil {
-		return m.AvailabilityDate
+		return m.Id
 	}
 	return ""
 }
 
-func (m *DoctorAvailability) GetAvailabilityTime() string {
+func (m *UpdatePatientRequest) GetPatient() *PatientUpdate {
 	if m != nil {
-		return m.AvailabilityTime
+		return m.Patient
 	}
-	return ""
+	return nil
 }
 
-func (m *DoctorAvailability) GetStatus() bool {
+type Status struct {
+	Status               bool     `protobuf:"varint,1,opt,name=status,proto3" json:"status"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Status) Reset()         { *m = Status{} }
+func (m *Status) String() string { return proto.CompactTextString(m) }
+func (*Status) ProtoMessage()    {}
+func (*Status) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{3}
+}
+func (m *Status) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Status) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Status.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Status) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Status.Merge(m, src)
+}
+func (m *Status) XXX_Size() int {
+	return m.Size()
+}
+func (m *Status) XXX_DiscardUnknown() {
+	xxx_messageInfo_Status.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Status proto.InternalMessageInfo
+
+func (m *Status) GetStatus() bool {
 	if m != nil {
 		return m.Status
 	}
 	return false
 }
 
-// Patients
+type Patients struct {
+	Patient              []*Patient `protobuf:"bytes,1,rep,name=patient,proto3" json:"patient"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *Patients) Reset()         { *m = Patients{} }
+func (m *Patients) String() string { return proto.CompactTextString(m) }
+func (*Patients) ProtoMessage()    {}
+func (*Patients) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{4}
+}
+func (m *Patients) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Patients) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Patients.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Patients) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Patients.Merge(m, src)
+}
+func (m *Patients) XXX_Size() int {
+	return m.Size()
+}
+func (m *Patients) XXX_DiscardUnknown() {
+	xxx_messageInfo_Patients.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Patients proto.InternalMessageInfo
+
+func (m *Patients) GetPatient() []*Patient {
+	if m != nil {
+		return m.Patient
+	}
+	return nil
+}
+
 type Patient struct {
 	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
 	FirstName            string   `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name"`
@@ -133,7 +295,7 @@ func (m *Patient) Reset()         { *m = Patient{} }
 func (m *Patient) String() string { return proto.CompactTextString(m) }
 func (*Patient) ProtoMessage()    {}
 func (*Patient) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{1}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{5}
 }
 func (m *Patient) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -211,6 +373,560 @@ func (m *Patient) GetPhoneNumber() string {
 	return ""
 }
 
+type PatientUpdate struct {
+	FirstName            string   `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name"`
+	LastName             string   `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name"`
+	BirthDate            string   `protobuf:"bytes,4,opt,name=birth_date,json=birthDate,proto3" json:"birth_date"`
+	Gender               string   `protobuf:"bytes,5,opt,name=gender,proto3" json:"gender"`
+	City                 string   `protobuf:"bytes,6,opt,name=city,proto3" json:"city"`
+	PhoneNumber          string   `protobuf:"bytes,7,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PatientUpdate) Reset()         { *m = PatientUpdate{} }
+func (m *PatientUpdate) String() string { return proto.CompactTextString(m) }
+func (*PatientUpdate) ProtoMessage()    {}
+func (*PatientUpdate) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{6}
+}
+func (m *PatientUpdate) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PatientUpdate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PatientUpdate.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PatientUpdate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PatientUpdate.Merge(m, src)
+}
+func (m *PatientUpdate) XXX_Size() int {
+	return m.Size()
+}
+func (m *PatientUpdate) XXX_DiscardUnknown() {
+	xxx_messageInfo_PatientUpdate.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PatientUpdate proto.InternalMessageInfo
+
+func (m *PatientUpdate) GetFirstName() string {
+	if m != nil {
+		return m.FirstName
+	}
+	return ""
+}
+
+func (m *PatientUpdate) GetLastName() string {
+	if m != nil {
+		return m.LastName
+	}
+	return ""
+}
+
+func (m *PatientUpdate) GetBirthDate() string {
+	if m != nil {
+		return m.BirthDate
+	}
+	return ""
+}
+
+func (m *PatientUpdate) GetGender() string {
+	if m != nil {
+		return m.Gender
+	}
+	return ""
+}
+
+func (m *PatientUpdate) GetCity() string {
+	if m != nil {
+		return m.City
+	}
+	return ""
+}
+
+func (m *PatientUpdate) GetPhoneNumber() string {
+	if m != nil {
+		return m.PhoneNumber
+	}
+	return ""
+}
+
+// -------------------------------------------------------------
+type CreateDoctorAvailabilitys struct {
+	DoctorId             string   `protobuf:"bytes,1,opt,name=doctor_id,json=doctorId,proto3" json:"doctor_id"`
+	DepartmentId         string   `protobuf:"bytes,2,opt,name=department_id,json=departmentId,proto3" json:"department_id"`
+	AvailabilityDate     string   `protobuf:"bytes,3,opt,name=availability_date,json=availabilityDate,proto3" json:"availability_date"`
+	AvailabilityTime     string   `protobuf:"bytes,4,opt,name=availability_time,json=availabilityTime,proto3" json:"availability_time"`
+	Status               bool     `protobuf:"varint,5,opt,name=status,proto3" json:"status"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CreateDoctorAvailabilitys) Reset()         { *m = CreateDoctorAvailabilitys{} }
+func (m *CreateDoctorAvailabilitys) String() string { return proto.CompactTextString(m) }
+func (*CreateDoctorAvailabilitys) ProtoMessage()    {}
+func (*CreateDoctorAvailabilitys) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{7}
+}
+func (m *CreateDoctorAvailabilitys) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CreateDoctorAvailabilitys) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CreateDoctorAvailabilitys.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CreateDoctorAvailabilitys) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateDoctorAvailabilitys.Merge(m, src)
+}
+func (m *CreateDoctorAvailabilitys) XXX_Size() int {
+	return m.Size()
+}
+func (m *CreateDoctorAvailabilitys) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateDoctorAvailabilitys.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreateDoctorAvailabilitys proto.InternalMessageInfo
+
+func (m *CreateDoctorAvailabilitys) GetDoctorId() string {
+	if m != nil {
+		return m.DoctorId
+	}
+	return ""
+}
+
+func (m *CreateDoctorAvailabilitys) GetDepartmentId() string {
+	if m != nil {
+		return m.DepartmentId
+	}
+	return ""
+}
+
+func (m *CreateDoctorAvailabilitys) GetAvailabilityDate() string {
+	if m != nil {
+		return m.AvailabilityDate
+	}
+	return ""
+}
+
+func (m *CreateDoctorAvailabilitys) GetAvailabilityTime() string {
+	if m != nil {
+		return m.AvailabilityTime
+	}
+	return ""
+}
+
+func (m *CreateDoctorAvailabilitys) GetStatus() bool {
+	if m != nil {
+		return m.Status
+	}
+	return false
+}
+
+type DoctorAvailabilitys struct {
+	DoctorAvailability   []*DoctorAvailability `protobuf:"bytes,1,rep,name=doctor_availability,json=doctorAvailability,proto3" json:"doctor_availability"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *DoctorAvailabilitys) Reset()         { *m = DoctorAvailabilitys{} }
+func (m *DoctorAvailabilitys) String() string { return proto.CompactTextString(m) }
+func (*DoctorAvailabilitys) ProtoMessage()    {}
+func (*DoctorAvailabilitys) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{8}
+}
+func (m *DoctorAvailabilitys) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DoctorAvailabilitys) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DoctorAvailabilitys.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DoctorAvailabilitys) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DoctorAvailabilitys.Merge(m, src)
+}
+func (m *DoctorAvailabilitys) XXX_Size() int {
+	return m.Size()
+}
+func (m *DoctorAvailabilitys) XXX_DiscardUnknown() {
+	xxx_messageInfo_DoctorAvailabilitys.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DoctorAvailabilitys proto.InternalMessageInfo
+
+func (m *DoctorAvailabilitys) GetDoctorAvailability() []*DoctorAvailability {
+	if m != nil {
+		return m.DoctorAvailability
+	}
+	return nil
+}
+
+type GetDoctorAvailabilityById struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetDoctorAvailabilityById) Reset()         { *m = GetDoctorAvailabilityById{} }
+func (m *GetDoctorAvailabilityById) String() string { return proto.CompactTextString(m) }
+func (*GetDoctorAvailabilityById) ProtoMessage()    {}
+func (*GetDoctorAvailabilityById) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{9}
+}
+func (m *GetDoctorAvailabilityById) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetDoctorAvailabilityById) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetDoctorAvailabilityById.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetDoctorAvailabilityById) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetDoctorAvailabilityById.Merge(m, src)
+}
+func (m *GetDoctorAvailabilityById) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetDoctorAvailabilityById) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetDoctorAvailabilityById.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetDoctorAvailabilityById proto.InternalMessageInfo
+
+func (m *GetDoctorAvailabilityById) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+type UpdateDoctorAvailabilityById struct {
+	Id                   string              `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	DoctorAvailability   *DoctorAvailability `protobuf:"bytes,2,opt,name=doctor_availability,json=doctorAvailability,proto3" json:"doctor_availability"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
+}
+
+func (m *UpdateDoctorAvailabilityById) Reset()         { *m = UpdateDoctorAvailabilityById{} }
+func (m *UpdateDoctorAvailabilityById) String() string { return proto.CompactTextString(m) }
+func (*UpdateDoctorAvailabilityById) ProtoMessage()    {}
+func (*UpdateDoctorAvailabilityById) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{10}
+}
+func (m *UpdateDoctorAvailabilityById) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateDoctorAvailabilityById) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateDoctorAvailabilityById.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateDoctorAvailabilityById) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateDoctorAvailabilityById.Merge(m, src)
+}
+func (m *UpdateDoctorAvailabilityById) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateDoctorAvailabilityById) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateDoctorAvailabilityById.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateDoctorAvailabilityById proto.InternalMessageInfo
+
+func (m *UpdateDoctorAvailabilityById) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *UpdateDoctorAvailabilityById) GetDoctorAvailability() *DoctorAvailability {
+	if m != nil {
+		return m.DoctorAvailability
+	}
+	return nil
+}
+
+type DoctorAvailability struct {
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	DoctorId             string   `protobuf:"bytes,2,opt,name=doctor_id,json=doctorId,proto3" json:"doctor_id"`
+	DepartmentId         string   `protobuf:"bytes,3,opt,name=department_id,json=departmentId,proto3" json:"department_id"`
+	AvailabilityDate     string   `protobuf:"bytes,4,opt,name=availability_date,json=availabilityDate,proto3" json:"availability_date"`
+	AvailabilityTime     string   `protobuf:"bytes,5,opt,name=availability_time,json=availabilityTime,proto3" json:"availability_time"`
+	Status               bool     `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DoctorAvailability) Reset()         { *m = DoctorAvailability{} }
+func (m *DoctorAvailability) String() string { return proto.CompactTextString(m) }
+func (*DoctorAvailability) ProtoMessage()    {}
+func (*DoctorAvailability) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{11}
+}
+func (m *DoctorAvailability) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DoctorAvailability) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DoctorAvailability.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DoctorAvailability) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DoctorAvailability.Merge(m, src)
+}
+func (m *DoctorAvailability) XXX_Size() int {
+	return m.Size()
+}
+func (m *DoctorAvailability) XXX_DiscardUnknown() {
+	xxx_messageInfo_DoctorAvailability.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DoctorAvailability proto.InternalMessageInfo
+
+func (m *DoctorAvailability) GetId() int32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *DoctorAvailability) GetDoctorId() string {
+	if m != nil {
+		return m.DoctorId
+	}
+	return ""
+}
+
+func (m *DoctorAvailability) GetDepartmentId() string {
+	if m != nil {
+		return m.DepartmentId
+	}
+	return ""
+}
+
+func (m *DoctorAvailability) GetAvailabilityDate() string {
+	if m != nil {
+		return m.AvailabilityDate
+	}
+	return ""
+}
+
+func (m *DoctorAvailability) GetAvailabilityTime() string {
+	if m != nil {
+		return m.AvailabilityTime
+	}
+	return ""
+}
+
+func (m *DoctorAvailability) GetStatus() bool {
+	if m != nil {
+		return m.Status
+	}
+	return false
+}
+
+type GetBookedAppointmentsByPatientIDResponse struct {
+	BookedAppointments   []*BookedAppointment `protobuf:"bytes,1,rep,name=booked_appointments,json=bookedAppointments,proto3" json:"booked_appointments"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *GetBookedAppointmentsByPatientIDResponse) Reset() {
+	*m = GetBookedAppointmentsByPatientIDResponse{}
+}
+func (m *GetBookedAppointmentsByPatientIDResponse) String() string { return proto.CompactTextString(m) }
+func (*GetBookedAppointmentsByPatientIDResponse) ProtoMessage()    {}
+func (*GetBookedAppointmentsByPatientIDResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{12}
+}
+func (m *GetBookedAppointmentsByPatientIDResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetBookedAppointmentsByPatientIDResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetBookedAppointmentsByPatientIDResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetBookedAppointmentsByPatientIDResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetBookedAppointmentsByPatientIDResponse.Merge(m, src)
+}
+func (m *GetBookedAppointmentsByPatientIDResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetBookedAppointmentsByPatientIDResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetBookedAppointmentsByPatientIDResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetBookedAppointmentsByPatientIDResponse proto.InternalMessageInfo
+
+func (m *GetBookedAppointmentsByPatientIDResponse) GetBookedAppointments() []*BookedAppointment {
+	if m != nil {
+		return m.BookedAppointments
+	}
+	return nil
+}
+
+type PatientID struct {
+	PatientId            string   `protobuf:"bytes,1,opt,name=patient_id,json=patientId,proto3" json:"patient_id"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PatientID) Reset()         { *m = PatientID{} }
+func (m *PatientID) String() string { return proto.CompactTextString(m) }
+func (*PatientID) ProtoMessage()    {}
+func (*PatientID) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{13}
+}
+func (m *PatientID) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PatientID) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PatientID.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PatientID) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PatientID.Merge(m, src)
+}
+func (m *PatientID) XXX_Size() int {
+	return m.Size()
+}
+func (m *PatientID) XXX_DiscardUnknown() {
+	xxx_messageInfo_PatientID.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PatientID proto.InternalMessageInfo
+
+func (m *PatientID) GetPatientId() string {
+	if m != nil {
+		return m.PatientId
+	}
+	return ""
+}
+
+type PatientsReq struct {
+	Limit                string   `protobuf:"bytes,1,opt,name=limit,proto3" json:"limit"`
+	Page                 string   `protobuf:"bytes,2,opt,name=page,proto3" json:"page"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PatientsReq) Reset()         { *m = PatientsReq{} }
+func (m *PatientsReq) String() string { return proto.CompactTextString(m) }
+func (*PatientsReq) ProtoMessage()    {}
+func (*PatientsReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{14}
+}
+func (m *PatientsReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PatientsReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PatientsReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PatientsReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PatientsReq.Merge(m, src)
+}
+func (m *PatientsReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *PatientsReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_PatientsReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PatientsReq proto.InternalMessageInfo
+
+func (m *PatientsReq) GetLimit() string {
+	if m != nil {
+		return m.Limit
+	}
+	return ""
+}
+
+func (m *PatientsReq) GetPage() string {
+	if m != nil {
+		return m.Page
+	}
+	return ""
+}
+
 // Booked appointments
 type BookedAppointment struct {
 	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
@@ -234,7 +950,7 @@ func (m *BookedAppointment) Reset()         { *m = BookedAppointment{} }
 func (m *BookedAppointment) String() string { return proto.CompactTextString(m) }
 func (*BookedAppointment) ProtoMessage()    {}
 func (*BookedAppointment) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{2}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{15}
 }
 func (m *BookedAppointment) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -358,7 +1074,7 @@ func (m *InsertArchive) Reset()         { *m = InsertArchive{} }
 func (m *InsertArchive) String() string { return proto.CompactTextString(m) }
 func (*InsertArchive) ProtoMessage()    {}
 func (*InsertArchive) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{3}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{16}
 }
 func (m *InsertArchive) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -415,7 +1131,7 @@ func (m *Create) Reset()         { *m = Create{} }
 func (m *Create) String() string { return proto.CompactTextString(m) }
 func (*Create) ProtoMessage()    {}
 func (*Create) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{4}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{17}
 }
 func (m *Create) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -521,25 +1237,25 @@ func (m *Create) GetVisitsCount() int32 {
 	return 0
 }
 
-type IsDeleted struct {
-	IsDeleted            bool     `protobuf:"varint,1,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+type Archives struct {
+	Archives             []*Archive `protobuf:"bytes,1,rep,name=archives,proto3" json:"archives"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *IsDeleted) Reset()         { *m = IsDeleted{} }
-func (m *IsDeleted) String() string { return proto.CompactTextString(m) }
-func (*IsDeleted) ProtoMessage()    {}
-func (*IsDeleted) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{5}
+func (m *Archives) Reset()         { *m = Archives{} }
+func (m *Archives) String() string { return proto.CompactTextString(m) }
+func (*Archives) ProtoMessage()    {}
+func (*Archives) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f88f1b71b7ab32dc, []int{18}
 }
-func (m *IsDeleted) XXX_Unmarshal(b []byte) error {
+func (m *Archives) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *IsDeleted) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Archives) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_IsDeleted.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Archives.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -549,23 +1265,23 @@ func (m *IsDeleted) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *IsDeleted) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IsDeleted.Merge(m, src)
+func (m *Archives) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Archives.Merge(m, src)
 }
-func (m *IsDeleted) XXX_Size() int {
+func (m *Archives) XXX_Size() int {
 	return m.Size()
 }
-func (m *IsDeleted) XXX_DiscardUnknown() {
-	xxx_messageInfo_IsDeleted.DiscardUnknown(m)
+func (m *Archives) XXX_DiscardUnknown() {
+	xxx_messageInfo_Archives.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_IsDeleted proto.InternalMessageInfo
+var xxx_messageInfo_Archives proto.InternalMessageInfo
 
-func (m *IsDeleted) GetIsDeleted() bool {
+func (m *Archives) GetArchives() []*Archive {
 	if m != nil {
-		return m.IsDeleted
+		return m.Archives
 	}
-	return false
+	return nil
 }
 
 // Archive
@@ -594,7 +1310,7 @@ func (m *Archive) Reset()         { *m = Archive{} }
 func (m *Archive) String() string { return proto.CompactTextString(m) }
 func (*Archive) ProtoMessage()    {}
 func (*Archive) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{6}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{19}
 }
 func (m *Archive) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -750,7 +1466,7 @@ func (m *UpdArchive) Reset()         { *m = UpdArchive{} }
 func (m *UpdArchive) String() string { return proto.CompactTextString(m) }
 func (*UpdArchive) ProtoMessage()    {}
 func (*UpdArchive) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{7}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{20}
 }
 func (m *UpdArchive) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -878,7 +1594,7 @@ func (m *UploadedFile) Reset()         { *m = UploadedFile{} }
 func (m *UploadedFile) String() string { return proto.CompactTextString(m) }
 func (*UploadedFile) ProtoMessage()    {}
 func (*UploadedFile) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{8}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{21}
 }
 func (m *UploadedFile) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -953,7 +1669,7 @@ func (m *PatientPayment) Reset()         { *m = PatientPayment{} }
 func (m *PatientPayment) String() string { return proto.CompactTextString(m) }
 func (*PatientPayment) ProtoMessage()    {}
 func (*PatientPayment) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{9}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{22}
 }
 func (m *PatientPayment) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1048,7 +1764,7 @@ func (m *DoctorNote) Reset()         { *m = DoctorNote{} }
 func (m *DoctorNote) String() string { return proto.CompactTextString(m) }
 func (*DoctorNote) ProtoMessage()    {}
 func (*DoctorNote) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{10}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{23}
 }
 func (m *DoctorNote) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1132,7 +1848,7 @@ func (m *LoginRequest) Reset()         { *m = LoginRequest{} }
 func (m *LoginRequest) String() string { return proto.CompactTextString(m) }
 func (*LoginRequest) ProtoMessage()    {}
 func (*LoginRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{11}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{24}
 }
 func (m *LoginRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1186,7 +1902,7 @@ func (m *LoginResponse) Reset()         { *m = LoginResponse{} }
 func (m *LoginResponse) String() string { return proto.CompactTextString(m) }
 func (*LoginResponse) ProtoMessage()    {}
 func (*LoginResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{12}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{25}
 }
 func (m *LoginResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1233,7 +1949,7 @@ func (m *LogoutRequest) Reset()         { *m = LogoutRequest{} }
 func (m *LogoutRequest) String() string { return proto.CompactTextString(m) }
 func (*LogoutRequest) ProtoMessage()    {}
 func (*LogoutRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{13}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{26}
 }
 func (m *LogoutRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1280,7 +1996,7 @@ func (m *LogoutResponse) Reset()         { *m = LogoutResponse{} }
 func (m *LogoutResponse) String() string { return proto.CompactTextString(m) }
 func (*LogoutResponse) ProtoMessage()    {}
 func (*LogoutResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{14}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{27}
 }
 func (m *LogoutResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1329,7 +2045,7 @@ func (m *SearchDoctorsRequest) Reset()         { *m = SearchDoctorsRequest{} }
 func (m *SearchDoctorsRequest) String() string { return proto.CompactTextString(m) }
 func (*SearchDoctorsRequest) ProtoMessage()    {}
 func (*SearchDoctorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{15}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{28}
 }
 func (m *SearchDoctorsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1383,7 +2099,7 @@ func (m *SearchDoctorsResponse) Reset()         { *m = SearchDoctorsResponse{} }
 func (m *SearchDoctorsResponse) String() string { return proto.CompactTextString(m) }
 func (*SearchDoctorsResponse) ProtoMessage()    {}
 func (*SearchDoctorsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{16}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{29}
 }
 func (m *SearchDoctorsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1433,7 +2149,7 @@ func (m *SearchDoctorsResponse_Doctor) Reset()         { *m = SearchDoctorsRespo
 func (m *SearchDoctorsResponse_Doctor) String() string { return proto.CompactTextString(m) }
 func (*SearchDoctorsResponse_Doctor) ProtoMessage()    {}
 func (*SearchDoctorsResponse_Doctor) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{16, 0}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{29, 0}
 }
 func (m *SearchDoctorsResponse_Doctor) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1502,7 +2218,7 @@ func (m *SearchPatientsRequest) Reset()         { *m = SearchPatientsRequest{} }
 func (m *SearchPatientsRequest) String() string { return proto.CompactTextString(m) }
 func (*SearchPatientsRequest) ProtoMessage()    {}
 func (*SearchPatientsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{17}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{30}
 }
 func (m *SearchPatientsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1556,7 +2272,7 @@ func (m *SearchPatientsResponse) Reset()         { *m = SearchPatientsResponse{}
 func (m *SearchPatientsResponse) String() string { return proto.CompactTextString(m) }
 func (*SearchPatientsResponse) ProtoMessage()    {}
 func (*SearchPatientsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{18}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{31}
 }
 func (m *SearchPatientsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1606,7 +2322,7 @@ func (m *SearchPatientsResponse_Patient) Reset()         { *m = SearchPatientsRe
 func (m *SearchPatientsResponse_Patient) String() string { return proto.CompactTextString(m) }
 func (*SearchPatientsResponse_Patient) ProtoMessage()    {}
 func (*SearchPatientsResponse_Patient) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{18, 0}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{31, 0}
 }
 func (m *SearchPatientsResponse_Patient) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1675,7 +2391,7 @@ func (m *SearchAppointmentsRequest) Reset()         { *m = SearchAppointmentsReq
 func (m *SearchAppointmentsRequest) String() string { return proto.CompactTextString(m) }
 func (*SearchAppointmentsRequest) ProtoMessage()    {}
 func (*SearchAppointmentsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{19}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{32}
 }
 func (m *SearchAppointmentsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1729,7 +2445,7 @@ func (m *RespBookedAppointment) Reset()         { *m = RespBookedAppointment{} }
 func (m *RespBookedAppointment) String() string { return proto.CompactTextString(m) }
 func (*RespBookedAppointment) ProtoMessage()    {}
 func (*RespBookedAppointment) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{20}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{33}
 }
 func (m *RespBookedAppointment) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1776,7 +2492,7 @@ func (m *SearchAppointmentsResponse) Reset()         { *m = SearchAppointmentsRe
 func (m *SearchAppointmentsResponse) String() string { return proto.CompactTextString(m) }
 func (*SearchAppointmentsResponse) ProtoMessage()    {}
 func (*SearchAppointmentsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{21}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{34}
 }
 func (m *SearchAppointmentsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1833,7 +2549,7 @@ func (m *SearchAppointmentsResponse_BookedAppointment) String() string {
 }
 func (*SearchAppointmentsResponse_BookedAppointment) ProtoMessage() {}
 func (*SearchAppointmentsResponse_BookedAppointment) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{21, 0}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{34, 0}
 }
 func (m *SearchAppointmentsResponse_BookedAppointment) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1924,7 +2640,7 @@ func (m *SendNotificationRequest) Reset()         { *m = SendNotificationRequest
 func (m *SendNotificationRequest) String() string { return proto.CompactTextString(m) }
 func (*SendNotificationRequest) ProtoMessage()    {}
 func (*SendNotificationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{22}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{35}
 }
 func (m *SendNotificationRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1978,7 +2694,7 @@ func (m *SendNotificationResponse) Reset()         { *m = SendNotificationRespon
 func (m *SendNotificationResponse) String() string { return proto.CompactTextString(m) }
 func (*SendNotificationResponse) ProtoMessage()    {}
 func (*SendNotificationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{23}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{36}
 }
 func (m *SendNotificationResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2026,7 +2742,7 @@ func (m *GenerateReportRequest) Reset()         { *m = GenerateReportRequest{} }
 func (m *GenerateReportRequest) String() string { return proto.CompactTextString(m) }
 func (*GenerateReportRequest) ProtoMessage()    {}
 func (*GenerateReportRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{24}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{37}
 }
 func (m *GenerateReportRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2073,7 +2789,7 @@ func (m *GenerateReportResponse) Reset()         { *m = GenerateReportResponse{}
 func (m *GenerateReportResponse) String() string { return proto.CompactTextString(m) }
 func (*GenerateReportResponse) ProtoMessage()    {}
 func (*GenerateReportResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{25}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{38}
 }
 func (m *GenerateReportResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2121,7 +2837,7 @@ func (m *GetAnalyticsRequest) Reset()         { *m = GetAnalyticsRequest{} }
 func (m *GetAnalyticsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAnalyticsRequest) ProtoMessage()    {}
 func (*GetAnalyticsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{26}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{39}
 }
 func (m *GetAnalyticsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2168,7 +2884,7 @@ func (m *GetAnalyticsResponse) Reset()         { *m = GetAnalyticsResponse{} }
 func (m *GetAnalyticsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetAnalyticsResponse) ProtoMessage()    {}
 func (*GetAnalyticsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{27}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{40}
 }
 func (m *GetAnalyticsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2216,7 +2932,7 @@ func (m *GenerateInvoiceRequest) Reset()         { *m = GenerateInvoiceRequest{}
 func (m *GenerateInvoiceRequest) String() string { return proto.CompactTextString(m) }
 func (*GenerateInvoiceRequest) ProtoMessage()    {}
 func (*GenerateInvoiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{28}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{41}
 }
 func (m *GenerateInvoiceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2263,7 +2979,7 @@ func (m *GenerateInvoiceResponse) Reset()         { *m = GenerateInvoiceResponse
 func (m *GenerateInvoiceResponse) String() string { return proto.CompactTextString(m) }
 func (*GenerateInvoiceResponse) ProtoMessage()    {}
 func (*GenerateInvoiceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{29}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{42}
 }
 func (m *GenerateInvoiceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2311,7 +3027,7 @@ func (m *ProcessPaymentRequest) Reset()         { *m = ProcessPaymentRequest{} }
 func (m *ProcessPaymentRequest) String() string { return proto.CompactTextString(m) }
 func (*ProcessPaymentRequest) ProtoMessage()    {}
 func (*ProcessPaymentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{30}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{43}
 }
 func (m *ProcessPaymentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2365,7 +3081,7 @@ func (m *ProcessPaymentResponse) Reset()         { *m = ProcessPaymentResponse{}
 func (m *ProcessPaymentResponse) String() string { return proto.CompactTextString(m) }
 func (*ProcessPaymentResponse) ProtoMessage()    {}
 func (*ProcessPaymentResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{31}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{44}
 }
 func (m *ProcessPaymentResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2413,7 +3129,7 @@ func (m *SubmitFeedbackRequest) Reset()         { *m = SubmitFeedbackRequest{} }
 func (m *SubmitFeedbackRequest) String() string { return proto.CompactTextString(m) }
 func (*SubmitFeedbackRequest) ProtoMessage()    {}
 func (*SubmitFeedbackRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{32}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{45}
 }
 func (m *SubmitFeedbackRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2460,7 +3176,7 @@ func (m *SubmitFeedbackResponse) Reset()         { *m = SubmitFeedbackResponse{}
 func (m *SubmitFeedbackResponse) String() string { return proto.CompactTextString(m) }
 func (*SubmitFeedbackResponse) ProtoMessage()    {}
 func (*SubmitFeedbackResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{33}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{46}
 }
 func (m *SubmitFeedbackResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2496,54 +3212,6 @@ func (m *SubmitFeedbackResponse) GetSuccess() bool {
 	return false
 }
 
-// Request message for creating a doctor's availability
-type CreateDoctorAvailabilityRequest struct {
-	DoctorAvailability   *DoctorAvailability `protobuf:"bytes,1,opt,name=doctor_availability,json=doctorAvailability,proto3" json:"doctor_availability"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
-}
-
-func (m *CreateDoctorAvailabilityRequest) Reset()         { *m = CreateDoctorAvailabilityRequest{} }
-func (m *CreateDoctorAvailabilityRequest) String() string { return proto.CompactTextString(m) }
-func (*CreateDoctorAvailabilityRequest) ProtoMessage()    {}
-func (*CreateDoctorAvailabilityRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{34}
-}
-func (m *CreateDoctorAvailabilityRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *CreateDoctorAvailabilityRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CreateDoctorAvailabilityRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *CreateDoctorAvailabilityRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateDoctorAvailabilityRequest.Merge(m, src)
-}
-func (m *CreateDoctorAvailabilityRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *CreateDoctorAvailabilityRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CreateDoctorAvailabilityRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CreateDoctorAvailabilityRequest proto.InternalMessageInfo
-
-func (m *CreateDoctorAvailabilityRequest) GetDoctorAvailability() *DoctorAvailability {
-	if m != nil {
-		return m.DoctorAvailability
-	}
-	return nil
-}
-
 // Request message for getting doctor's availability
 type GetDoctorAvailabilityRequest struct {
 	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
@@ -2556,7 +3224,7 @@ func (m *GetDoctorAvailabilityRequest) Reset()         { *m = GetDoctorAvailabil
 func (m *GetDoctorAvailabilityRequest) String() string { return proto.CompactTextString(m) }
 func (*GetDoctorAvailabilityRequest) ProtoMessage()    {}
 func (*GetDoctorAvailabilityRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{35}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{47}
 }
 func (m *GetDoctorAvailabilityRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2592,357 +3260,6 @@ func (m *GetDoctorAvailabilityRequest) GetId() int32 {
 	return 0
 }
 
-type GetDoctorAvailabilityRequest1 struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *GetDoctorAvailabilityRequest1) Reset()         { *m = GetDoctorAvailabilityRequest1{} }
-func (m *GetDoctorAvailabilityRequest1) String() string { return proto.CompactTextString(m) }
-func (*GetDoctorAvailabilityRequest1) ProtoMessage()    {}
-func (*GetDoctorAvailabilityRequest1) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{36}
-}
-func (m *GetDoctorAvailabilityRequest1) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *GetDoctorAvailabilityRequest1) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_GetDoctorAvailabilityRequest1.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *GetDoctorAvailabilityRequest1) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetDoctorAvailabilityRequest1.Merge(m, src)
-}
-func (m *GetDoctorAvailabilityRequest1) XXX_Size() int {
-	return m.Size()
-}
-func (m *GetDoctorAvailabilityRequest1) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetDoctorAvailabilityRequest1.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetDoctorAvailabilityRequest1 proto.InternalMessageInfo
-
-func (m *GetDoctorAvailabilityRequest1) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-// Request message for updating doctor's availability
-type UpdateDoctorAvailabilityRequest struct {
-	Id                   string              `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	DoctorAvailability   *DoctorAvailability `protobuf:"bytes,2,opt,name=doctor_availability,json=doctorAvailability,proto3" json:"doctor_availability"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
-}
-
-func (m *UpdateDoctorAvailabilityRequest) Reset()         { *m = UpdateDoctorAvailabilityRequest{} }
-func (m *UpdateDoctorAvailabilityRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateDoctorAvailabilityRequest) ProtoMessage()    {}
-func (*UpdateDoctorAvailabilityRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{37}
-}
-func (m *UpdateDoctorAvailabilityRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *UpdateDoctorAvailabilityRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdateDoctorAvailabilityRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *UpdateDoctorAvailabilityRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateDoctorAvailabilityRequest.Merge(m, src)
-}
-func (m *UpdateDoctorAvailabilityRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *UpdateDoctorAvailabilityRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateDoctorAvailabilityRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateDoctorAvailabilityRequest proto.InternalMessageInfo
-
-func (m *UpdateDoctorAvailabilityRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *UpdateDoctorAvailabilityRequest) GetDoctorAvailability() *DoctorAvailability {
-	if m != nil {
-		return m.DoctorAvailability
-	}
-	return nil
-}
-
-// Request message for deleting doctor's availability
-type DeleteDoctorAvailabilityRequest struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *DeleteDoctorAvailabilityRequest) Reset()         { *m = DeleteDoctorAvailabilityRequest{} }
-func (m *DeleteDoctorAvailabilityRequest) String() string { return proto.CompactTextString(m) }
-func (*DeleteDoctorAvailabilityRequest) ProtoMessage()    {}
-func (*DeleteDoctorAvailabilityRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{38}
-}
-func (m *DeleteDoctorAvailabilityRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *DeleteDoctorAvailabilityRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_DeleteDoctorAvailabilityRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *DeleteDoctorAvailabilityRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteDoctorAvailabilityRequest.Merge(m, src)
-}
-func (m *DeleteDoctorAvailabilityRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *DeleteDoctorAvailabilityRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteDoctorAvailabilityRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteDoctorAvailabilityRequest proto.InternalMessageInfo
-
-func (m *DeleteDoctorAvailabilityRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-// Request message for creating a patient
-type CreatePatientRequest struct {
-	Patient              *Patient `protobuf:"bytes,1,opt,name=patient,proto3" json:"patient"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *CreatePatientRequest) Reset()         { *m = CreatePatientRequest{} }
-func (m *CreatePatientRequest) String() string { return proto.CompactTextString(m) }
-func (*CreatePatientRequest) ProtoMessage()    {}
-func (*CreatePatientRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{39}
-}
-func (m *CreatePatientRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *CreatePatientRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CreatePatientRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *CreatePatientRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreatePatientRequest.Merge(m, src)
-}
-func (m *CreatePatientRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *CreatePatientRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CreatePatientRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CreatePatientRequest proto.InternalMessageInfo
-
-func (m *CreatePatientRequest) GetPatient() *Patient {
-	if m != nil {
-		return m.Patient
-	}
-	return nil
-}
-
-// Request message for getting a patient
-type GetPatientRequest struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *GetPatientRequest) Reset()         { *m = GetPatientRequest{} }
-func (m *GetPatientRequest) String() string { return proto.CompactTextString(m) }
-func (*GetPatientRequest) ProtoMessage()    {}
-func (*GetPatientRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{40}
-}
-func (m *GetPatientRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *GetPatientRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_GetPatientRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *GetPatientRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetPatientRequest.Merge(m, src)
-}
-func (m *GetPatientRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *GetPatientRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetPatientRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetPatientRequest proto.InternalMessageInfo
-
-func (m *GetPatientRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-// Request message for updating a patient
-type UpdatePatientRequest struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	Patient              *Patient `protobuf:"bytes,2,opt,name=patient,proto3" json:"patient"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *UpdatePatientRequest) Reset()         { *m = UpdatePatientRequest{} }
-func (m *UpdatePatientRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdatePatientRequest) ProtoMessage()    {}
-func (*UpdatePatientRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{41}
-}
-func (m *UpdatePatientRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *UpdatePatientRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdatePatientRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *UpdatePatientRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdatePatientRequest.Merge(m, src)
-}
-func (m *UpdatePatientRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *UpdatePatientRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdatePatientRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdatePatientRequest proto.InternalMessageInfo
-
-func (m *UpdatePatientRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *UpdatePatientRequest) GetPatient() *Patient {
-	if m != nil {
-		return m.Patient
-	}
-	return nil
-}
-
-// Request message for deleting a patient
-type DeletePatientRequest struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *DeletePatientRequest) Reset()         { *m = DeletePatientRequest{} }
-func (m *DeletePatientRequest) String() string { return proto.CompactTextString(m) }
-func (*DeletePatientRequest) ProtoMessage()    {}
-func (*DeletePatientRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{42}
-}
-func (m *DeletePatientRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *DeletePatientRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_DeletePatientRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *DeletePatientRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeletePatientRequest.Merge(m, src)
-}
-func (m *DeletePatientRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *DeletePatientRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeletePatientRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeletePatientRequest proto.InternalMessageInfo
-
-func (m *DeletePatientRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
 // Request message for creating a booked appointment
 type CreateBookedAppointmentRequest struct {
 	BookedAppointment    *BookedAppointment `protobuf:"bytes,1,opt,name=booked_appointment,json=bookedAppointment,proto3" json:"booked_appointment"`
@@ -2955,7 +3272,7 @@ func (m *CreateBookedAppointmentRequest) Reset()         { *m = CreateBookedAppo
 func (m *CreateBookedAppointmentRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateBookedAppointmentRequest) ProtoMessage()    {}
 func (*CreateBookedAppointmentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{43}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{48}
 }
 func (m *CreateBookedAppointmentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3003,7 +3320,7 @@ func (m *GetBookedAppointmentRequest) Reset()         { *m = GetBookedAppointmen
 func (m *GetBookedAppointmentRequest) String() string { return proto.CompactTextString(m) }
 func (*GetBookedAppointmentRequest) ProtoMessage()    {}
 func (*GetBookedAppointmentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{44}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{49}
 }
 func (m *GetBookedAppointmentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3052,7 +3369,7 @@ func (m *UpdateBookedAppointmentRequest) Reset()         { *m = UpdateBookedAppo
 func (m *UpdateBookedAppointmentRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateBookedAppointmentRequest) ProtoMessage()    {}
 func (*UpdateBookedAppointmentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{45}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{50}
 }
 func (m *UpdateBookedAppointmentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3107,7 +3424,7 @@ func (m *DeleteBookedAppointmentRequest) Reset()         { *m = DeleteBookedAppo
 func (m *DeleteBookedAppointmentRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteBookedAppointmentRequest) ProtoMessage()    {}
 func (*DeleteBookedAppointmentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{46}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{51}
 }
 func (m *DeleteBookedAppointmentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3155,7 +3472,7 @@ func (m *CreateArchiveRequest) Reset()         { *m = CreateArchiveRequest{} }
 func (m *CreateArchiveRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateArchiveRequest) ProtoMessage()    {}
 func (*CreateArchiveRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{47}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{52}
 }
 func (m *CreateArchiveRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3203,7 +3520,7 @@ func (m *GetArchiveRequest) Reset()         { *m = GetArchiveRequest{} }
 func (m *GetArchiveRequest) String() string { return proto.CompactTextString(m) }
 func (*GetArchiveRequest) ProtoMessage()    {}
 func (*GetArchiveRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{48}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{53}
 }
 func (m *GetArchiveRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3252,7 +3569,7 @@ func (m *UpdateArchiveRequest) Reset()         { *m = UpdateArchiveRequest{} }
 func (m *UpdateArchiveRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateArchiveRequest) ProtoMessage()    {}
 func (*UpdateArchiveRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{49}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{54}
 }
 func (m *UpdateArchiveRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3307,7 +3624,7 @@ func (m *DeleteArchiveRequest) Reset()         { *m = DeleteArchiveRequest{} }
 func (m *DeleteArchiveRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteArchiveRequest) ProtoMessage()    {}
 func (*DeleteArchiveRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{50}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{55}
 }
 func (m *DeleteArchiveRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3355,7 +3672,7 @@ func (m *UploadFileRequest) Reset()         { *m = UploadFileRequest{} }
 func (m *UploadFileRequest) String() string { return proto.CompactTextString(m) }
 func (*UploadFileRequest) ProtoMessage()    {}
 func (*UploadFileRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{51}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{56}
 }
 func (m *UploadFileRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3403,7 +3720,7 @@ func (m *GetFileRequest) Reset()         { *m = GetFileRequest{} }
 func (m *GetFileRequest) String() string { return proto.CompactTextString(m) }
 func (*GetFileRequest) ProtoMessage()    {}
 func (*GetFileRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{52}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{57}
 }
 func (m *GetFileRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3452,7 +3769,7 @@ func (m *UpdateFileRequest) Reset()         { *m = UpdateFileRequest{} }
 func (m *UpdateFileRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateFileRequest) ProtoMessage()    {}
 func (*UpdateFileRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{53}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{58}
 }
 func (m *UpdateFileRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3507,7 +3824,7 @@ func (m *DeleteFileRequest) Reset()         { *m = DeleteFileRequest{} }
 func (m *DeleteFileRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteFileRequest) ProtoMessage()    {}
 func (*DeleteFileRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{54}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{59}
 }
 func (m *DeleteFileRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3555,7 +3872,7 @@ func (m *MakePaymentRequest) Reset()         { *m = MakePaymentRequest{} }
 func (m *MakePaymentRequest) String() string { return proto.CompactTextString(m) }
 func (*MakePaymentRequest) ProtoMessage()    {}
 func (*MakePaymentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{55}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{60}
 }
 func (m *MakePaymentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3603,7 +3920,7 @@ func (m *GetPaymentRequest) Reset()         { *m = GetPaymentRequest{} }
 func (m *GetPaymentRequest) String() string { return proto.CompactTextString(m) }
 func (*GetPaymentRequest) ProtoMessage()    {}
 func (*GetPaymentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{56}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{61}
 }
 func (m *GetPaymentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3652,7 +3969,7 @@ func (m *UpdatePaymentRequest) Reset()         { *m = UpdatePaymentRequest{} }
 func (m *UpdatePaymentRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdatePaymentRequest) ProtoMessage()    {}
 func (*UpdatePaymentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{57}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{62}
 }
 func (m *UpdatePaymentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3707,7 +4024,7 @@ func (m *DeletePaymentRequest) Reset()         { *m = DeletePaymentRequest{} }
 func (m *DeletePaymentRequest) String() string { return proto.CompactTextString(m) }
 func (*DeletePaymentRequest) ProtoMessage()    {}
 func (*DeletePaymentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{58}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{63}
 }
 func (m *DeletePaymentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3755,7 +4072,7 @@ func (m *CreateDoctorNoteRequest) Reset()         { *m = CreateDoctorNoteRequest
 func (m *CreateDoctorNoteRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateDoctorNoteRequest) ProtoMessage()    {}
 func (*CreateDoctorNoteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{59}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{64}
 }
 func (m *CreateDoctorNoteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3803,7 +4120,7 @@ func (m *GetDoctorNoteRequest) Reset()         { *m = GetDoctorNoteRequest{} }
 func (m *GetDoctorNoteRequest) String() string { return proto.CompactTextString(m) }
 func (*GetDoctorNoteRequest) ProtoMessage()    {}
 func (*GetDoctorNoteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{60}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{65}
 }
 func (m *GetDoctorNoteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3852,7 +4169,7 @@ func (m *UpdateDoctorNoteRequest) Reset()         { *m = UpdateDoctorNoteRequest
 func (m *UpdateDoctorNoteRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateDoctorNoteRequest) ProtoMessage()    {}
 func (*UpdateDoctorNoteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{61}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{66}
 }
 func (m *UpdateDoctorNoteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3907,7 +4224,7 @@ func (m *DeleteDoctorNoteRequest) Reset()         { *m = DeleteDoctorNoteRequest
 func (m *DeleteDoctorNoteRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteDoctorNoteRequest) ProtoMessage()    {}
 func (*DeleteDoctorNoteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f88f1b71b7ab32dc, []int{62}
+	return fileDescriptor_f88f1b71b7ab32dc, []int{67}
 }
 func (m *DeleteDoctorNoteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3944,12 +4261,25 @@ func (m *DeleteDoctorNoteRequest) GetId() int32 {
 }
 
 func init() {
-	proto.RegisterType((*DoctorAvailability)(nil), "booking_service.DoctorAvailability")
+	proto.RegisterType((*GetPatientRequest)(nil), "booking_service.GetPatientRequest")
+	proto.RegisterType((*GetPatientsRequest)(nil), "booking_service.GetPatientsRequest")
+	proto.RegisterType((*UpdatePatientRequest)(nil), "booking_service.UpdatePatientRequest")
+	proto.RegisterType((*Status)(nil), "booking_service.Status")
+	proto.RegisterType((*Patients)(nil), "booking_service.Patients")
 	proto.RegisterType((*Patient)(nil), "booking_service.Patient")
+	proto.RegisterType((*PatientUpdate)(nil), "booking_service.PatientUpdate")
+	proto.RegisterType((*CreateDoctorAvailabilitys)(nil), "booking_service.CreateDoctorAvailabilitys")
+	proto.RegisterType((*DoctorAvailabilitys)(nil), "booking_service.DoctorAvailabilitys")
+	proto.RegisterType((*GetDoctorAvailabilityById)(nil), "booking_service.GetDoctorAvailabilityById")
+	proto.RegisterType((*UpdateDoctorAvailabilityById)(nil), "booking_service.UpdateDoctorAvailabilityById")
+	proto.RegisterType((*DoctorAvailability)(nil), "booking_service.DoctorAvailability")
+	proto.RegisterType((*GetBookedAppointmentsByPatientIDResponse)(nil), "booking_service.GetBookedAppointmentsByPatientIDResponse")
+	proto.RegisterType((*PatientID)(nil), "booking_service.PatientID")
+	proto.RegisterType((*PatientsReq)(nil), "booking_service.PatientsReq")
 	proto.RegisterType((*BookedAppointment)(nil), "booking_service.BookedAppointment")
 	proto.RegisterType((*InsertArchive)(nil), "booking_service.InsertArchive")
 	proto.RegisterType((*Create)(nil), "booking_service.Create")
-	proto.RegisterType((*IsDeleted)(nil), "booking_service.IsDeleted")
+	proto.RegisterType((*Archives)(nil), "booking_service.Archives")
 	proto.RegisterType((*Archive)(nil), "booking_service.Archive")
 	proto.RegisterType((*UpdArchive)(nil), "booking_service.UpdArchive")
 	proto.RegisterType((*UploadedFile)(nil), "booking_service.UploadedFile")
@@ -3981,15 +4311,7 @@ func init() {
 	proto.RegisterType((*ProcessPaymentResponse)(nil), "booking_service.ProcessPaymentResponse")
 	proto.RegisterType((*SubmitFeedbackRequest)(nil), "booking_service.SubmitFeedbackRequest")
 	proto.RegisterType((*SubmitFeedbackResponse)(nil), "booking_service.SubmitFeedbackResponse")
-	proto.RegisterType((*CreateDoctorAvailabilityRequest)(nil), "booking_service.CreateDoctorAvailabilityRequest")
 	proto.RegisterType((*GetDoctorAvailabilityRequest)(nil), "booking_service.GetDoctorAvailabilityRequest")
-	proto.RegisterType((*GetDoctorAvailabilityRequest1)(nil), "booking_service.GetDoctorAvailabilityRequest1")
-	proto.RegisterType((*UpdateDoctorAvailabilityRequest)(nil), "booking_service.UpdateDoctorAvailabilityRequest")
-	proto.RegisterType((*DeleteDoctorAvailabilityRequest)(nil), "booking_service.DeleteDoctorAvailabilityRequest")
-	proto.RegisterType((*CreatePatientRequest)(nil), "booking_service.CreatePatientRequest")
-	proto.RegisterType((*GetPatientRequest)(nil), "booking_service.GetPatientRequest")
-	proto.RegisterType((*UpdatePatientRequest)(nil), "booking_service.UpdatePatientRequest")
-	proto.RegisterType((*DeletePatientRequest)(nil), "booking_service.DeletePatientRequest")
 	proto.RegisterType((*CreateBookedAppointmentRequest)(nil), "booking_service.CreateBookedAppointmentRequest")
 	proto.RegisterType((*GetBookedAppointmentRequest)(nil), "booking_service.GetBookedAppointmentRequest")
 	proto.RegisterType((*UpdateBookedAppointmentRequest)(nil), "booking_service.UpdateBookedAppointmentRequest")
@@ -4017,164 +4339,176 @@ func init() {
 }
 
 var fileDescriptor_f88f1b71b7ab32dc = []byte{
-	// 2508 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x5a, 0x4f, 0x6f, 0x24, 0x47,
-	0x15, 0xa7, 0xdb, 0xf6, 0xd8, 0xf3, 0xe6, 0x8f, 0xed, 0x5a, 0xff, 0x99, 0xcc, 0xc6, 0xf6, 0x6e,
-	0x2f, 0xde, 0x78, 0x37, 0x59, 0x6f, 0x32, 0x10, 0x44, 0x50, 0x10, 0x78, 0xb3, 0x5a, 0x6b, 0x42,
-	0xb2, 0x71, 0xda, 0xbb, 0x59, 0x12, 0x04, 0xa3, 0x9e, 0xe9, 0x5a, 0xbb, 0xb5, 0x33, 0xdd, 0xb3,
-	0xdd, 0x35, 0x8e, 0xe7, 0xc2, 0x85, 0x03, 0x7c, 0x04, 0x0e, 0x7c, 0x02, 0xbe, 0x01, 0x17, 0x24,
-	0xc4, 0x85, 0x03, 0x48, 0x39, 0xe4, 0x40, 0xc4, 0x05, 0x2d, 0x57, 0x84, 0x38, 0x72, 0x42, 0xa8,
-	0xeb, 0xcf, 0x74, 0x4d, 0x57, 0x75, 0x4f, 0x1b, 0x0b, 0x84, 0x44, 0x6e, 0x53, 0xaf, 0x5e, 0xbd,
-	0xf7, 0xea, 0xbd, 0xaa, 0xf7, 0x7e, 0xf5, 0x7a, 0x60, 0xb7, 0x1b, 0x04, 0xcf, 0x3c, 0xff, 0xe4,
-	0x4e, 0x84, 0xc3, 0x33, 0xaf, 0x87, 0xef, 0xf2, 0x71, 0x87, 0x8f, 0xf7, 0x87, 0x61, 0x40, 0x02,
-	0xb4, 0x9c, 0x22, 0x5b, 0x7f, 0x34, 0x00, 0xdd, 0x0f, 0x7a, 0x24, 0x08, 0x0f, 0xce, 0x1c, 0xaf,
-	0xef, 0x74, 0xbd, 0xbe, 0x47, 0xc6, 0xa8, 0x0e, 0xa6, 0xe7, 0x36, 0x8c, 0x6b, 0xc6, 0xde, 0x82,
-	0x6d, 0x7a, 0x2e, 0xba, 0x0a, 0x65, 0x97, 0x72, 0x75, 0x3c, 0xb7, 0x61, 0x5e, 0x33, 0xf6, 0xca,
-	0xf6, 0x12, 0x23, 0xb4, 0x5d, 0x74, 0x03, 0x6a, 0x2e, 0x1e, 0x3a, 0x21, 0x19, 0x60, 0x9f, 0xc4,
-	0x0c, 0x73, 0x94, 0xa1, 0x9a, 0x10, 0xdb, 0x2e, 0x7a, 0x15, 0x56, 0x1d, 0x49, 0x43, 0xc7, 0x75,
-	0x08, 0x6e, 0xcc, 0x53, 0xc6, 0x15, 0x79, 0xe2, 0xbe, 0x43, 0xb0, 0xc2, 0x4c, 0xbc, 0x01, 0x6e,
-	0x2c, 0xa8, 0xcc, 0x8f, 0xbc, 0x01, 0x46, 0x1b, 0x50, 0x8a, 0x88, 0x43, 0x46, 0x51, 0xa3, 0x74,
-	0xcd, 0xd8, 0x5b, 0xb2, 0xf9, 0xc8, 0xfa, 0xad, 0x01, 0x8b, 0x47, 0x0e, 0xf1, 0xb0, 0x4f, 0xa4,
-	0xfd, 0x94, 0xe9, 0x7e, 0xb6, 0x00, 0x9e, 0x7a, 0x61, 0x44, 0x3a, 0xbe, 0x33, 0xc0, 0x7c, 0x43,
-	0x65, 0x4a, 0x79, 0xe8, 0x0c, 0x70, 0xbc, 0xdd, 0xbe, 0x23, 0x66, 0xd9, 0x6e, 0x96, 0x62, 0x02,
-	0x9d, 0xdc, 0x02, 0xe8, 0x7a, 0x21, 0x39, 0x95, 0xb7, 0x50, 0xa6, 0x14, 0x6a, 0xfb, 0x06, 0x94,
-	0x4e, 0xb0, 0xef, 0xe2, 0x90, 0x1b, 0xcc, 0x47, 0x08, 0xc1, 0x7c, 0xcf, 0x23, 0x63, 0x6a, 0x64,
-	0xd9, 0xa6, 0xbf, 0xd1, 0x75, 0xa8, 0x0e, 0x4f, 0x03, 0x1f, 0x77, 0xfc, 0xd1, 0xa0, 0x8b, 0xc3,
-	0xc6, 0x22, 0x9d, 0xab, 0x50, 0xda, 0x43, 0x4a, 0xb2, 0xfe, 0x69, 0xc2, 0xea, 0xbd, 0x20, 0x78,
-	0x86, 0xdd, 0x83, 0xe1, 0x30, 0xf0, 0x7c, 0xea, 0x4f, 0x25, 0x3e, 0x4a, 0x08, 0x4c, 0x4d, 0x08,
-	0xa6, 0x82, 0x38, 0x97, 0x0a, 0xe2, 0x16, 0xc0, 0x90, 0x39, 0x2b, 0x9e, 0xe5, 0xbb, 0xe2, 0x94,
-	0xb6, 0x8b, 0x6e, 0xc1, 0x8a, 0x93, 0xe8, 0x67, 0x5b, 0x67, 0xfb, 0x5b, 0x96, 0xe8, 0xd4, 0x01,
-	0x29, 0x56, 0x1a, 0xbb, 0x92, 0xc2, 0x4a, 0x43, 0x87, 0x60, 0x9e, 0x8c, 0x87, 0x98, 0xef, 0x9b,
-	0xfe, 0x46, 0x4d, 0x58, 0x72, 0x47, 0xa1, 0x43, 0xbc, 0xc0, 0x6f, 0x2c, 0x71, 0x23, 0xf9, 0x38,
-	0x36, 0x12, 0x9f, 0x0f, 0xbd, 0x10, 0x47, 0x1d, 0x87, 0x34, 0xca, 0xcc, 0x48, 0x4e, 0x39, 0x20,
-	0x68, 0x0d, 0x16, 0x48, 0xf0, 0x0c, 0xfb, 0x0d, 0xa0, 0x33, 0x6c, 0x80, 0x76, 0xa1, 0x2e, 0x76,
-	0xc6, 0xcf, 0x49, 0x85, 0x9e, 0x93, 0x1a, 0xa7, 0x1e, 0x53, 0xa2, 0x74, 0x8c, 0xaa, 0x2c, 0x6e,
-	0xfc, 0x18, 0x7d, 0x17, 0x6a, 0x6d, 0x3f, 0xc2, 0x21, 0x39, 0x08, 0x7b, 0xa7, 0xde, 0x19, 0x46,
-	0x77, 0xa1, 0xe4, 0x51, 0x02, 0xf5, 0x7f, 0xa5, 0xb5, 0xb9, 0x9f, 0xbe, 0x6b, 0xef, 0x84, 0xd8,
-	0x21, 0xd8, 0xe6, 0x6c, 0xd6, 0xcf, 0xe6, 0xa0, 0xc4, 0x48, 0x6a, 0x9c, 0x8c, 0x59, 0x71, 0x32,
-	0x73, 0xe3, 0x34, 0x97, 0x8e, 0xd3, 0x0d, 0x10, 0xdb, 0xea, 0x30, 0x57, 0xb0, 0x48, 0x56, 0x39,
-	0xf1, 0x11, 0xf5, 0xc8, 0x2b, 0xb0, 0x2c, 0x98, 0x86, 0x61, 0xd0, 0xed, 0xe3, 0x01, 0x8f, 0xa5,
-	0x70, 0xd4, 0x11, 0xa3, 0xc6, 0xf7, 0xb0, 0x17, 0xf8, 0xd1, 0xa8, 0x4f, 0xa8, 0xff, 0x3b, 0x34,
-	0x58, 0x2c, 0x96, 0x2b, 0xf2, 0xc4, 0xa3, 0x38, 0x70, 0x3b, 0x50, 0xe9, 0xd2, 0x83, 0xca, 0x4e,
-	0x07, 0x8b, 0x29, 0x30, 0x12, 0x3d, 0x18, 0x09, 0x03, 0x3d, 0x13, 0x4b, 0x32, 0x03, 0x3d, 0x0e,
-	0xbb, 0x50, 0x97, 0x4f, 0x8e, 0xe7, 0xd2, 0x10, 0x2f, 0xd8, 0x35, 0x89, 0xda, 0x76, 0xa5, 0x48,
-	0x81, 0x1c, 0xa9, 0xf8, 0x36, 0x9d, 0x79, 0x91, 0x47, 0xa2, 0x4e, 0x2f, 0x18, 0xf9, 0x84, 0x86,
-	0x79, 0xc1, 0xae, 0x30, 0xda, 0x3b, 0x31, 0xc9, 0xba, 0x0d, 0xe5, 0x76, 0x74, 0x1f, 0xf7, 0x31,
-	0xc1, 0xd4, 0x95, 0x5e, 0xd4, 0x71, 0xd9, 0x88, 0x46, 0x62, 0xc9, 0x2e, 0x7b, 0x62, 0xda, 0xfa,
-	0xfb, 0x1c, 0x2c, 0x8a, 0x98, 0xff, 0xd7, 0xef, 0x9b, 0x12, 0xc7, 0x85, 0x62, 0x71, 0x2c, 0x15,
-	0x8f, 0xe3, 0x62, 0xb1, 0x38, 0x2e, 0xcd, 0x8a, 0x63, 0xb9, 0x40, 0x1c, 0x21, 0x3f, 0x8e, 0x95,
-	0xdc, 0x38, 0x56, 0x95, 0x38, 0xc6, 0xae, 0xed, 0xd1, 0x1b, 0x15, 0xe7, 0x81, 0x1a, 0x73, 0x2d,
-	0x23, 0x1c, 0xd0, 0xc9, 0xd1, 0xd0, 0xe5, 0x93, 0x75, 0x36, 0xc9, 0x08, 0x6c, 0x92, 0x45, 0x3c,
-	0x9e, 0x5c, 0xe6, 0x41, 0xa1, 0x84, 0x03, 0x62, 0xfd, 0x62, 0x0e, 0xe0, 0xf1, 0xd0, 0xfd, 0x32,
-	0xea, 0xff, 0x93, 0x51, 0xb7, 0xc6, 0x50, 0x7d, 0x3c, 0xec, 0x07, 0x8e, 0x8b, 0xdd, 0x07, 0x5e,
-	0x1f, 0xa3, 0x4d, 0x58, 0x7c, 0xea, 0xf5, 0x71, 0x92, 0x47, 0x4b, 0xf1, 0x50, 0x71, 0xb3, 0x99,
-	0x76, 0xf3, 0x16, 0x40, 0x88, 0x9f, 0x8f, 0x70, 0x34, 0xc9, 0xa1, 0x0b, 0x76, 0x99, 0x53, 0xda,
-	0x6e, 0x5c, 0x95, 0x62, 0x39, 0x34, 0x3c, 0x55, 0x9b, 0xfe, 0xb6, 0x7e, 0x6d, 0x40, 0x9d, 0x83,
-	0x89, 0x23, 0x67, 0xac, 0xad, 0xc1, 0xea, 0xfe, 0x4d, 0xdd, 0xfe, 0x67, 0x24, 0x70, 0x51, 0x12,
-	0xe7, 0xa5, 0x92, 0xb8, 0x01, 0x25, 0x67, 0x40, 0x9d, 0x12, 0x9f, 0x07, 0xd3, 0xe6, 0xa3, 0x14,
-	0xf2, 0x49, 0x5c, 0x89, 0x60, 0x7e, 0xe8, 0x78, 0x2e, 0x8d, 0xf5, 0x92, 0x4d, 0x7f, 0x5b, 0xbf,
-	0x32, 0x00, 0x18, 0xd0, 0x7b, 0x18, 0x10, 0xfc, 0xef, 0x1a, 0x7f, 0x99, 0xc3, 0x7d, 0x15, 0xca,
-	0x7e, 0x40, 0x30, 0x3b, 0x86, 0xec, 0x60, 0x2f, 0xc5, 0x04, 0x7a, 0xfc, 0x26, 0x93, 0xf8, 0x9c,
-	0xf0, 0xdd, 0xb0, 0x49, 0x7c, 0x4e, 0xac, 0x07, 0x50, 0x7d, 0x2f, 0x38, 0xf1, 0x7c, 0x9b, 0x85,
-	0x28, 0x86, 0x08, 0xa3, 0x08, 0x87, 0x14, 0x9d, 0x19, 0xfc, 0x7e, 0xf3, 0x71, 0x3c, 0x37, 0x74,
-	0xa2, 0xe8, 0xd3, 0x20, 0x9c, 0xd4, 0x4e, 0x31, 0xb6, 0x76, 0xa1, 0xc6, 0xe5, 0x44, 0xc3, 0xc0,
-	0x8f, 0x70, 0x02, 0x18, 0x0c, 0x09, 0x30, 0x70, 0xb6, 0x60, 0x44, 0x84, 0x3e, 0x3d, 0xdb, 0x6d,
-	0xa8, 0x0b, 0x36, 0x2e, 0xae, 0x01, 0x8b, 0xd1, 0xa8, 0xd7, 0xc3, 0x51, 0xc4, 0xab, 0x89, 0x18,
-	0x5a, 0xef, 0xc3, 0xda, 0x31, 0x76, 0xc2, 0xde, 0x29, 0x0b, 0x41, 0x24, 0x49, 0x7e, 0x3e, 0xc2,
-	0xe1, 0x58, 0x48, 0xa6, 0x83, 0xf8, 0xaa, 0x0d, 0x9c, 0xf3, 0x4e, 0x88, 0xe3, 0x2b, 0x1a, 0xf1,
-	0x48, 0xc0, 0xc0, 0x39, 0xb7, 0x19, 0xc5, 0xfa, 0x93, 0x01, 0xeb, 0x29, 0x79, 0xdc, 0x84, 0x43,
-	0x58, 0x64, 0xf1, 0x88, 0x4d, 0x98, 0xdb, 0xab, 0xb4, 0xee, 0x28, 0xe8, 0x44, 0xbb, 0x70, 0x9f,
-	0x8d, 0x6d, 0xb1, 0xba, 0x39, 0x86, 0x12, 0x23, 0x29, 0x47, 0xe5, 0x32, 0xd8, 0x59, 0xc9, 0xa0,
-	0xf3, 0x6a, 0x06, 0xb5, 0x1e, 0x8a, 0xcd, 0xf1, 0x0b, 0x77, 0x59, 0x6f, 0x7d, 0x6e, 0xc0, 0x46,
-	0x5a, 0x20, 0x77, 0xd7, 0xf7, 0xe2, 0xd3, 0xc2, 0x68, 0xdc, 0x5f, 0x77, 0x33, 0xfc, 0x95, 0x5e,
-	0xba, 0xcf, 0x09, 0xf6, 0x44, 0x40, 0x73, 0xf0, 0x9f, 0x79, 0x6f, 0x24, 0x0f, 0x8a, 0x79, 0xf9,
-	0x41, 0x61, 0xd9, 0xf0, 0x12, 0x33, 0x4d, 0x7a, 0x18, 0x5c, 0xd6, 0x55, 0x6f, 0xc2, 0x7a, 0xbc,
-	0x41, 0xf5, 0xc1, 0xf1, 0x32, 0x24, 0xc8, 0x48, 0x03, 0x95, 0x4c, 0x68, 0xea, 0x6c, 0xe1, 0x5e,
-	0x76, 0xa0, 0x2a, 0xa5, 0x11, 0xe1, 0xe9, 0x6f, 0x67, 0x78, 0x5a, 0x27, 0x62, 0x5f, 0xb1, 0xc8,
-	0x9e, 0x12, 0xd9, 0xfc, 0x9b, 0xf1, 0xff, 0xf5, 0x4c, 0xb2, 0x3e, 0x82, 0xcd, 0x63, 0xec, 0xbb,
-	0x0f, 0x03, 0xe2, 0x3d, 0xf5, 0x7a, 0xb4, 0x8e, 0x8b, 0xd8, 0x5f, 0x87, 0x6a, 0x88, 0x7b, 0xde,
-	0xd0, 0x9b, 0x7a, 0x63, 0x54, 0x26, 0xb4, 0xb6, 0x1b, 0x67, 0xaa, 0x01, 0x8e, 0x22, 0xe7, 0x44,
-	0x1c, 0x46, 0x31, 0xb4, 0xbe, 0x0e, 0x0d, 0x55, 0xee, 0xcc, 0xfc, 0xf6, 0x4d, 0x58, 0x3f, 0xc4,
-	0x3e, 0x0e, 0xe3, 0x67, 0x0f, 0x1e, 0x06, 0xe1, 0x24, 0x75, 0xee, 0x40, 0x25, 0xa4, 0x04, 0x96,
-	0xf6, 0x99, 0x29, 0xc0, 0x48, 0x71, 0xe2, 0xb7, 0xde, 0x82, 0x8d, 0xf4, 0x4a, 0xae, 0x2d, 0x59,
-	0xea, 0x3a, 0xc4, 0xa1, 0x4b, 0xab, 0x62, 0xe9, 0x7d, 0x87, 0x38, 0xd6, 0x37, 0xe0, 0xca, 0x21,
-	0x26, 0x07, 0xbe, 0xd3, 0x1f, 0x13, 0xaf, 0x17, 0x49, 0x2a, 0x07, 0x98, 0x84, 0x5e, 0x6f, 0x4a,
-	0x25, 0x23, 0x71, 0x95, 0x6b, 0xd3, 0xeb, 0xb8, 0xc2, 0xeb, 0x50, 0xe5, 0x0b, 0xcf, 0x9c, 0xfe,
-	0x88, 0xad, 0x34, 0x6d, 0x2e, 0xec, 0xa3, 0x98, 0x64, 0x7d, 0x27, 0xb1, 0xb6, 0xed, 0x9f, 0x05,
-	0x5e, 0x0f, 0x0b, 0xad, 0x6a, 0x01, 0x35, 0x34, 0x05, 0xd4, 0xfa, 0x16, 0x6c, 0x2a, 0x02, 0x92,
-	0xfd, 0x7a, 0x8c, 0xd4, 0x19, 0x85, 0x7d, 0x61, 0x37, 0x27, 0x3d, 0x0e, 0xfb, 0x71, 0x5e, 0x3c,
-	0x0a, 0x83, 0xd8, 0xdf, 0x1c, 0x82, 0x08, 0xdd, 0xf1, 0x43, 0x86, 0xaf, 0x9c, 0xe8, 0x2d, 0x73,
-	0x0a, 0x43, 0x5c, 0x1c, 0x3e, 0x98, 0x32, 0x7c, 0xb0, 0x5a, 0xb0, 0x91, 0x96, 0x37, 0x33, 0xd0,
-	0x6f, 0xc3, 0xfa, 0xf1, 0xa8, 0x3b, 0xf0, 0xc8, 0x03, 0x8c, 0xdd, 0xae, 0xd3, 0x7b, 0x26, 0x6c,
-	0xb8, 0x01, 0xb5, 0xa7, 0x9c, 0xc4, 0x8a, 0x38, 0x7f, 0xd9, 0x0a, 0x22, 0x2d, 0xe4, 0x2d, 0xd8,
-	0x48, 0xaf, 0x9e, 0xa9, 0xf1, 0x53, 0xd8, 0x61, 0x8f, 0x67, 0xb5, 0x4d, 0x25, 0x74, 0x3f, 0x82,
-	0x2b, 0xfc, 0xc6, 0xca, 0xcd, 0x21, 0xfe, 0x3c, 0xbf, 0xa1, 0xa4, 0x19, 0x8d, 0x20, 0xe4, 0x2a,
-	0x34, 0x6b, 0x1f, 0x5e, 0x3e, 0xc4, 0x24, 0x5b, 0x6b, 0x2a, 0xb9, 0x58, 0x77, 0x61, 0x2b, 0x8f,
-	0xff, 0x8d, 0x74, 0x51, 0xb0, 0x7e, 0x6a, 0xc0, 0xce, 0x63, 0xfa, 0x2e, 0x29, 0xa2, 0x84, 0x15,
-	0x92, 0x8c, 0xad, 0x9a, 0x97, 0xdb, 0xea, 0x1b, 0xb0, 0xc3, 0x52, 0x79, 0x61, 0x43, 0xac, 0x77,
-	0x61, 0x8d, 0x85, 0x45, 0xd4, 0x41, 0xce, 0xd7, 0x82, 0x45, 0x9e, 0x0e, 0xb9, 0xff, 0x1b, 0x8a,
-	0x51, 0x62, 0x85, 0x60, 0xb4, 0x6e, 0xc0, 0xea, 0x21, 0x26, 0x29, 0x41, 0x69, 0x85, 0x9f, 0xc0,
-	0x1a, 0x73, 0x56, 0x3e, 0x9f, 0x6c, 0x80, 0x59, 0xd4, 0x80, 0x9b, 0xb0, 0xc6, 0xf6, 0x3f, 0xc3,
-	0x86, 0x08, 0xb6, 0xd9, 0xa6, 0xd5, 0x72, 0xc4, 0x57, 0x7c, 0x08, 0x88, 0xbf, 0x92, 0xa4, 0x7b,
-	0xcf, 0x3d, 0x61, 0x29, 0x86, 0xa8, 0x62, 0x56, 0xbb, 0x69, 0x92, 0x75, 0x07, 0xae, 0x1e, 0x62,
-	0x92, 0xa9, 0x31, 0x6d, 0xe3, 0x4f, 0x0c, 0xd8, 0x66, 0x8e, 0x2a, 0xba, 0x24, 0xc3, 0x68, 0xf3,
-	0x32, 0x46, 0xbf, 0x0e, 0xdb, 0xcc, 0xa3, 0x85, 0xed, 0x9e, 0x1c, 0x28, 0xfe, 0xfa, 0x96, 0x0e,
-	0x94, 0xc3, 0x28, 0x99, 0x07, 0x4a, 0xac, 0x10, 0x8c, 0xfc, 0x40, 0xa5, 0x04, 0xa5, 0x15, 0xfe,
-	0x50, 0x1c, 0xa8, 0x7c, 0x3e, 0xf4, 0x66, 0x62, 0x00, 0x73, 0xc9, 0x55, 0xc5, 0x80, 0xa4, 0x67,
-	0x90, 0xd8, 0x30, 0x39, 0x53, 0x33, 0xcc, 0x78, 0x02, 0xab, 0xec, 0x51, 0x1b, 0x3f, 0x69, 0x05,
-	0xd3, 0x3d, 0xa8, 0x8d, 0xf8, 0x4b, 0xb7, 0x43, 0xdf, 0xa2, 0x6c, 0xeb, 0x5b, 0x1a, 0xcd, 0xc9,
-	0x7b, 0xd8, 0xae, 0x8e, 0xa4, 0x91, 0x75, 0x0b, 0xea, 0x87, 0x98, 0xc8, 0x52, 0xb3, 0xde, 0xcb,
-	0xd6, 0x30, 0xb6, 0x21, 0x76, 0x45, 0x11, 0x6e, 0xd5, 0x38, 0xf3, 0xe2, 0xc6, 0xbd, 0x06, 0xab,
-	0xcc, 0x3b, 0x85, 0xec, 0xfb, 0x00, 0xd0, 0xfb, 0xce, 0x33, 0x9c, 0x2a, 0x7b, 0x6f, 0xc5, 0x37,
-	0x7d, 0x2c, 0x5d, 0xb0, 0x9d, 0xac, 0x9b, 0x2e, 0x16, 0x0a, 0xfe, 0x49, 0xc6, 0x19, 0xeb, 0x4f,
-	0x24, 0x4b, 0xe8, 0x4e, 0x92, 0x71, 0xf2, 0xf8, 0x64, 0x3b, 0xcc, 0x0b, 0xda, 0x21, 0x25, 0x9e,
-	0x5c, 0x53, 0x9e, 0xc0, 0xa6, 0x5c, 0x04, 0xe3, 0x27, 0xbc, 0x60, 0x7d, 0x1b, 0x2a, 0xbc, 0x22,
-	0xc4, 0xef, 0x65, 0xee, 0x89, 0xab, 0x19, 0x95, 0x80, 0x2e, 0x04, 0x77, 0xf2, 0x3b, 0x36, 0x60,
-	0x52, 0xb4, 0x64, 0xa9, 0x69, 0x03, 0x4e, 0x60, 0x53, 0x2e, 0x55, 0x39, 0xac, 0x69, 0x83, 0xcc,
-	0x8b, 0x19, 0x74, 0x0b, 0x36, 0xe5, 0x52, 0x94, 0xa3, 0xa8, 0xf5, 0xc5, 0x1c, 0xbc, 0xa4, 0x16,
-	0xac, 0x63, 0x26, 0x1f, 0x3d, 0x87, 0x46, 0x16, 0x6e, 0x40, 0xaf, 0x67, 0xb4, 0xec, 0x33, 0xcb,
-	0x5f, 0xb3, 0x48, 0x69, 0x45, 0xfd, 0x18, 0x05, 0x6b, 0x10, 0x00, 0xda, 0x57, 0x56, 0xe7, 0x22,
-	0x85, 0x62, 0xda, 0x9e, 0x43, 0x23, 0x0b, 0x3d, 0x68, 0x36, 0x38, 0x03, 0x68, 0x14, 0x53, 0x79,
-	0x0a, 0x8d, 0x2c, 0x9c, 0xa0, 0x51, 0x39, 0x03, 0x52, 0x34, 0x9b, 0xca, 0x8a, 0x49, 0x6f, 0xbe,
-	0xf5, 0xb9, 0x39, 0xe9, 0xb7, 0x89, 0x80, 0x1e, 0x41, 0x6d, 0x0a, 0x71, 0xa0, 0xdd, 0x8c, 0x28,
-	0x4e, 0x17, 0xf1, 0x66, 0x66, 0xfd, 0x47, 0xef, 0x02, 0x24, 0xb8, 0x03, 0x59, 0xba, 0x20, 0x15,
-	0x96, 0x75, 0x04, 0xb5, 0x29, 0x78, 0xa2, 0xb1, 0x4e, 0x07, 0x5f, 0x72, 0x24, 0xda, 0x50, 0x9b,
-	0x02, 0x25, 0x1a, 0x89, 0x3a, 0xd0, 0x92, 0xeb, 0xd6, 0xdf, 0xcf, 0x41, 0x43, 0xa9, 0xc8, 0xc2,
-	0xc1, 0xbe, 0x48, 0x32, 0xea, 0x43, 0xfa, 0x6e, 0x86, 0xab, 0xb3, 0xaa, 0x7b, 0xb3, 0x00, 0x6c,
-	0x40, 0xa7, 0x34, 0xf7, 0xa8, 0xf4, 0xd7, 0x74, 0x81, 0xb8, 0x94, 0x26, 0x5f, 0x64, 0xaf, 0x22,
-	0x3b, 0xcb, 0x07, 0x4f, 0x85, 0xf4, 0x3d, 0x15, 0x49, 0xac, 0x88, 0xbe, 0x7c, 0x9c, 0x94, 0x1b,
-	0xce, 0x3f, 0x98, 0x50, 0xe7, 0xf0, 0x42, 0x04, 0xb1, 0x2d, 0x6e, 0x89, 0xf8, 0x88, 0xb1, 0xad,
-	0xae, 0x97, 0x3f, 0x67, 0x36, 0x33, 0xe1, 0x14, 0xbf, 0x1e, 0x62, 0xa4, 0xbd, 0x1e, 0xd3, 0xd8,
-	0x26, 0x47, 0xd6, 0xe4, 0x7a, 0x08, 0x42, 0xd6, 0xf5, 0x28, 0x2c, 0x71, 0x72, 0x3d, 0xb2, 0x25,
-	0xea, 0xf0, 0x57, 0xae, 0x3f, 0x3f, 0x33, 0xe1, 0x8a, 0x0c, 0x5a, 0x84, 0x53, 0x3f, 0x00, 0x48,
-	0x30, 0x9a, 0xc6, 0x13, 0x0a, 0x80, 0x6b, 0xe6, 0x83, 0x21, 0xd4, 0x86, 0x45, 0x8e, 0xcd, 0xd0,
-	0x8e, 0xce, 0xaf, 0x17, 0x10, 0x45, 0x6d, 0x13, 0xd8, 0x4d, 0x6b, 0x5b, 0x0a, 0xd8, 0xcd, 0x12,
-	0xf8, 0x1e, 0x40, 0x02, 0xcd, 0x34, 0x02, 0x15, 0xdc, 0x96, 0xeb, 0xd2, 0xbf, 0x9a, 0xb0, 0x3e,
-	0x8d, 0x7e, 0x84, 0x53, 0x8f, 0xa1, 0x22, 0x81, 0x3a, 0xa4, 0x16, 0x20, 0x15, 0xf2, 0x35, 0x67,
-	0x21, 0x2b, 0xf4, 0x21, 0x4f, 0xe9, 0x6c, 0x94, 0x91, 0xd2, 0x2f, 0x26, 0xf2, 0x49, 0x92, 0xd9,
-	0x19, 0x21, 0x3b, 0xb3, 0x5f, 0x4c, 0xb0, 0x94, 0xe0, 0xb3, 0x04, 0xeb, 0xc0, 0x61, 0xae, 0xbb,
-	0xff, 0x61, 0xc2, 0x6a, 0x82, 0x9c, 0x84, 0xab, 0x3f, 0x86, 0x95, 0x34, 0x7c, 0x44, 0x7b, 0xb9,
-	0x18, 0x48, 0xc2, 0x5d, 0xcd, 0x3c, 0xec, 0x86, 0x8e, 0xa1, 0x36, 0x05, 0x20, 0x35, 0x9b, 0xd0,
-	0x01, 0xcc, 0x7c, 0xa1, 0x1f, 0xc3, 0x4a, 0x1a, 0x6d, 0x6a, 0xec, 0xcd, 0x00, 0xa4, 0xf9, 0xa2,
-	0xbf, 0x0f, 0x2b, 0x69, 0x7c, 0xa9, 0x11, 0x9d, 0x01, 0x41, 0x73, 0x5d, 0xff, 0x4b, 0x03, 0xd6,
-	0x0f, 0x46, 0xe4, 0x14, 0xfb, 0x84, 0x37, 0x4e, 0x85, 0xfb, 0x1f, 0xc0, 0x02, 0xfd, 0xee, 0x84,
-	0xd4, 0x9b, 0x27, 0x7f, 0xd7, 0x6a, 0x6e, 0x67, 0x4d, 0xf3, 0x26, 0x59, 0x1b, 0x4a, 0xec, 0x8b,
-	0x13, 0xd2, 0x72, 0x26, 0x5f, 0xac, 0x34, 0x67, 0x6f, 0xfa, 0x53, 0x55, 0xeb, 0x37, 0x26, 0xd4,
-	0x58, 0xbb, 0x5d, 0x18, 0xf9, 0x23, 0x41, 0xe0, 0x5f, 0x86, 0x34, 0x81, 0xd4, 0x7d, 0xc2, 0x6a,
-	0xde, 0x2c, 0xf6, 0x81, 0x09, 0x39, 0x50, 0x9f, 0xfe, 0x92, 0x82, 0x6e, 0xce, 0xfc, 0xd4, 0xc2,
-	0x34, 0xbc, 0x52, 0xf0, 0x93, 0x0c, 0x1a, 0x00, 0x52, 0x3f, 0x21, 0xa0, 0xdb, 0x85, 0xbe, 0x33,
-	0x30, 0x55, 0xaf, 0x5e, 0xe0, 0x9b, 0x44, 0xeb, 0xc7, 0x70, 0x45, 0x6e, 0x93, 0x0b, 0x47, 0x9e,
-	0xc0, 0x4a, 0xba, 0x83, 0xae, 0x39, 0x61, 0x19, 0xcd, 0xfb, 0xe6, 0xad, 0x02, 0x9c, 0x5c, 0xff,
-	0x08, 0x56, 0x58, 0xcb, 0xdc, 0xf3, 0x4f, 0x84, 0x72, 0x27, 0x7e, 0xf4, 0xcb, 0xed, 0x74, 0x8d,
-	0x97, 0xb5, 0x9d, 0x7a, 0x8d, 0x97, 0xf5, 0x7d, 0xf9, 0x56, 0x00, 0x2b, 0x93, 0xde, 0xb9, 0x50,
-	0xfb, 0x03, 0xa8, 0xca, 0x2d, 0x75, 0xf4, 0x55, 0x2d, 0x58, 0x48, 0x75, 0xea, 0x9b, 0xbb, 0x33,
-	0xb8, 0xb8, 0xc2, 0x2f, 0x0c, 0xa8, 0xdf, 0xf3, 0xfa, 0x7d, 0x69, 0x9b, 0x2e, 0x2c, 0xa7, 0xda,
-	0xe8, 0x28, 0xdb, 0xfe, 0xe9, 0x4e, 0x7d, 0x73, 0x6f, 0x36, 0x63, 0x72, 0x64, 0xa7, 0x1b, 0xe4,
-	0x1a, 0x67, 0x6a, 0x3b, 0xf2, 0x1a, 0x67, 0xea, 0x3b, 0xed, 0x2d, 0x02, 0xcb, 0xa2, 0x17, 0x2e,
-	0x85, 0x70, 0xba, 0x49, 0xae, 0xbb, 0x28, 0xba, 0x1e, 0xbc, 0xee, 0xa2, 0x68, 0xbb, 0xed, 0xf7,
-	0xae, 0xff, 0xee, 0xc5, 0xb6, 0xf1, 0xd9, 0x8b, 0x6d, 0xe3, 0xcf, 0x2f, 0xb6, 0x8d, 0x9f, 0xff,
-	0x65, 0xfb, 0x2b, 0x9f, 0xa4, 0xff, 0x18, 0xda, 0x2d, 0xd1, 0x3f, 0x8c, 0x7e, 0xed, 0x5f, 0x01,
-	0x00, 0x00, 0xff, 0xff, 0xe7, 0x75, 0x2c, 0xd9, 0x59, 0x2a, 0x00, 0x00,
+	// 2693 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x3a, 0x4b, 0x73, 0x1c, 0x49,
+	0xd1, 0x5f, 0x8f, 0xa4, 0xd1, 0x28, 0xe7, 0x21, 0xa9, 0xf4, 0x1a, 0xb5, 0x6d, 0xd9, 0x6e, 0xaf,
+	0xbc, 0x7e, 0xac, 0xed, 0x2f, 0x86, 0x5d, 0x58, 0x13, 0xcb, 0xb2, 0x92, 0x15, 0x56, 0xcc, 0xb2,
+	0x6b, 0x7b, 0x47, 0x7e, 0xc4, 0x42, 0xc0, 0xd0, 0x9a, 0x2e, 0x4b, 0x1d, 0x9a, 0xe9, 0x9e, 0xed,
+	0xae, 0x11, 0x9e, 0x0b, 0x1c, 0xe0, 0x00, 0xfc, 0x02, 0x0e, 0x9c, 0x38, 0xf2, 0x0b, 0xe0, 0x42,
+	0x04, 0xc1, 0x85, 0x0b, 0x01, 0x44, 0x70, 0x80, 0xe0, 0x42, 0x98, 0x13, 0x17, 0x62, 0x2f, 0x5c,
+	0x09, 0xa2, 0xeb, 0x31, 0xfd, 0xa8, 0xaa, 0x99, 0x1e, 0x2b, 0x20, 0x20, 0xe0, 0x36, 0x9d, 0x95,
+	0x95, 0x99, 0x95, 0x99, 0x95, 0x95, 0x8f, 0x81, 0xed, 0x43, 0xdf, 0x3f, 0x71, 0xbd, 0xa3, 0x5b,
+	0x21, 0x0e, 0x4e, 0xdd, 0x0e, 0xbe, 0xc3, 0xbf, 0xdb, 0xfc, 0xfb, 0x76, 0x3f, 0xf0, 0x89, 0x8f,
+	0x16, 0x33, 0x60, 0xeb, 0x0a, 0x2c, 0xef, 0x63, 0xf2, 0xc8, 0x26, 0x2e, 0xf6, 0x48, 0x0b, 0x7f,
+	0x32, 0xc0, 0x21, 0x41, 0x35, 0x28, 0xb8, 0x4e, 0xdd, 0xb8, 0x64, 0x5c, 0x5b, 0x68, 0x15, 0x5c,
+	0xc7, 0x7a, 0x17, 0x50, 0x8c, 0x14, 0x0a, 0xac, 0x55, 0x98, 0xeb, 0xba, 0x3d, 0x97, 0x70, 0x44,
+	0xf6, 0x81, 0x10, 0xcc, 0xf6, 0xed, 0x23, 0x5c, 0x2f, 0x50, 0x20, 0xfd, 0x6d, 0x7d, 0x1d, 0x56,
+	0x9f, 0xf4, 0x1d, 0x9b, 0xe0, 0xf1, 0x7c, 0xd0, 0xdb, 0x30, 0xdf, 0x67, 0x18, 0x74, 0x7b, 0xb9,
+	0xb1, 0x75, 0x3b, 0x7b, 0x0c, 0x4e, 0x81, 0x91, 0x6b, 0x09, 0x74, 0xeb, 0x12, 0x14, 0x0f, 0x88,
+	0x4d, 0x06, 0x21, 0x5a, 0x87, 0x62, 0x48, 0x7f, 0x51, 0xba, 0xa5, 0x16, 0xff, 0xb2, 0xde, 0x85,
+	0x92, 0x38, 0x00, 0x6a, 0xc4, 0x7c, 0x8c, 0x4b, 0x33, 0xd7, 0xca, 0x8d, 0xba, 0x8e, 0x4f, 0xcc,
+	0xe1, 0x17, 0x06, 0xcc, 0x73, 0xa0, 0x24, 0xf7, 0x05, 0x80, 0xe7, 0x6e, 0x10, 0x92, 0xb6, 0x67,
+	0xf7, 0xc4, 0xc9, 0x17, 0x28, 0xe4, 0x81, 0xdd, 0xc3, 0xe8, 0x1c, 0x2c, 0x74, 0x6d, 0xb1, 0x3a,
+	0x43, 0x57, 0x4b, 0x11, 0x80, 0x2e, 0x5e, 0x00, 0x38, 0x74, 0x03, 0x72, 0xdc, 0x8e, 0x0e, 0x54,
+	0x9f, 0x65, 0x7b, 0x29, 0x64, 0xcf, 0x26, 0x38, 0x3a, 0xce, 0x11, 0xf6, 0x1c, 0x1c, 0xd4, 0xe7,
+	0xe8, 0x12, 0xff, 0x8a, 0xd4, 0xdc, 0x71, 0xc9, 0xb0, 0x5e, 0x64, 0x6a, 0x8e, 0x7e, 0xa3, 0xcb,
+	0x50, 0xe9, 0x1f, 0xfb, 0x1e, 0x6e, 0x7b, 0x83, 0xde, 0x21, 0x0e, 0xea, 0xf3, 0x74, 0xad, 0x4c,
+	0x61, 0x0f, 0x28, 0xc8, 0xfa, 0xa9, 0x01, 0xd5, 0x94, 0x0a, 0xff, 0x83, 0x64, 0xff, 0xb5, 0x01,
+	0x9b, 0xf7, 0x02, 0x6c, 0x13, 0xbc, 0xe7, 0x77, 0x88, 0x1f, 0xec, 0x9c, 0xda, 0x6e, 0xd7, 0x3e,
+	0x74, 0xbb, 0x2e, 0x19, 0x86, 0x91, 0xa0, 0x0e, 0x05, 0xb7, 0x47, 0xa6, 0x29, 0x31, 0x40, 0xd3,
+	0x41, 0x57, 0xa0, 0xea, 0xe0, 0xbe, 0x1d, 0x90, 0x1e, 0xf6, 0x48, 0x84, 0xc0, 0xce, 0x59, 0x89,
+	0x81, 0x4d, 0x07, 0xdd, 0x84, 0x65, 0x3b, 0x41, 0x92, 0x1d, 0x8a, 0x1d, 0x79, 0x29, 0xb9, 0x40,
+	0xcf, 0x96, 0x45, 0x26, 0x6e, 0x4f, 0x68, 0x20, 0x85, 0xfc, 0xd8, 0xed, 0xe1, 0x84, 0x4f, 0xce,
+	0xa5, 0x7c, 0xf2, 0x04, 0x56, 0x54, 0x47, 0x79, 0x0c, 0x2b, 0xfc, 0x28, 0x49, 0x4a, 0xdc, 0x55,
+	0xaf, 0x48, 0xae, 0x2a, 0x93, 0x68, 0x21, 0x47, 0x82, 0x59, 0x37, 0x61, 0x73, 0x1f, 0x13, 0x19,
+	0x79, 0x77, 0xd8, 0x74, 0xa4, 0x1b, 0xff, 0x1d, 0x03, 0xce, 0x33, 0x07, 0xc9, 0xb7, 0x41, 0x27,
+	0x33, 0xbb, 0xc6, 0xaf, 0x2c, 0xf3, 0xef, 0x0d, 0x40, 0x32, 0x6a, 0x82, 0xf9, 0x1c, 0x65, 0x9e,
+	0xb2, 0x7d, 0x61, 0x92, 0xed, 0x67, 0xf2, 0xda, 0x7e, 0x76, 0x1a, 0xdb, 0xcf, 0x4d, 0xb4, 0x7d,
+	0x31, 0x65, 0xfb, 0x6f, 0xc1, 0xb5, 0x7d, 0x4c, 0x76, 0x7d, 0xff, 0x04, 0x3b, 0x3b, 0xfd, 0xbe,
+	0xef, 0x7a, 0x54, 0x96, 0x70, 0x77, 0xc8, 0xef, 0x67, 0x73, 0xaf, 0x85, 0xc3, 0xbe, 0xef, 0x85,
+	0x18, 0x1d, 0xc0, 0xca, 0x21, 0x45, 0x6c, 0xdb, 0x09, 0x4c, 0xee, 0x10, 0x96, 0xa4, 0x5c, 0x89,
+	0x68, 0x0b, 0x1d, 0x4a, 0x7c, 0xac, 0x1b, 0xb0, 0x30, 0xe2, 0x14, 0xdd, 0x64, 0x1e, 0xe8, 0xe2,
+	0xeb, 0xb3, 0xc0, 0x21, 0x4d, 0xc7, 0xfa, 0x1c, 0x94, 0x13, 0xd1, 0x7f, 0x8a, 0xc8, 0xff, 0xf7,
+	0x02, 0x2c, 0x4b, 0xe2, 0x48, 0xf6, 0xcb, 0x75, 0x3d, 0x53, 0x46, 0x9e, 0xc9, 0x18, 0x39, 0x2d,
+	0xff, 0x6c, 0x46, 0x7e, 0x74, 0x1d, 0x96, 0x12, 0x9a, 0x63, 0xd6, 0x65, 0x06, 0x5b, 0x4c, 0xc0,
+	0xa9, 0x71, 0x33, 0xa8, 0xd4, 0xb6, 0x45, 0x09, 0x95, 0x9a, 0x16, 0xc1, 0x2c, 0x19, 0xf6, 0x31,
+	0x8f, 0x55, 0xf4, 0x37, 0x32, 0xa1, 0xe4, 0x0c, 0x02, 0x9b, 0xb8, 0xbe, 0x57, 0x2f, 0x71, 0x21,
+	0xf9, 0x77, 0x24, 0x24, 0x7e, 0xd1, 0x77, 0x03, 0x1c, 0xb6, 0x6d, 0x52, 0x5f, 0x60, 0x42, 0x72,
+	0xc8, 0x0e, 0x7d, 0x4f, 0x89, 0x7f, 0x82, 0xbd, 0x3a, 0x30, 0xad, 0xd2, 0x0f, 0xb4, 0x0d, 0x35,
+	0x71, 0x32, 0xee, 0x47, 0x65, 0xea, 0x47, 0x55, 0x0e, 0x95, 0x9e, 0xbd, 0x0a, 0x8b, 0xb5, 0xdc,
+	0xcd, 0xde, 0x83, 0x6a, 0xd3, 0x0b, 0x71, 0x40, 0x76, 0x82, 0xce, 0xb1, 0x7b, 0x8a, 0xd1, 0x1d,
+	0x28, 0xba, 0x14, 0x40, 0xf5, 0x5f, 0x6e, 0x6c, 0x48, 0xee, 0xc3, 0x62, 0x6c, 0x8b, 0xa3, 0x59,
+	0xdf, 0x9d, 0x81, 0x22, 0x03, 0xc9, 0x76, 0x32, 0x26, 0xd9, 0xa9, 0x30, 0xd6, 0x4e, 0x33, 0x59,
+	0x3b, 0x5d, 0x01, 0x71, 0xac, 0x36, 0x53, 0x05, 0xb3, 0x64, 0x85, 0x03, 0x1f, 0x53, 0x8d, 0xbc,
+	0x0e, 0x8b, 0x02, 0xa9, 0x1f, 0xf8, 0x87, 0x5d, 0xdc, 0xe3, 0xb6, 0x14, 0x8a, 0x7a, 0xc4, 0xa0,
+	0xd1, 0x3d, 0xed, 0xf8, 0x5e, 0x38, 0xe8, 0x12, 0xaa, 0xff, 0x36, 0x35, 0x16, 0xb3, 0xe5, 0x52,
+	0x72, 0xe1, 0x71, 0x64, 0xb8, 0x8b, 0x50, 0xe6, 0x77, 0x8c, 0x7a, 0x07, 0xb3, 0x29, 0x30, 0x10,
+	0x75, 0x8c, 0x18, 0x81, 0xfa, 0x44, 0x29, 0x89, 0x40, 0xdd, 0x61, 0x1b, 0x6a, 0x49, 0xcf, 0x71,
+	0x1d, 0x6a, 0xe2, 0xb9, 0x56, 0x35, 0x01, 0x6d, 0x3a, 0x09, 0x4b, 0x41, 0xd2, 0x52, 0xd1, 0x0b,
+	0x78, 0xea, 0x86, 0x2e, 0x09, 0xdb, 0x1d, 0x7f, 0xe0, 0x11, 0x6a, 0xe6, 0xb9, 0x56, 0x99, 0xc1,
+	0xee, 0x45, 0x20, 0xeb, 0x3d, 0x28, 0x71, 0x33, 0x86, 0xe8, 0x4d, 0x28, 0xd9, 0xfc, 0xb7, 0x36,
+	0x89, 0xe1, 0xc8, 0xad, 0x11, 0xa6, 0xf5, 0xe9, 0x0c, 0xcc, 0x0b, 0x4f, 0xf8, 0x97, 0xdf, 0x42,
+	0xc9, 0xba, 0x73, 0xf9, 0xac, 0x5b, 0xcc, 0x6f, 0xdd, 0xf9, 0x7c, 0xd6, 0x2d, 0x4d, 0xb2, 0xee,
+	0x42, 0x0e, 0xeb, 0xc2, 0x78, 0xeb, 0x96, 0xc7, 0x5a, 0xb7, 0x22, 0x59, 0x37, 0x52, 0x6d, 0x87,
+	0xde, 0xb3, 0x28, 0x3a, 0x54, 0x99, 0x6a, 0x19, 0x60, 0x87, 0x2e, 0x0e, 0xe8, 0x7b, 0x1c, 0x2d,
+	0xd6, 0xd8, 0x22, 0x03, 0xb0, 0x45, 0x07, 0x77, 0x31, 0x5b, 0x5c, 0xe4, 0x46, 0xa1, 0x80, 0x1d,
+	0x62, 0xfd, 0x70, 0x06, 0xe0, 0x49, 0xdf, 0xf9, 0x9f, 0xd5, 0xff, 0x2d, 0xad, 0x6e, 0x0d, 0xa1,
+	0xf2, 0xa4, 0xdf, 0xf5, 0x6d, 0x07, 0x3b, 0xf7, 0xdd, 0x2e, 0x46, 0x1b, 0x30, 0xff, 0xdc, 0xed,
+	0xe2, 0x38, 0xba, 0x16, 0xa3, 0x4f, 0x49, 0xcd, 0x85, 0xac, 0x9a, 0x2f, 0x00, 0x04, 0xac, 0xac,
+	0x12, 0x36, 0x9a, 0x6b, 0x2d, 0x70, 0x48, 0xd3, 0x89, 0xde, 0xaa, 0x88, 0x0e, 0x35, 0x4f, 0xa5,
+	0x45, 0x7f, 0x5b, 0x3f, 0x33, 0xa0, 0xc6, 0x9f, 0xf5, 0x47, 0xf6, 0x50, 0xf9, 0x32, 0xcb, 0xe7,
+	0x2f, 0xa8, 0xce, 0x3f, 0x21, 0xac, 0x8b, 0x87, 0x72, 0x36, 0xf1, 0x50, 0xae, 0x43, 0xd1, 0xee,
+	0x51, 0xa5, 0x44, 0xfe, 0x50, 0x68, 0xf1, 0xaf, 0x4c, 0xbe, 0x14, 0xab, 0x92, 0x66, 0x17, 0xae,
+	0x43, 0x6d, 0x5d, 0x6a, 0xd1, 0xdf, 0x51, 0x35, 0x03, 0x2c, 0x3d, 0x7c, 0xe0, 0x13, 0xfc, 0xaa,
+	0xc2, 0x9f, 0xc5, 0xb9, 0xcf, 0xc1, 0x82, 0xe7, 0x13, 0xcc, 0xdc, 0x90, 0x39, 0x76, 0x29, 0x02,
+	0x50, 0xf7, 0x1b, 0x2d, 0xe2, 0x17, 0x84, 0x9f, 0x86, 0x2d, 0xe2, 0x17, 0xc4, 0xba, 0x0f, 0x95,
+	0x0f, 0xfc, 0x23, 0xd7, 0x13, 0xb5, 0xb0, 0x09, 0xa5, 0x41, 0x88, 0x03, 0x5a, 0x67, 0xf1, 0xf2,
+	0x45, 0x7c, 0x47, 0x6b, 0x7d, 0x3b, 0x0c, 0xbf, 0xe1, 0x07, 0xa3, 0x17, 0x55, 0x7c, 0x5b, 0xdb,
+	0x50, 0xe5, 0x74, 0x78, 0xb2, 0x38, 0x4a, 0x23, 0x8c, 0x44, 0x1a, 0xc1, 0xd1, 0xfc, 0x01, 0x49,
+	0x54, 0xef, 0x0a, 0xb4, 0x1b, 0x50, 0x13, 0x68, 0x9c, 0x5c, 0x1d, 0xe6, 0xc3, 0x41, 0xa7, 0x83,
+	0x43, 0x51, 0x50, 0x8b, 0x4f, 0xeb, 0x43, 0x58, 0x3d, 0xc0, 0xd1, 0xcb, 0xc2, 0x4c, 0x90, 0xec,
+	0x0b, 0x7c, 0x32, 0xc0, 0xc1, 0x50, 0x50, 0xa6, 0x1f, 0xd1, 0x55, 0xeb, 0xd9, 0x2f, 0xda, 0x01,
+	0x8e, 0xae, 0x68, 0xc8, 0x2d, 0x01, 0x3d, 0xfb, 0x45, 0x8b, 0x41, 0xac, 0x3f, 0x1a, 0xb0, 0x96,
+	0xa1, 0xc7, 0x45, 0xd8, 0x87, 0x79, 0x66, 0x0f, 0xf1, 0xd2, 0xdd, 0x92, 0x5e, 0x3a, 0xe5, 0x46,
+	0x5e, 0x65, 0xb4, 0xc4, 0x6e, 0x73, 0x08, 0x45, 0x06, 0x92, 0x5c, 0xe5, 0x2c, 0x55, 0xb0, 0x14,
+	0x41, 0x67, 0xe5, 0x08, 0x6a, 0x3d, 0x10, 0x87, 0x53, 0x74, 0x51, 0x5e, 0x45, 0x5b, 0xbf, 0x33,
+	0x60, 0x3d, 0x4b, 0x90, 0xab, 0xeb, 0x4b, 0x91, 0xb7, 0x30, 0x18, 0xd7, 0xd7, 0x1d, 0x8d, 0xbe,
+	0xb2, 0x5b, 0x47, 0x5d, 0x8f, 0x11, 0x01, 0xb3, 0xf7, 0xcf, 0xe9, 0x7a, 0xc4, 0xad, 0x81, 0xd9,
+	0x64, 0x6b, 0xc0, 0x6a, 0xc1, 0x26, 0x13, 0x2d, 0x59, 0xaa, 0x9c, 0x51, 0x55, 0x6f, 0xc1, 0x5a,
+	0x74, 0x40, 0xb9, 0x0c, 0x39, 0x0f, 0x0b, 0x6e, 0xb8, 0x47, 0xdf, 0x49, 0x87, 0x3b, 0x77, 0x0c,
+	0xb0, 0x3e, 0x2d, 0x80, 0xa9, 0x92, 0x85, 0x6b, 0xd9, 0x86, 0x8a, 0xa2, 0x18, 0xfb, 0x82, 0x46,
+	0xd3, 0x2a, 0x12, 0x8a, 0x3a, 0x2d, 0x45, 0xd2, 0xfc, 0xab, 0xf1, 0xdf, 0x55, 0x3c, 0x59, 0x4f,
+	0x61, 0xe3, 0x00, 0x7b, 0xce, 0x03, 0x9f, 0xb8, 0xcf, 0xdd, 0x0e, 0x7d, 0xc7, 0x85, 0xed, 0x2f,
+	0x43, 0x25, 0xc0, 0x1d, 0xb7, 0x9f, 0x2e, 0x51, 0xcb, 0x23, 0x58, 0xd3, 0x89, 0x22, 0x55, 0x0f,
+	0x87, 0x61, 0x5c, 0x82, 0x8a, 0x4f, 0xeb, 0x4d, 0xa8, 0xcb, 0x74, 0x27, 0xc6, 0xb7, 0xb7, 0x61,
+	0x6d, 0x1f, 0x7b, 0x38, 0x88, 0x8a, 0x21, 0xdc, 0xf7, 0x83, 0x51, 0xe8, 0xbc, 0x08, 0xe5, 0x80,
+	0x02, 0x58, 0xd8, 0x67, 0xa2, 0x00, 0x03, 0x45, 0x81, 0xdf, 0xba, 0x0b, 0xeb, 0xd9, 0x9d, 0x9c,
+	0x5b, 0xbc, 0xd5, 0xb1, 0x89, 0x4d, 0xb7, 0x56, 0xc4, 0xd6, 0x3d, 0x9b, 0xd8, 0xd6, 0x67, 0x61,
+	0x65, 0x1f, 0x93, 0x1d, 0xcf, 0xee, 0x0e, 0x89, 0xdb, 0x09, 0x13, 0x2c, 0x7b, 0x98, 0x04, 0x6e,
+	0x27, 0xc5, 0x92, 0x81, 0x38, 0xcb, 0xd5, 0xf4, 0x3e, 0xce, 0xf0, 0x32, 0x54, 0xf8, 0xc6, 0x53,
+	0xbb, 0x3b, 0x60, 0x3b, 0x0b, 0x2d, 0x4e, 0xec, 0x69, 0x04, 0xb2, 0xbe, 0x18, 0x4b, 0xdb, 0xf4,
+	0x4e, 0x7d, 0xb7, 0x83, 0x05, 0x57, 0xf9, 0x01, 0x35, 0x14, 0x0f, 0xa8, 0xf5, 0x79, 0xd8, 0x90,
+	0x08, 0xc4, 0xe7, 0x75, 0x19, 0xa8, 0x3d, 0x08, 0xba, 0x42, 0x6e, 0x0e, 0x7a, 0x12, 0x74, 0xa3,
+	0xb8, 0xf8, 0x28, 0xf0, 0x23, 0x7d, 0xf3, 0x14, 0x44, 0xf0, 0xbe, 0x00, 0x02, 0x2d, 0xe6, 0xbb,
+	0xc0, 0x21, 0x2c, 0xe3, 0xe2, 0xe9, 0x43, 0x21, 0x99, 0x3e, 0x58, 0x0d, 0x58, 0xcf, 0xd2, 0x9b,
+	0x68, 0xe8, 0x77, 0x60, 0xed, 0x60, 0x70, 0xd8, 0x73, 0xc9, 0x7d, 0x8c, 0x9d, 0x43, 0xbb, 0x73,
+	0x22, 0x64, 0xb8, 0x02, 0xd5, 0xe7, 0x1c, 0xc4, 0x1e, 0x71, 0x5e, 0xef, 0x0a, 0x20, 0x7d, 0xc8,
+	0x1b, 0xb0, 0x9e, 0xdd, 0x3d, 0x91, 0xe3, 0x6d, 0x38, 0xaf, 0xec, 0xc5, 0xc9, 0x8d, 0x71, 0x7a,
+	0xc7, 0xad, 0x10, 0xb6, 0x58, 0x09, 0x2e, 0x87, 0x0c, 0xbe, 0xe3, 0x23, 0x40, 0x72, 0x8b, 0x88,
+	0x97, 0xf8, 0x79, 0x3a, 0x44, 0xcb, 0x52, 0x87, 0xc8, 0xba, 0x05, 0xe7, 0x54, 0x1d, 0x2a, 0xdd,
+	0x90, 0xe0, 0xdb, 0x06, 0x6c, 0xb1, 0x96, 0x61, 0xde, 0x2d, 0x1a, 0xa1, 0x0b, 0x67, 0x11, 0xfa,
+	0xff, 0x61, 0x8b, 0x05, 0xf0, 0xdc, 0x72, 0xbf, 0x0f, 0xab, 0x4c, 0xb7, 0xa2, 0x5a, 0xe6, 0x78,
+	0x0d, 0x98, 0xe7, 0x65, 0x33, 0x57, 0xa3, 0xbe, 0xbe, 0x16, 0x88, 0x7c, 0x9a, 0x92, 0x21, 0x94,
+	0x65, 0xf8, 0x55, 0x31, 0x0d, 0x19, 0x8f, 0x87, 0xde, 0x8a, 0x05, 0x60, 0x2a, 0x39, 0x27, 0x09,
+	0x10, 0xd7, 0x75, 0xb1, 0x0c, 0x57, 0x61, 0x95, 0x69, 0x60, 0x82, 0x18, 0xcf, 0x60, 0x99, 0x15,
+	0x1e, 0x51, 0xd9, 0x21, 0x90, 0x76, 0xa1, 0x3a, 0xe0, 0xd5, 0x48, 0x9b, 0xd6, 0x0b, 0xec, 0xe8,
+	0x17, 0x14, 0x9c, 0xe3, 0x9a, 0xa5, 0x55, 0x19, 0x24, 0xbe, 0xac, 0xeb, 0x50, 0xdb, 0xc7, 0x24,
+	0x49, 0x55, 0x57, 0xd3, 0x58, 0xfd, 0x48, 0x86, 0x48, 0x15, 0x79, 0xb0, 0x65, 0xe1, 0x0a, 0xd3,
+	0x0b, 0xf7, 0x06, 0x2c, 0x33, 0xed, 0xe4, 0x92, 0xef, 0x21, 0xa0, 0x0f, 0xed, 0x13, 0x9c, 0x09,
+	0x4d, 0x77, 0x61, 0xbe, 0xcf, 0x20, 0x5c, 0x3d, 0x17, 0x75, 0xe3, 0x23, 0xb1, 0x51, 0xe0, 0x8f,
+	0xc6, 0x6d, 0x43, 0xb5, 0x47, 0xb2, 0xdb, 0x6e, 0xc7, 0xe3, 0xb2, 0x71, 0x78, 0x49, 0x39, 0x0a,
+	0x53, 0xca, 0x31, 0x72, 0x92, 0x09, 0xa2, 0x3c, 0x83, 0x8d, 0xe4, 0xc8, 0x25, 0x2a, 0xb3, 0x04,
+	0xea, 0x3b, 0x50, 0xe6, 0x29, 0x45, 0x54, 0xd3, 0x70, 0x4d, 0x9c, 0xd3, 0x74, 0xfa, 0xe9, 0x46,
+	0x70, 0x46, 0xbf, 0x23, 0x01, 0x46, 0x11, 0x30, 0x49, 0x35, 0x2b, 0xc0, 0x11, 0x6c, 0x24, 0xe7,
+	0x10, 0x63, 0x50, 0xb3, 0x02, 0x15, 0xa6, 0x13, 0xe8, 0x3a, 0x6c, 0x30, 0x8d, 0x4c, 0x64, 0xd4,
+	0xf8, 0xde, 0xcc, 0xa8, 0x6e, 0x3e, 0x60, 0x44, 0xd1, 0x3d, 0xa8, 0x32, 0x3d, 0x89, 0x64, 0x59,
+	0x3b, 0x51, 0x34, 0xb5, 0x2b, 0xe8, 0x7d, 0x80, 0x78, 0xcc, 0x8a, 0xe4, 0x00, 0x28, 0x0d, 0x6a,
+	0xc7, 0xd0, 0xba, 0x0f, 0xe5, 0xc4, 0xc8, 0x16, 0x9d, 0xd7, 0x21, 0x46, 0x19, 0x86, 0xb9, 0xa9,
+	0x5d, 0x45, 0x8f, 0xa0, 0x9a, 0x1a, 0xdd, 0xa2, 0x6d, 0x55, 0x10, 0x92, 0x46, 0xbb, 0x63, 0x24,
+	0xfb, 0x00, 0xaa, 0xc2, 0xf5, 0xf2, 0x1f, 0x54, 0xee, 0x52, 0xb3, 0xbe, 0x77, 0xe3, 0x27, 0xb3,
+	0xb0, 0x29, 0xbf, 0xa3, 0xc2, 0x2c, 0x27, 0x50, 0xd7, 0x4d, 0x0c, 0xd1, 0x0d, 0x4d, 0xe3, 0x5b,
+	0x31, 0x91, 0x33, 0xf3, 0x0c, 0xb0, 0xd0, 0x71, 0x94, 0x2f, 0x92, 0x5c, 0x9c, 0xb4, 0x83, 0xb8,
+	0x7c, 0x9c, 0x42, 0xb8, 0xa8, 0xa1, 0xb0, 0x27, 0x72, 0xfa, 0x69, 0x78, 0xbe, 0x96, 0x83, 0x67,
+	0x88, 0x3c, 0xa8, 0xeb, 0x26, 0x82, 0xe8, 0x96, 0xc6, 0x29, 0xce, 0x72, 0xc8, 0x36, 0xd4, 0x93,
+	0x17, 0xf2, 0x95, 0x35, 0xaa, 0x75, 0x9d, 0xbf, 0x14, 0x60, 0x2d, 0x1d, 0x1f, 0x85, 0xdb, 0x1c,
+	0x40, 0x39, 0x11, 0xf6, 0x91, 0x2c, 0xae, 0xfc, 0x28, 0x98, 0x93, 0x62, 0x2f, 0xfa, 0x88, 0xdf,
+	0x6e, 0xf6, 0xa5, 0x71, 0xfa, 0xe9, 0x48, 0x3e, 0x8b, 0x2f, 0x27, 0x03, 0xe8, 0x2f, 0xe7, 0x74,
+	0x84, 0x1f, 0xc6, 0x77, 0x54, 0x47, 0x58, 0xf5, 0x7c, 0xe8, 0x75, 0xfd, 0xdb, 0x39, 0xa8, 0x4b,
+	0x19, 0x99, 0x50, 0xb7, 0x27, 0x1e, 0x19, 0xb9, 0xd8, 0xbd, 0xa3, 0xb9, 0xa4, 0xba, 0xec, 0xce,
+	0xcc, 0x91, 0x36, 0xa2, 0x63, 0xfa, 0xf6, 0xc8, 0xf0, 0x37, 0x54, 0x36, 0x39, 0x13, 0xa7, 0x21,
+	0x5c, 0x9a, 0x34, 0xe4, 0x45, 0xa6, 0xce, 0x18, 0xcd, 0x3d, 0xf3, 0x6e, 0x2e, 0x89, 0x94, 0x33,
+	0xe3, 0xef, 0x1b, 0x34, 0x48, 0xa8, 0x90, 0x79, 0x90, 0xd8, 0x9b, 0xf2, 0xc0, 0x67, 0x10, 0xc6,
+	0x13, 0xaf, 0x78, 0x1e, 0x0b, 0x8f, 0x2f, 0x22, 0x72, 0xe9, 0xbd, 0x23, 0x1e, 0xf3, 0x3c, 0xfc,
+	0xc6, 0xd7, 0x0b, 0x7a, 0x9f, 0xfe, 0xd1, 0x0c, 0xd4, 0x78, 0x8e, 0x2d, 0x3c, 0xb9, 0x29, 0xd2,
+	0x00, 0x31, 0x6d, 0x91, 0xff, 0xc0, 0x94, 0x9a, 0xc6, 0x9a, 0xda, 0x9a, 0x82, 0x27, 0x03, 0xe2,
+	0x4b, 0x19, 0x2e, 0xd2, 0x09, 0xfe, 0x18, 0x5a, 0x4f, 0xe9, 0xcb, 0xc4, 0xbf, 0x92, 0xbe, 0x97,
+	0x87, 0xec, 0xa6, 0x8e, 0x6c, 0x22, 0x39, 0x10, 0x8c, 0x74, 0xf1, 0x27, 0xb7, 0xa4, 0xa3, 0xc0,
+	0xa3, 0xa7, 0xa8, 0x2a, 0x6e, 0xf4, 0x46, 0xfa, 0x55, 0x01, 0x56, 0x92, 0xe5, 0x80, 0xb0, 0xd4,
+	0x43, 0x80, 0xb8, 0xfa, 0x51, 0xe8, 0x41, 0x2a, 0x8d, 0xcc, 0xf1, 0x65, 0x06, 0x6a, 0xc2, 0x3c,
+	0xaf, 0x7a, 0xd0, 0x45, 0x95, 0x56, 0xa7, 0x20, 0x45, 0x65, 0x13, 0x55, 0x91, 0x52, 0xb6, 0x4c,
+	0xc9, 0x34, 0x59, 0x36, 0x88, 0x8b, 0x1e, 0x05, 0x41, 0xa9, 0x22, 0xd2, 0xeb, 0xf3, 0x6f, 0x05,
+	0x58, 0x8e, 0x33, 0x64, 0xa1, 0xcd, 0x8f, 0x61, 0x29, 0x5b, 0x26, 0xa0, 0x6b, 0x63, 0xf3, 0xab,
+	0x44, 0x7e, 0x6d, 0x8e, 0xcb, 0xd1, 0xd1, 0x01, 0x54, 0x53, 0x85, 0x82, 0xc2, 0x23, 0x54, 0x85,
+	0xc4, 0x78, 0xa2, 0x1f, 0xc3, 0x52, 0xb6, 0xaa, 0x50, 0xc8, 0xab, 0x29, 0x3c, 0xc6, 0x93, 0x7e,
+	0x02, 0x4b, 0xd9, 0x3a, 0x42, 0x41, 0x5a, 0x53, 0x6a, 0xe8, 0xf5, 0xfe, 0x63, 0x03, 0xd6, 0x76,
+	0x06, 0xe4, 0x18, 0x7b, 0x84, 0x77, 0x30, 0x85, 0xee, 0xef, 0xc3, 0x1c, 0x1d, 0x00, 0x21, 0xd9,
+	0x09, 0x92, 0x03, 0x26, 0x73, 0x4b, 0xb7, 0xcc, 0x63, 0x74, 0x13, 0x8a, 0x6c, 0xf4, 0x83, 0x94,
+	0x98, 0xf1, 0xe8, 0x48, 0x91, 0x3e, 0xa4, 0x67, 0x46, 0x8d, 0x9f, 0x17, 0xa0, 0xca, 0xfa, 0xde,
+	0x42, 0xc8, 0xaf, 0x09, 0x00, 0x1f, 0xd1, 0x28, 0xac, 0xa8, 0x9a, 0x25, 0x99, 0x57, 0xf3, 0x4d,
+	0x7a, 0x90, 0x0d, 0xb5, 0xf4, 0x48, 0x03, 0x5d, 0x9d, 0x38, 0xf3, 0x60, 0x1c, 0x5e, 0xcf, 0x39,
+	0x1b, 0x41, 0x3d, 0x40, 0x72, 0x2f, 0x5f, 0x91, 0x89, 0x6a, 0xe7, 0x17, 0xe6, 0xcd, 0x29, 0x86,
+	0x03, 0x8d, 0x6f, 0xc2, 0x4a, 0xb2, 0x5f, 0x2d, 0x14, 0x79, 0x04, 0x4b, 0xd9, 0x56, 0xb6, 0xc2,
+	0xbd, 0x34, 0x5d, 0x74, 0xf3, 0x7a, 0x0e, 0x4c, 0xce, 0x7f, 0x00, 0x4b, 0xac, 0x77, 0xed, 0x7a,
+	0x47, 0x82, 0xb9, 0x0d, 0xb5, 0x74, 0x5f, 0x5b, 0xa1, 0x65, 0x65, 0xcb, 0x5c, 0xa1, 0x65, 0x75,
+	0x83, 0xbc, 0xe1, 0xc3, 0xd2, 0xa8, 0x89, 0x2d, 0xd8, 0x7e, 0x05, 0x2a, 0xc9, 0xde, 0x36, 0x7a,
+	0x4d, 0xf9, 0x6a, 0x65, 0x5a, 0xe6, 0xe6, 0xf6, 0x04, 0x2c, 0xce, 0xf0, 0x0f, 0x06, 0xd4, 0x76,
+	0xdd, 0x6e, 0x37, 0x71, 0x4c, 0x07, 0x16, 0x33, 0xfd, 0x6c, 0xa4, 0x97, 0x3f, 0xdd, 0x32, 0x37,
+	0xaf, 0x4d, 0x46, 0x8c, 0x5d, 0x36, 0xdd, 0xa9, 0x56, 0x28, 0x53, 0xd9, 0x1a, 0x57, 0x28, 0x53,
+	0xdd, 0xf2, 0x6e, 0x10, 0x58, 0x14, 0x4d, 0xe9, 0x84, 0x09, 0xd3, 0xdd, 0x6a, 0xd5, 0x45, 0x51,
+	0x35, 0xc3, 0x55, 0x17, 0x45, 0xd9, 0xf6, 0xde, 0xbd, 0xfc, 0xcb, 0x97, 0x5b, 0xc6, 0x6f, 0x5e,
+	0x6e, 0x19, 0x7f, 0x7a, 0xb9, 0x65, 0xfc, 0xe0, 0xcf, 0x5b, 0xff, 0xf7, 0xe5, 0xec, 0xbf, 0xce,
+	0x0f, 0x8b, 0xf4, 0xdf, 0xe8, 0x9f, 0xf9, 0x47, 0x00, 0x00, 0x00, 0xff, 0xff, 0xd1, 0x95, 0x8e,
+	0x42, 0xb6, 0x2e, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -4185,194 +4519,15 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// DoctorAvailabilityServiceClient is the client API for DoctorAvailabilityService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type DoctorAvailabilityServiceClient interface {
-	CreateDoctorAvailability(ctx context.Context, in *CreateDoctorAvailabilityRequest, opts ...grpc.CallOption) (*DoctorAvailability, error)
-	GetDoctorAvailability(ctx context.Context, in *GetDoctorAvailabilityRequest1, opts ...grpc.CallOption) (*DoctorAvailability, error)
-	UpdateDoctorAvailability(ctx context.Context, in *UpdateDoctorAvailabilityRequest, opts ...grpc.CallOption) (*DoctorAvailability, error)
-	DeleteDoctorAvailability(ctx context.Context, in *DeleteDoctorAvailabilityRequest, opts ...grpc.CallOption) (*IsDeleted, error)
-}
-
-type doctorAvailabilityServiceClient struct {
-	cc *grpc.ClientConn
-}
-
-func NewDoctorAvailabilityServiceClient(cc *grpc.ClientConn) DoctorAvailabilityServiceClient {
-	return &doctorAvailabilityServiceClient{cc}
-}
-
-func (c *doctorAvailabilityServiceClient) CreateDoctorAvailability(ctx context.Context, in *CreateDoctorAvailabilityRequest, opts ...grpc.CallOption) (*DoctorAvailability, error) {
-	out := new(DoctorAvailability)
-	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/CreateDoctorAvailability", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *doctorAvailabilityServiceClient) GetDoctorAvailability(ctx context.Context, in *GetDoctorAvailabilityRequest1, opts ...grpc.CallOption) (*DoctorAvailability, error) {
-	out := new(DoctorAvailability)
-	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/GetDoctorAvailability", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *doctorAvailabilityServiceClient) UpdateDoctorAvailability(ctx context.Context, in *UpdateDoctorAvailabilityRequest, opts ...grpc.CallOption) (*DoctorAvailability, error) {
-	out := new(DoctorAvailability)
-	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/UpdateDoctorAvailability", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *doctorAvailabilityServiceClient) DeleteDoctorAvailability(ctx context.Context, in *DeleteDoctorAvailabilityRequest, opts ...grpc.CallOption) (*IsDeleted, error) {
-	out := new(IsDeleted)
-	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/DeleteDoctorAvailability", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// DoctorAvailabilityServiceServer is the server API for DoctorAvailabilityService service.
-type DoctorAvailabilityServiceServer interface {
-	CreateDoctorAvailability(context.Context, *CreateDoctorAvailabilityRequest) (*DoctorAvailability, error)
-	GetDoctorAvailability(context.Context, *GetDoctorAvailabilityRequest1) (*DoctorAvailability, error)
-	UpdateDoctorAvailability(context.Context, *UpdateDoctorAvailabilityRequest) (*DoctorAvailability, error)
-	DeleteDoctorAvailability(context.Context, *DeleteDoctorAvailabilityRequest) (*IsDeleted, error)
-}
-
-// UnimplementedDoctorAvailabilityServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedDoctorAvailabilityServiceServer struct {
-}
-
-func (*UnimplementedDoctorAvailabilityServiceServer) CreateDoctorAvailability(ctx context.Context, req *CreateDoctorAvailabilityRequest) (*DoctorAvailability, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateDoctorAvailability not implemented")
-}
-func (*UnimplementedDoctorAvailabilityServiceServer) GetDoctorAvailability(ctx context.Context, req *GetDoctorAvailabilityRequest1) (*DoctorAvailability, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetDoctorAvailability not implemented")
-}
-func (*UnimplementedDoctorAvailabilityServiceServer) UpdateDoctorAvailability(ctx context.Context, req *UpdateDoctorAvailabilityRequest) (*DoctorAvailability, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateDoctorAvailability not implemented")
-}
-func (*UnimplementedDoctorAvailabilityServiceServer) DeleteDoctorAvailability(ctx context.Context, req *DeleteDoctorAvailabilityRequest) (*IsDeleted, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteDoctorAvailability not implemented")
-}
-
-func RegisterDoctorAvailabilityServiceServer(s *grpc.Server, srv DoctorAvailabilityServiceServer) {
-	s.RegisterService(&_DoctorAvailabilityService_serviceDesc, srv)
-}
-
-func _DoctorAvailabilityService_CreateDoctorAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateDoctorAvailabilityRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DoctorAvailabilityServiceServer).CreateDoctorAvailability(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.DoctorAvailabilityService/CreateDoctorAvailability",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorAvailabilityServiceServer).CreateDoctorAvailability(ctx, req.(*CreateDoctorAvailabilityRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DoctorAvailabilityService_GetDoctorAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetDoctorAvailabilityRequest1)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DoctorAvailabilityServiceServer).GetDoctorAvailability(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.DoctorAvailabilityService/GetDoctorAvailability",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorAvailabilityServiceServer).GetDoctorAvailability(ctx, req.(*GetDoctorAvailabilityRequest1))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DoctorAvailabilityService_UpdateDoctorAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateDoctorAvailabilityRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DoctorAvailabilityServiceServer).UpdateDoctorAvailability(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.DoctorAvailabilityService/UpdateDoctorAvailability",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorAvailabilityServiceServer).UpdateDoctorAvailability(ctx, req.(*UpdateDoctorAvailabilityRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DoctorAvailabilityService_DeleteDoctorAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteDoctorAvailabilityRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DoctorAvailabilityServiceServer).DeleteDoctorAvailability(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.DoctorAvailabilityService/DeleteDoctorAvailability",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorAvailabilityServiceServer).DeleteDoctorAvailability(ctx, req.(*DeleteDoctorAvailabilityRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _DoctorAvailabilityService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "booking_service.DoctorAvailabilityService",
-	HandlerType: (*DoctorAvailabilityServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CreateDoctorAvailability",
-			Handler:    _DoctorAvailabilityService_CreateDoctorAvailability_Handler,
-		},
-		{
-			MethodName: "GetDoctorAvailability",
-			Handler:    _DoctorAvailabilityService_GetDoctorAvailability_Handler,
-		},
-		{
-			MethodName: "UpdateDoctorAvailability",
-			Handler:    _DoctorAvailabilityService_UpdateDoctorAvailability_Handler,
-		},
-		{
-			MethodName: "DeleteDoctorAvailability",
-			Handler:    _DoctorAvailabilityService_DeleteDoctorAvailability_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "booking-service/booking_service.proto",
-}
-
 // PatientServiceClient is the client API for PatientService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type PatientServiceClient interface {
-	CreatePatient(ctx context.Context, in *CreatePatientRequest, opts ...grpc.CallOption) (*Patient, error)
+	CreatePatient(ctx context.Context, in *Patient, opts ...grpc.CallOption) (*Patient, error)
 	GetPatient(ctx context.Context, in *GetPatientRequest, opts ...grpc.CallOption) (*Patient, error)
+	GetPatients(ctx context.Context, in *PatientsReq, opts ...grpc.CallOption) (*Patients, error)
 	UpdatePatient(ctx context.Context, in *UpdatePatientRequest, opts ...grpc.CallOption) (*Patient, error)
-	DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*IsDeleted, error)
+	DeletePatient(ctx context.Context, in *GetPatientRequest, opts ...grpc.CallOption) (*Status, error)
 }
 
 type patientServiceClient struct {
@@ -4383,7 +4538,7 @@ func NewPatientServiceClient(cc *grpc.ClientConn) PatientServiceClient {
 	return &patientServiceClient{cc}
 }
 
-func (c *patientServiceClient) CreatePatient(ctx context.Context, in *CreatePatientRequest, opts ...grpc.CallOption) (*Patient, error) {
+func (c *patientServiceClient) CreatePatient(ctx context.Context, in *Patient, opts ...grpc.CallOption) (*Patient, error) {
 	out := new(Patient)
 	err := c.cc.Invoke(ctx, "/booking_service.PatientService/CreatePatient", in, out, opts...)
 	if err != nil {
@@ -4401,6 +4556,15 @@ func (c *patientServiceClient) GetPatient(ctx context.Context, in *GetPatientReq
 	return out, nil
 }
 
+func (c *patientServiceClient) GetPatients(ctx context.Context, in *PatientsReq, opts ...grpc.CallOption) (*Patients, error) {
+	out := new(Patients)
+	err := c.cc.Invoke(ctx, "/booking_service.PatientService/GetPatients", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *patientServiceClient) UpdatePatient(ctx context.Context, in *UpdatePatientRequest, opts ...grpc.CallOption) (*Patient, error) {
 	out := new(Patient)
 	err := c.cc.Invoke(ctx, "/booking_service.PatientService/UpdatePatient", in, out, opts...)
@@ -4410,8 +4574,8 @@ func (c *patientServiceClient) UpdatePatient(ctx context.Context, in *UpdatePati
 	return out, nil
 }
 
-func (c *patientServiceClient) DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*IsDeleted, error) {
-	out := new(IsDeleted)
+func (c *patientServiceClient) DeletePatient(ctx context.Context, in *GetPatientRequest, opts ...grpc.CallOption) (*Status, error) {
+	out := new(Status)
 	err := c.cc.Invoke(ctx, "/booking_service.PatientService/DeletePatient", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -4421,26 +4585,30 @@ func (c *patientServiceClient) DeletePatient(ctx context.Context, in *DeletePati
 
 // PatientServiceServer is the server API for PatientService service.
 type PatientServiceServer interface {
-	CreatePatient(context.Context, *CreatePatientRequest) (*Patient, error)
+	CreatePatient(context.Context, *Patient) (*Patient, error)
 	GetPatient(context.Context, *GetPatientRequest) (*Patient, error)
+	GetPatients(context.Context, *PatientsReq) (*Patients, error)
 	UpdatePatient(context.Context, *UpdatePatientRequest) (*Patient, error)
-	DeletePatient(context.Context, *DeletePatientRequest) (*IsDeleted, error)
+	DeletePatient(context.Context, *GetPatientRequest) (*Status, error)
 }
 
 // UnimplementedPatientServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedPatientServiceServer struct {
 }
 
-func (*UnimplementedPatientServiceServer) CreatePatient(ctx context.Context, req *CreatePatientRequest) (*Patient, error) {
+func (*UnimplementedPatientServiceServer) CreatePatient(ctx context.Context, req *Patient) (*Patient, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePatient not implemented")
 }
 func (*UnimplementedPatientServiceServer) GetPatient(ctx context.Context, req *GetPatientRequest) (*Patient, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPatient not implemented")
 }
+func (*UnimplementedPatientServiceServer) GetPatients(ctx context.Context, req *PatientsReq) (*Patients, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPatients not implemented")
+}
 func (*UnimplementedPatientServiceServer) UpdatePatient(ctx context.Context, req *UpdatePatientRequest) (*Patient, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePatient not implemented")
 }
-func (*UnimplementedPatientServiceServer) DeletePatient(ctx context.Context, req *DeletePatientRequest) (*IsDeleted, error) {
+func (*UnimplementedPatientServiceServer) DeletePatient(ctx context.Context, req *GetPatientRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePatient not implemented")
 }
 
@@ -4449,7 +4617,7 @@ func RegisterPatientServiceServer(s *grpc.Server, srv PatientServiceServer) {
 }
 
 func _PatientService_CreatePatient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePatientRequest)
+	in := new(Patient)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -4461,7 +4629,7 @@ func _PatientService_CreatePatient_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/booking_service.PatientService/CreatePatient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PatientServiceServer).CreatePatient(ctx, req.(*CreatePatientRequest))
+		return srv.(PatientServiceServer).CreatePatient(ctx, req.(*Patient))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -4480,6 +4648,24 @@ func _PatientService_GetPatient_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PatientServiceServer).GetPatient(ctx, req.(*GetPatientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PatientService_GetPatients_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatientsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PatientServiceServer).GetPatients(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.PatientService/GetPatients",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PatientServiceServer).GetPatients(ctx, req.(*PatientsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -4503,7 +4689,7 @@ func _PatientService_UpdatePatient_Handler(srv interface{}, ctx context.Context,
 }
 
 func _PatientService_DeletePatient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeletePatientRequest)
+	in := new(GetPatientRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -4515,7 +4701,7 @@ func _PatientService_DeletePatient_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/booking_service.PatientService/DeletePatient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PatientServiceServer).DeletePatient(ctx, req.(*DeletePatientRequest))
+		return srv.(PatientServiceServer).DeletePatient(ctx, req.(*GetPatientRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -4533,6 +4719,10 @@ var _PatientService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _PatientService_GetPatient_Handler,
 		},
 		{
+			MethodName: "GetPatients",
+			Handler:    _PatientService_GetPatients_Handler,
+		},
+		{
 			MethodName: "UpdatePatient",
 			Handler:    _PatientService_UpdatePatient_Handler,
 		},
@@ -4545,540 +4735,216 @@ var _PatientService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "booking-service/booking_service.proto",
 }
 
-// BookedAppointmentServiceClient is the client API for BookedAppointmentService service.
+// DoctorAvailabilityServiceClient is the client API for DoctorAvailabilityService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type BookedAppointmentServiceClient interface {
-	CreateBookedAppointment(ctx context.Context, in *CreateBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error)
-	GetBookedAppointment(ctx context.Context, in *GetBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error)
-	UpdateBookedAppointment(ctx context.Context, in *UpdateBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error)
-	DeleteBookedAppointment(ctx context.Context, in *DeleteBookedAppointmentRequest, opts ...grpc.CallOption) (*IsDeleted, error)
+type DoctorAvailabilityServiceClient interface {
+	CreateDoctorAvailability(ctx context.Context, in *CreateDoctorAvailabilitys, opts ...grpc.CallOption) (*DoctorAvailability, error)
+	GetDoctorAvailability(ctx context.Context, in *GetDoctorAvailabilityById, opts ...grpc.CallOption) (*DoctorAvailability, error)
+	GetDoctorAvailabilityByDoctorId(ctx context.Context, in *GetDoctorAvailabilityById, opts ...grpc.CallOption) (*DoctorAvailabilitys, error)
+	UpdateDoctorAvailability(ctx context.Context, in *UpdateDoctorAvailabilityById, opts ...grpc.CallOption) (*DoctorAvailability, error)
+	DeleteDoctorAvailability(ctx context.Context, in *GetDoctorAvailabilityById, opts ...grpc.CallOption) (*Status, error)
 }
 
-type bookedAppointmentServiceClient struct {
+type doctorAvailabilityServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewBookedAppointmentServiceClient(cc *grpc.ClientConn) BookedAppointmentServiceClient {
-	return &bookedAppointmentServiceClient{cc}
+func NewDoctorAvailabilityServiceClient(cc *grpc.ClientConn) DoctorAvailabilityServiceClient {
+	return &doctorAvailabilityServiceClient{cc}
 }
 
-func (c *bookedAppointmentServiceClient) CreateBookedAppointment(ctx context.Context, in *CreateBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error) {
-	out := new(BookedAppointment)
-	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/CreateBookedAppointment", in, out, opts...)
+func (c *doctorAvailabilityServiceClient) CreateDoctorAvailability(ctx context.Context, in *CreateDoctorAvailabilitys, opts ...grpc.CallOption) (*DoctorAvailability, error) {
+	out := new(DoctorAvailability)
+	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/CreateDoctorAvailability", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bookedAppointmentServiceClient) GetBookedAppointment(ctx context.Context, in *GetBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error) {
-	out := new(BookedAppointment)
-	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/GetBookedAppointment", in, out, opts...)
+func (c *doctorAvailabilityServiceClient) GetDoctorAvailability(ctx context.Context, in *GetDoctorAvailabilityById, opts ...grpc.CallOption) (*DoctorAvailability, error) {
+	out := new(DoctorAvailability)
+	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/GetDoctorAvailability", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bookedAppointmentServiceClient) UpdateBookedAppointment(ctx context.Context, in *UpdateBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error) {
-	out := new(BookedAppointment)
-	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/UpdateBookedAppointment", in, out, opts...)
+func (c *doctorAvailabilityServiceClient) GetDoctorAvailabilityByDoctorId(ctx context.Context, in *GetDoctorAvailabilityById, opts ...grpc.CallOption) (*DoctorAvailabilitys, error) {
+	out := new(DoctorAvailabilitys)
+	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/GetDoctorAvailabilityByDoctorId", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bookedAppointmentServiceClient) DeleteBookedAppointment(ctx context.Context, in *DeleteBookedAppointmentRequest, opts ...grpc.CallOption) (*IsDeleted, error) {
-	out := new(IsDeleted)
-	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/DeleteBookedAppointment", in, out, opts...)
+func (c *doctorAvailabilityServiceClient) UpdateDoctorAvailability(ctx context.Context, in *UpdateDoctorAvailabilityById, opts ...grpc.CallOption) (*DoctorAvailability, error) {
+	out := new(DoctorAvailability)
+	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/UpdateDoctorAvailability", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BookedAppointmentServiceServer is the server API for BookedAppointmentService service.
-type BookedAppointmentServiceServer interface {
-	CreateBookedAppointment(context.Context, *CreateBookedAppointmentRequest) (*BookedAppointment, error)
-	GetBookedAppointment(context.Context, *GetBookedAppointmentRequest) (*BookedAppointment, error)
-	UpdateBookedAppointment(context.Context, *UpdateBookedAppointmentRequest) (*BookedAppointment, error)
-	DeleteBookedAppointment(context.Context, *DeleteBookedAppointmentRequest) (*IsDeleted, error)
+func (c *doctorAvailabilityServiceClient) DeleteDoctorAvailability(ctx context.Context, in *GetDoctorAvailabilityById, opts ...grpc.CallOption) (*Status, error) {
+	out := new(Status)
+	err := c.cc.Invoke(ctx, "/booking_service.DoctorAvailabilityService/DeleteDoctorAvailability", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedBookedAppointmentServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedBookedAppointmentServiceServer struct {
+// DoctorAvailabilityServiceServer is the server API for DoctorAvailabilityService service.
+type DoctorAvailabilityServiceServer interface {
+	CreateDoctorAvailability(context.Context, *CreateDoctorAvailabilitys) (*DoctorAvailability, error)
+	GetDoctorAvailability(context.Context, *GetDoctorAvailabilityById) (*DoctorAvailability, error)
+	GetDoctorAvailabilityByDoctorId(context.Context, *GetDoctorAvailabilityById) (*DoctorAvailabilitys, error)
+	UpdateDoctorAvailability(context.Context, *UpdateDoctorAvailabilityById) (*DoctorAvailability, error)
+	DeleteDoctorAvailability(context.Context, *GetDoctorAvailabilityById) (*Status, error)
 }
 
-func (*UnimplementedBookedAppointmentServiceServer) CreateBookedAppointment(ctx context.Context, req *CreateBookedAppointmentRequest) (*BookedAppointment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateBookedAppointment not implemented")
-}
-func (*UnimplementedBookedAppointmentServiceServer) GetBookedAppointment(ctx context.Context, req *GetBookedAppointmentRequest) (*BookedAppointment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBookedAppointment not implemented")
-}
-func (*UnimplementedBookedAppointmentServiceServer) UpdateBookedAppointment(ctx context.Context, req *UpdateBookedAppointmentRequest) (*BookedAppointment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateBookedAppointment not implemented")
-}
-func (*UnimplementedBookedAppointmentServiceServer) DeleteBookedAppointment(ctx context.Context, req *DeleteBookedAppointmentRequest) (*IsDeleted, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteBookedAppointment not implemented")
+// UnimplementedDoctorAvailabilityServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedDoctorAvailabilityServiceServer struct {
 }
 
-func RegisterBookedAppointmentServiceServer(s *grpc.Server, srv BookedAppointmentServiceServer) {
-	s.RegisterService(&_BookedAppointmentService_serviceDesc, srv)
+func (*UnimplementedDoctorAvailabilityServiceServer) CreateDoctorAvailability(ctx context.Context, req *CreateDoctorAvailabilitys) (*DoctorAvailability, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDoctorAvailability not implemented")
+}
+func (*UnimplementedDoctorAvailabilityServiceServer) GetDoctorAvailability(ctx context.Context, req *GetDoctorAvailabilityById) (*DoctorAvailability, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDoctorAvailability not implemented")
+}
+func (*UnimplementedDoctorAvailabilityServiceServer) GetDoctorAvailabilityByDoctorId(ctx context.Context, req *GetDoctorAvailabilityById) (*DoctorAvailabilitys, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDoctorAvailabilityByDoctorId not implemented")
+}
+func (*UnimplementedDoctorAvailabilityServiceServer) UpdateDoctorAvailability(ctx context.Context, req *UpdateDoctorAvailabilityById) (*DoctorAvailability, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDoctorAvailability not implemented")
+}
+func (*UnimplementedDoctorAvailabilityServiceServer) DeleteDoctorAvailability(ctx context.Context, req *GetDoctorAvailabilityById) (*Status, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDoctorAvailability not implemented")
 }
 
-func _BookedAppointmentService_CreateBookedAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateBookedAppointmentRequest)
+func RegisterDoctorAvailabilityServiceServer(s *grpc.Server, srv DoctorAvailabilityServiceServer) {
+	s.RegisterService(&_DoctorAvailabilityService_serviceDesc, srv)
+}
+
+func _DoctorAvailabilityService_CreateDoctorAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDoctorAvailabilitys)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookedAppointmentServiceServer).CreateBookedAppointment(ctx, in)
+		return srv.(DoctorAvailabilityServiceServer).CreateDoctorAvailability(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/booking_service.BookedAppointmentService/CreateBookedAppointment",
+		FullMethod: "/booking_service.DoctorAvailabilityService/CreateDoctorAvailability",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookedAppointmentServiceServer).CreateBookedAppointment(ctx, req.(*CreateBookedAppointmentRequest))
+		return srv.(DoctorAvailabilityServiceServer).CreateDoctorAvailability(ctx, req.(*CreateDoctorAvailabilitys))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BookedAppointmentService_GetBookedAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetBookedAppointmentRequest)
+func _DoctorAvailabilityService_GetDoctorAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDoctorAvailabilityById)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookedAppointmentServiceServer).GetBookedAppointment(ctx, in)
+		return srv.(DoctorAvailabilityServiceServer).GetDoctorAvailability(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/booking_service.BookedAppointmentService/GetBookedAppointment",
+		FullMethod: "/booking_service.DoctorAvailabilityService/GetDoctorAvailability",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookedAppointmentServiceServer).GetBookedAppointment(ctx, req.(*GetBookedAppointmentRequest))
+		return srv.(DoctorAvailabilityServiceServer).GetDoctorAvailability(ctx, req.(*GetDoctorAvailabilityById))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BookedAppointmentService_UpdateBookedAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateBookedAppointmentRequest)
+func _DoctorAvailabilityService_GetDoctorAvailabilityByDoctorId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDoctorAvailabilityById)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookedAppointmentServiceServer).UpdateBookedAppointment(ctx, in)
+		return srv.(DoctorAvailabilityServiceServer).GetDoctorAvailabilityByDoctorId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/booking_service.BookedAppointmentService/UpdateBookedAppointment",
+		FullMethod: "/booking_service.DoctorAvailabilityService/GetDoctorAvailabilityByDoctorId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookedAppointmentServiceServer).UpdateBookedAppointment(ctx, req.(*UpdateBookedAppointmentRequest))
+		return srv.(DoctorAvailabilityServiceServer).GetDoctorAvailabilityByDoctorId(ctx, req.(*GetDoctorAvailabilityById))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BookedAppointmentService_DeleteBookedAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteBookedAppointmentRequest)
+func _DoctorAvailabilityService_UpdateDoctorAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDoctorAvailabilityById)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookedAppointmentServiceServer).DeleteBookedAppointment(ctx, in)
+		return srv.(DoctorAvailabilityServiceServer).UpdateDoctorAvailability(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/booking_service.BookedAppointmentService/DeleteBookedAppointment",
+		FullMethod: "/booking_service.DoctorAvailabilityService/UpdateDoctorAvailability",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookedAppointmentServiceServer).DeleteBookedAppointment(ctx, req.(*DeleteBookedAppointmentRequest))
+		return srv.(DoctorAvailabilityServiceServer).UpdateDoctorAvailability(ctx, req.(*UpdateDoctorAvailabilityById))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _BookedAppointmentService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "booking_service.BookedAppointmentService",
-	HandlerType: (*BookedAppointmentServiceServer)(nil),
+func _DoctorAvailabilityService_DeleteDoctorAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDoctorAvailabilityById)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DoctorAvailabilityServiceServer).DeleteDoctorAvailability(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.DoctorAvailabilityService/DeleteDoctorAvailability",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DoctorAvailabilityServiceServer).DeleteDoctorAvailability(ctx, req.(*GetDoctorAvailabilityById))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _DoctorAvailabilityService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "booking_service.DoctorAvailabilityService",
+	HandlerType: (*DoctorAvailabilityServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateBookedAppointment",
-			Handler:    _BookedAppointmentService_CreateBookedAppointment_Handler,
+			MethodName: "CreateDoctorAvailability",
+			Handler:    _DoctorAvailabilityService_CreateDoctorAvailability_Handler,
 		},
 		{
-			MethodName: "GetBookedAppointment",
-			Handler:    _BookedAppointmentService_GetBookedAppointment_Handler,
+			MethodName: "GetDoctorAvailability",
+			Handler:    _DoctorAvailabilityService_GetDoctorAvailability_Handler,
 		},
 		{
-			MethodName: "UpdateBookedAppointment",
-			Handler:    _BookedAppointmentService_UpdateBookedAppointment_Handler,
+			MethodName: "GetDoctorAvailabilityByDoctorId",
+			Handler:    _DoctorAvailabilityService_GetDoctorAvailabilityByDoctorId_Handler,
 		},
 		{
-			MethodName: "DeleteBookedAppointment",
-			Handler:    _BookedAppointmentService_DeleteBookedAppointment_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "booking-service/booking_service.proto",
-}
-
-// ArchiveServiceClient is the client API for ArchiveService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ArchiveServiceClient interface {
-	CreateArchive(ctx context.Context, in *InsertArchive, opts ...grpc.CallOption) (*Archive, error)
-	GetArchive(ctx context.Context, in *GetArchiveRequest, opts ...grpc.CallOption) (*Archive, error)
-	UpdateArchive(ctx context.Context, in *UpdateArchiveRequest, opts ...grpc.CallOption) (*Archive, error)
-	DeleteArchive(ctx context.Context, in *DeleteArchiveRequest, opts ...grpc.CallOption) (*IsDeleted, error)
-}
-
-type archiveServiceClient struct {
-	cc *grpc.ClientConn
-}
-
-func NewArchiveServiceClient(cc *grpc.ClientConn) ArchiveServiceClient {
-	return &archiveServiceClient{cc}
-}
-
-func (c *archiveServiceClient) CreateArchive(ctx context.Context, in *InsertArchive, opts ...grpc.CallOption) (*Archive, error) {
-	out := new(Archive)
-	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/CreateArchive", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *archiveServiceClient) GetArchive(ctx context.Context, in *GetArchiveRequest, opts ...grpc.CallOption) (*Archive, error) {
-	out := new(Archive)
-	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/GetArchive", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *archiveServiceClient) UpdateArchive(ctx context.Context, in *UpdateArchiveRequest, opts ...grpc.CallOption) (*Archive, error) {
-	out := new(Archive)
-	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/UpdateArchive", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *archiveServiceClient) DeleteArchive(ctx context.Context, in *DeleteArchiveRequest, opts ...grpc.CallOption) (*IsDeleted, error) {
-	out := new(IsDeleted)
-	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/DeleteArchive", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// ArchiveServiceServer is the server API for ArchiveService service.
-type ArchiveServiceServer interface {
-	CreateArchive(context.Context, *InsertArchive) (*Archive, error)
-	GetArchive(context.Context, *GetArchiveRequest) (*Archive, error)
-	UpdateArchive(context.Context, *UpdateArchiveRequest) (*Archive, error)
-	DeleteArchive(context.Context, *DeleteArchiveRequest) (*IsDeleted, error)
-}
-
-// UnimplementedArchiveServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedArchiveServiceServer struct {
-}
-
-func (*UnimplementedArchiveServiceServer) CreateArchive(ctx context.Context, req *InsertArchive) (*Archive, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateArchive not implemented")
-}
-func (*UnimplementedArchiveServiceServer) GetArchive(ctx context.Context, req *GetArchiveRequest) (*Archive, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetArchive not implemented")
-}
-func (*UnimplementedArchiveServiceServer) UpdateArchive(ctx context.Context, req *UpdateArchiveRequest) (*Archive, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateArchive not implemented")
-}
-func (*UnimplementedArchiveServiceServer) DeleteArchive(ctx context.Context, req *DeleteArchiveRequest) (*IsDeleted, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteArchive not implemented")
-}
-
-func RegisterArchiveServiceServer(s *grpc.Server, srv ArchiveServiceServer) {
-	s.RegisterService(&_ArchiveService_serviceDesc, srv)
-}
-
-func _ArchiveService_CreateArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InsertArchive)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ArchiveServiceServer).CreateArchive(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.ArchiveService/CreateArchive",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArchiveServiceServer).CreateArchive(ctx, req.(*InsertArchive))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ArchiveService_GetArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetArchiveRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ArchiveServiceServer).GetArchive(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.ArchiveService/GetArchive",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArchiveServiceServer).GetArchive(ctx, req.(*GetArchiveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ArchiveService_UpdateArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateArchiveRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ArchiveServiceServer).UpdateArchive(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.ArchiveService/UpdateArchive",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArchiveServiceServer).UpdateArchive(ctx, req.(*UpdateArchiveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ArchiveService_DeleteArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteArchiveRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ArchiveServiceServer).DeleteArchive(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.ArchiveService/DeleteArchive",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArchiveServiceServer).DeleteArchive(ctx, req.(*DeleteArchiveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _ArchiveService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "booking_service.ArchiveService",
-	HandlerType: (*ArchiveServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CreateArchive",
-			Handler:    _ArchiveService_CreateArchive_Handler,
+			MethodName: "UpdateDoctorAvailability",
+			Handler:    _DoctorAvailabilityService_UpdateDoctorAvailability_Handler,
 		},
 		{
-			MethodName: "GetArchive",
-			Handler:    _ArchiveService_GetArchive_Handler,
-		},
-		{
-			MethodName: "UpdateArchive",
-			Handler:    _ArchiveService_UpdateArchive_Handler,
-		},
-		{
-			MethodName: "DeleteArchive",
-			Handler:    _ArchiveService_DeleteArchive_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "booking-service/booking_service.proto",
-}
-
-// UploadedFileServiceClient is the client API for UploadedFileService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type UploadedFileServiceClient interface {
-	UploadFile(ctx context.Context, in *UploadFileRequest, opts ...grpc.CallOption) (*UploadedFile, error)
-	GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*UploadedFile, error)
-	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UploadedFile, error)
-	DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*IsDeleted, error)
-}
-
-type uploadedFileServiceClient struct {
-	cc *grpc.ClientConn
-}
-
-func NewUploadedFileServiceClient(cc *grpc.ClientConn) UploadedFileServiceClient {
-	return &uploadedFileServiceClient{cc}
-}
-
-func (c *uploadedFileServiceClient) UploadFile(ctx context.Context, in *UploadFileRequest, opts ...grpc.CallOption) (*UploadedFile, error) {
-	out := new(UploadedFile)
-	err := c.cc.Invoke(ctx, "/booking_service.UploadedFileService/UploadFile", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *uploadedFileServiceClient) GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*UploadedFile, error) {
-	out := new(UploadedFile)
-	err := c.cc.Invoke(ctx, "/booking_service.UploadedFileService/GetFile", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *uploadedFileServiceClient) UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UploadedFile, error) {
-	out := new(UploadedFile)
-	err := c.cc.Invoke(ctx, "/booking_service.UploadedFileService/UpdateFile", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *uploadedFileServiceClient) DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*IsDeleted, error) {
-	out := new(IsDeleted)
-	err := c.cc.Invoke(ctx, "/booking_service.UploadedFileService/DeleteFile", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// UploadedFileServiceServer is the server API for UploadedFileService service.
-type UploadedFileServiceServer interface {
-	UploadFile(context.Context, *UploadFileRequest) (*UploadedFile, error)
-	GetFile(context.Context, *GetFileRequest) (*UploadedFile, error)
-	UpdateFile(context.Context, *UpdateFileRequest) (*UploadedFile, error)
-	DeleteFile(context.Context, *DeleteFileRequest) (*IsDeleted, error)
-}
-
-// UnimplementedUploadedFileServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedUploadedFileServiceServer struct {
-}
-
-func (*UnimplementedUploadedFileServiceServer) UploadFile(ctx context.Context, req *UploadFileRequest) (*UploadedFile, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
-}
-func (*UnimplementedUploadedFileServiceServer) GetFile(ctx context.Context, req *GetFileRequest) (*UploadedFile, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFile not implemented")
-}
-func (*UnimplementedUploadedFileServiceServer) UpdateFile(ctx context.Context, req *UpdateFileRequest) (*UploadedFile, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateFile not implemented")
-}
-func (*UnimplementedUploadedFileServiceServer) DeleteFile(ctx context.Context, req *DeleteFileRequest) (*IsDeleted, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteFile not implemented")
-}
-
-func RegisterUploadedFileServiceServer(s *grpc.Server, srv UploadedFileServiceServer) {
-	s.RegisterService(&_UploadedFileService_serviceDesc, srv)
-}
-
-func _UploadedFileService_UploadFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadFileRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UploadedFileServiceServer).UploadFile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.UploadedFileService/UploadFile",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UploadedFileServiceServer).UploadFile(ctx, req.(*UploadFileRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UploadedFileService_GetFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFileRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UploadedFileServiceServer).GetFile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.UploadedFileService/GetFile",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UploadedFileServiceServer).GetFile(ctx, req.(*GetFileRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UploadedFileService_UpdateFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateFileRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UploadedFileServiceServer).UpdateFile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.UploadedFileService/UpdateFile",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UploadedFileServiceServer).UpdateFile(ctx, req.(*UpdateFileRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UploadedFileService_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteFileRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UploadedFileServiceServer).DeleteFile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/booking_service.UploadedFileService/DeleteFile",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UploadedFileServiceServer).DeleteFile(ctx, req.(*DeleteFileRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _UploadedFileService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "booking_service.UploadedFileService",
-	HandlerType: (*UploadedFileServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "UploadFile",
-			Handler:    _UploadedFileService_UploadFile_Handler,
-		},
-		{
-			MethodName: "GetFile",
-			Handler:    _UploadedFileService_GetFile_Handler,
-		},
-		{
-			MethodName: "UpdateFile",
-			Handler:    _UploadedFileService_UpdateFile_Handler,
-		},
-		{
-			MethodName: "DeleteFile",
-			Handler:    _UploadedFileService_DeleteFile_Handler,
+			MethodName: "DeleteDoctorAvailability",
+			Handler:    _DoctorAvailabilityService_DeleteDoctorAvailability_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -5092,7 +4958,7 @@ type PatientPaymentServiceClient interface {
 	MakePayment(ctx context.Context, in *MakePaymentRequest, opts ...grpc.CallOption) (*PatientPayment, error)
 	GetPayment(ctx context.Context, in *GetPaymentRequest, opts ...grpc.CallOption) (*PatientPayment, error)
 	UpdatePayment(ctx context.Context, in *UpdatePaymentRequest, opts ...grpc.CallOption) (*PatientPayment, error)
-	DeletePayment(ctx context.Context, in *DeletePaymentRequest, opts ...grpc.CallOption) (*IsDeleted, error)
+	DeletePayment(ctx context.Context, in *DeletePaymentRequest, opts ...grpc.CallOption) (*Status, error)
 }
 
 type patientPaymentServiceClient struct {
@@ -5130,8 +4996,8 @@ func (c *patientPaymentServiceClient) UpdatePayment(ctx context.Context, in *Upd
 	return out, nil
 }
 
-func (c *patientPaymentServiceClient) DeletePayment(ctx context.Context, in *DeletePaymentRequest, opts ...grpc.CallOption) (*IsDeleted, error) {
-	out := new(IsDeleted)
+func (c *patientPaymentServiceClient) DeletePayment(ctx context.Context, in *DeletePaymentRequest, opts ...grpc.CallOption) (*Status, error) {
+	out := new(Status)
 	err := c.cc.Invoke(ctx, "/booking_service.PatientPaymentService/DeletePayment", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -5144,7 +5010,7 @@ type PatientPaymentServiceServer interface {
 	MakePayment(context.Context, *MakePaymentRequest) (*PatientPayment, error)
 	GetPayment(context.Context, *GetPaymentRequest) (*PatientPayment, error)
 	UpdatePayment(context.Context, *UpdatePaymentRequest) (*PatientPayment, error)
-	DeletePayment(context.Context, *DeletePaymentRequest) (*IsDeleted, error)
+	DeletePayment(context.Context, *DeletePaymentRequest) (*Status, error)
 }
 
 // UnimplementedPatientPaymentServiceServer can be embedded to have forward compatible implementations.
@@ -5160,7 +5026,7 @@ func (*UnimplementedPatientPaymentServiceServer) GetPayment(ctx context.Context,
 func (*UnimplementedPatientPaymentServiceServer) UpdatePayment(ctx context.Context, req *UpdatePaymentRequest) (*PatientPayment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePayment not implemented")
 }
-func (*UnimplementedPatientPaymentServiceServer) DeletePayment(ctx context.Context, req *DeletePaymentRequest) (*IsDeleted, error) {
+func (*UnimplementedPatientPaymentServiceServer) DeletePayment(ctx context.Context, req *DeletePaymentRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePayment not implemented")
 }
 
@@ -5265,6 +5131,654 @@ var _PatientPaymentService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "booking-service/booking_service.proto",
 }
 
+// BookedAppointmentServiceClient is the client API for BookedAppointmentService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type BookedAppointmentServiceClient interface {
+	CreateBookedAppointment(ctx context.Context, in *CreateBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error)
+	GetBookedAppointment(ctx context.Context, in *GetBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error)
+	GetBookedAppointmentsByPatientID(ctx context.Context, in *PatientID, opts ...grpc.CallOption) (*GetBookedAppointmentsByPatientIDResponse, error)
+	GetBookedAppointmentsByDoctorID(ctx context.Context, in *GetBookedAppointmentRequest, opts ...grpc.CallOption) (*GetBookedAppointmentsByPatientIDResponse, error)
+	UpdateBookedAppointment(ctx context.Context, in *UpdateBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error)
+	DeleteBookedAppointment(ctx context.Context, in *DeleteBookedAppointmentRequest, opts ...grpc.CallOption) (*Status, error)
+}
+
+type bookedAppointmentServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewBookedAppointmentServiceClient(cc *grpc.ClientConn) BookedAppointmentServiceClient {
+	return &bookedAppointmentServiceClient{cc}
+}
+
+func (c *bookedAppointmentServiceClient) CreateBookedAppointment(ctx context.Context, in *CreateBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error) {
+	out := new(BookedAppointment)
+	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/CreateBookedAppointment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookedAppointmentServiceClient) GetBookedAppointment(ctx context.Context, in *GetBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error) {
+	out := new(BookedAppointment)
+	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/GetBookedAppointment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookedAppointmentServiceClient) GetBookedAppointmentsByPatientID(ctx context.Context, in *PatientID, opts ...grpc.CallOption) (*GetBookedAppointmentsByPatientIDResponse, error) {
+	out := new(GetBookedAppointmentsByPatientIDResponse)
+	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/GetBookedAppointmentsByPatientID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookedAppointmentServiceClient) GetBookedAppointmentsByDoctorID(ctx context.Context, in *GetBookedAppointmentRequest, opts ...grpc.CallOption) (*GetBookedAppointmentsByPatientIDResponse, error) {
+	out := new(GetBookedAppointmentsByPatientIDResponse)
+	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/GetBookedAppointmentsByDoctorID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookedAppointmentServiceClient) UpdateBookedAppointment(ctx context.Context, in *UpdateBookedAppointmentRequest, opts ...grpc.CallOption) (*BookedAppointment, error) {
+	out := new(BookedAppointment)
+	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/UpdateBookedAppointment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookedAppointmentServiceClient) DeleteBookedAppointment(ctx context.Context, in *DeleteBookedAppointmentRequest, opts ...grpc.CallOption) (*Status, error) {
+	out := new(Status)
+	err := c.cc.Invoke(ctx, "/booking_service.BookedAppointmentService/DeleteBookedAppointment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// BookedAppointmentServiceServer is the server API for BookedAppointmentService service.
+type BookedAppointmentServiceServer interface {
+	CreateBookedAppointment(context.Context, *CreateBookedAppointmentRequest) (*BookedAppointment, error)
+	GetBookedAppointment(context.Context, *GetBookedAppointmentRequest) (*BookedAppointment, error)
+	GetBookedAppointmentsByPatientID(context.Context, *PatientID) (*GetBookedAppointmentsByPatientIDResponse, error)
+	GetBookedAppointmentsByDoctorID(context.Context, *GetBookedAppointmentRequest) (*GetBookedAppointmentsByPatientIDResponse, error)
+	UpdateBookedAppointment(context.Context, *UpdateBookedAppointmentRequest) (*BookedAppointment, error)
+	DeleteBookedAppointment(context.Context, *DeleteBookedAppointmentRequest) (*Status, error)
+}
+
+// UnimplementedBookedAppointmentServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedBookedAppointmentServiceServer struct {
+}
+
+func (*UnimplementedBookedAppointmentServiceServer) CreateBookedAppointment(ctx context.Context, req *CreateBookedAppointmentRequest) (*BookedAppointment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBookedAppointment not implemented")
+}
+func (*UnimplementedBookedAppointmentServiceServer) GetBookedAppointment(ctx context.Context, req *GetBookedAppointmentRequest) (*BookedAppointment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBookedAppointment not implemented")
+}
+func (*UnimplementedBookedAppointmentServiceServer) GetBookedAppointmentsByPatientID(ctx context.Context, req *PatientID) (*GetBookedAppointmentsByPatientIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBookedAppointmentsByPatientID not implemented")
+}
+func (*UnimplementedBookedAppointmentServiceServer) GetBookedAppointmentsByDoctorID(ctx context.Context, req *GetBookedAppointmentRequest) (*GetBookedAppointmentsByPatientIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBookedAppointmentsByDoctorID not implemented")
+}
+func (*UnimplementedBookedAppointmentServiceServer) UpdateBookedAppointment(ctx context.Context, req *UpdateBookedAppointmentRequest) (*BookedAppointment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBookedAppointment not implemented")
+}
+func (*UnimplementedBookedAppointmentServiceServer) DeleteBookedAppointment(ctx context.Context, req *DeleteBookedAppointmentRequest) (*Status, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteBookedAppointment not implemented")
+}
+
+func RegisterBookedAppointmentServiceServer(s *grpc.Server, srv BookedAppointmentServiceServer) {
+	s.RegisterService(&_BookedAppointmentService_serviceDesc, srv)
+}
+
+func _BookedAppointmentService_CreateBookedAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBookedAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookedAppointmentServiceServer).CreateBookedAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.BookedAppointmentService/CreateBookedAppointment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookedAppointmentServiceServer).CreateBookedAppointment(ctx, req.(*CreateBookedAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookedAppointmentService_GetBookedAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBookedAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookedAppointmentServiceServer).GetBookedAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.BookedAppointmentService/GetBookedAppointment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookedAppointmentServiceServer).GetBookedAppointment(ctx, req.(*GetBookedAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookedAppointmentService_GetBookedAppointmentsByPatientID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatientID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookedAppointmentServiceServer).GetBookedAppointmentsByPatientID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.BookedAppointmentService/GetBookedAppointmentsByPatientID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookedAppointmentServiceServer).GetBookedAppointmentsByPatientID(ctx, req.(*PatientID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookedAppointmentService_GetBookedAppointmentsByDoctorID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBookedAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookedAppointmentServiceServer).GetBookedAppointmentsByDoctorID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.BookedAppointmentService/GetBookedAppointmentsByDoctorID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookedAppointmentServiceServer).GetBookedAppointmentsByDoctorID(ctx, req.(*GetBookedAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookedAppointmentService_UpdateBookedAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBookedAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookedAppointmentServiceServer).UpdateBookedAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.BookedAppointmentService/UpdateBookedAppointment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookedAppointmentServiceServer).UpdateBookedAppointment(ctx, req.(*UpdateBookedAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookedAppointmentService_DeleteBookedAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteBookedAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookedAppointmentServiceServer).DeleteBookedAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.BookedAppointmentService/DeleteBookedAppointment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookedAppointmentServiceServer).DeleteBookedAppointment(ctx, req.(*DeleteBookedAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _BookedAppointmentService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "booking_service.BookedAppointmentService",
+	HandlerType: (*BookedAppointmentServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateBookedAppointment",
+			Handler:    _BookedAppointmentService_CreateBookedAppointment_Handler,
+		},
+		{
+			MethodName: "GetBookedAppointment",
+			Handler:    _BookedAppointmentService_GetBookedAppointment_Handler,
+		},
+		{
+			MethodName: "GetBookedAppointmentsByPatientID",
+			Handler:    _BookedAppointmentService_GetBookedAppointmentsByPatientID_Handler,
+		},
+		{
+			MethodName: "GetBookedAppointmentsByDoctorID",
+			Handler:    _BookedAppointmentService_GetBookedAppointmentsByDoctorID_Handler,
+		},
+		{
+			MethodName: "UpdateBookedAppointment",
+			Handler:    _BookedAppointmentService_UpdateBookedAppointment_Handler,
+		},
+		{
+			MethodName: "DeleteBookedAppointment",
+			Handler:    _BookedAppointmentService_DeleteBookedAppointment_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "booking-service/booking_service.proto",
+}
+
+// ArchiveServiceClient is the client API for ArchiveService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ArchiveServiceClient interface {
+	CreateArchive(ctx context.Context, in *InsertArchive, opts ...grpc.CallOption) (*Archive, error)
+	GetArchive(ctx context.Context, in *GetArchiveRequest, opts ...grpc.CallOption) (*Archive, error)
+	GetArchiveByPatientID(ctx context.Context, in *GetArchiveRequest, opts ...grpc.CallOption) (*Archives, error)
+	UpdateArchive(ctx context.Context, in *UpdateArchiveRequest, opts ...grpc.CallOption) (*Archive, error)
+	DeleteArchive(ctx context.Context, in *DeleteArchiveRequest, opts ...grpc.CallOption) (*Status, error)
+}
+
+type archiveServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewArchiveServiceClient(cc *grpc.ClientConn) ArchiveServiceClient {
+	return &archiveServiceClient{cc}
+}
+
+func (c *archiveServiceClient) CreateArchive(ctx context.Context, in *InsertArchive, opts ...grpc.CallOption) (*Archive, error) {
+	out := new(Archive)
+	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/CreateArchive", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *archiveServiceClient) GetArchive(ctx context.Context, in *GetArchiveRequest, opts ...grpc.CallOption) (*Archive, error) {
+	out := new(Archive)
+	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/GetArchive", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *archiveServiceClient) GetArchiveByPatientID(ctx context.Context, in *GetArchiveRequest, opts ...grpc.CallOption) (*Archives, error) {
+	out := new(Archives)
+	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/GetArchiveByPatientID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *archiveServiceClient) UpdateArchive(ctx context.Context, in *UpdateArchiveRequest, opts ...grpc.CallOption) (*Archive, error) {
+	out := new(Archive)
+	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/UpdateArchive", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *archiveServiceClient) DeleteArchive(ctx context.Context, in *DeleteArchiveRequest, opts ...grpc.CallOption) (*Status, error) {
+	out := new(Status)
+	err := c.cc.Invoke(ctx, "/booking_service.ArchiveService/DeleteArchive", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ArchiveServiceServer is the server API for ArchiveService service.
+type ArchiveServiceServer interface {
+	CreateArchive(context.Context, *InsertArchive) (*Archive, error)
+	GetArchive(context.Context, *GetArchiveRequest) (*Archive, error)
+	GetArchiveByPatientID(context.Context, *GetArchiveRequest) (*Archives, error)
+	UpdateArchive(context.Context, *UpdateArchiveRequest) (*Archive, error)
+	DeleteArchive(context.Context, *DeleteArchiveRequest) (*Status, error)
+}
+
+// UnimplementedArchiveServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedArchiveServiceServer struct {
+}
+
+func (*UnimplementedArchiveServiceServer) CreateArchive(ctx context.Context, req *InsertArchive) (*Archive, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateArchive not implemented")
+}
+func (*UnimplementedArchiveServiceServer) GetArchive(ctx context.Context, req *GetArchiveRequest) (*Archive, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetArchive not implemented")
+}
+func (*UnimplementedArchiveServiceServer) GetArchiveByPatientID(ctx context.Context, req *GetArchiveRequest) (*Archives, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetArchiveByPatientID not implemented")
+}
+func (*UnimplementedArchiveServiceServer) UpdateArchive(ctx context.Context, req *UpdateArchiveRequest) (*Archive, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateArchive not implemented")
+}
+func (*UnimplementedArchiveServiceServer) DeleteArchive(ctx context.Context, req *DeleteArchiveRequest) (*Status, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteArchive not implemented")
+}
+
+func RegisterArchiveServiceServer(s *grpc.Server, srv ArchiveServiceServer) {
+	s.RegisterService(&_ArchiveService_serviceDesc, srv)
+}
+
+func _ArchiveService_CreateArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InsertArchive)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArchiveServiceServer).CreateArchive(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.ArchiveService/CreateArchive",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArchiveServiceServer).CreateArchive(ctx, req.(*InsertArchive))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArchiveService_GetArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetArchiveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArchiveServiceServer).GetArchive(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.ArchiveService/GetArchive",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArchiveServiceServer).GetArchive(ctx, req.(*GetArchiveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArchiveService_GetArchiveByPatientID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetArchiveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArchiveServiceServer).GetArchiveByPatientID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.ArchiveService/GetArchiveByPatientID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArchiveServiceServer).GetArchiveByPatientID(ctx, req.(*GetArchiveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArchiveService_UpdateArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateArchiveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArchiveServiceServer).UpdateArchive(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.ArchiveService/UpdateArchive",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArchiveServiceServer).UpdateArchive(ctx, req.(*UpdateArchiveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArchiveService_DeleteArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteArchiveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArchiveServiceServer).DeleteArchive(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.ArchiveService/DeleteArchive",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArchiveServiceServer).DeleteArchive(ctx, req.(*DeleteArchiveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _ArchiveService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "booking_service.ArchiveService",
+	HandlerType: (*ArchiveServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateArchive",
+			Handler:    _ArchiveService_CreateArchive_Handler,
+		},
+		{
+			MethodName: "GetArchive",
+			Handler:    _ArchiveService_GetArchive_Handler,
+		},
+		{
+			MethodName: "GetArchiveByPatientID",
+			Handler:    _ArchiveService_GetArchiveByPatientID_Handler,
+		},
+		{
+			MethodName: "UpdateArchive",
+			Handler:    _ArchiveService_UpdateArchive_Handler,
+		},
+		{
+			MethodName: "DeleteArchive",
+			Handler:    _ArchiveService_DeleteArchive_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "booking-service/booking_service.proto",
+}
+
+// UploadedFileServiceClient is the client API for UploadedFileService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type UploadedFileServiceClient interface {
+	UploadFile(ctx context.Context, in *UploadFileRequest, opts ...grpc.CallOption) (*UploadedFile, error)
+	GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*UploadedFile, error)
+	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UploadedFile, error)
+	DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*Status, error)
+}
+
+type uploadedFileServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewUploadedFileServiceClient(cc *grpc.ClientConn) UploadedFileServiceClient {
+	return &uploadedFileServiceClient{cc}
+}
+
+func (c *uploadedFileServiceClient) UploadFile(ctx context.Context, in *UploadFileRequest, opts ...grpc.CallOption) (*UploadedFile, error) {
+	out := new(UploadedFile)
+	err := c.cc.Invoke(ctx, "/booking_service.UploadedFileService/UploadFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *uploadedFileServiceClient) GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*UploadedFile, error) {
+	out := new(UploadedFile)
+	err := c.cc.Invoke(ctx, "/booking_service.UploadedFileService/GetFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *uploadedFileServiceClient) UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UploadedFile, error) {
+	out := new(UploadedFile)
+	err := c.cc.Invoke(ctx, "/booking_service.UploadedFileService/UpdateFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *uploadedFileServiceClient) DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*Status, error) {
+	out := new(Status)
+	err := c.cc.Invoke(ctx, "/booking_service.UploadedFileService/DeleteFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UploadedFileServiceServer is the server API for UploadedFileService service.
+type UploadedFileServiceServer interface {
+	UploadFile(context.Context, *UploadFileRequest) (*UploadedFile, error)
+	GetFile(context.Context, *GetFileRequest) (*UploadedFile, error)
+	UpdateFile(context.Context, *UpdateFileRequest) (*UploadedFile, error)
+	DeleteFile(context.Context, *DeleteFileRequest) (*Status, error)
+}
+
+// UnimplementedUploadedFileServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedUploadedFileServiceServer struct {
+}
+
+func (*UnimplementedUploadedFileServiceServer) UploadFile(ctx context.Context, req *UploadFileRequest) (*UploadedFile, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
+}
+func (*UnimplementedUploadedFileServiceServer) GetFile(ctx context.Context, req *GetFileRequest) (*UploadedFile, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFile not implemented")
+}
+func (*UnimplementedUploadedFileServiceServer) UpdateFile(ctx context.Context, req *UpdateFileRequest) (*UploadedFile, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFile not implemented")
+}
+func (*UnimplementedUploadedFileServiceServer) DeleteFile(ctx context.Context, req *DeleteFileRequest) (*Status, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFile not implemented")
+}
+
+func RegisterUploadedFileServiceServer(s *grpc.Server, srv UploadedFileServiceServer) {
+	s.RegisterService(&_UploadedFileService_serviceDesc, srv)
+}
+
+func _UploadedFileService_UploadFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UploadedFileServiceServer).UploadFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.UploadedFileService/UploadFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UploadedFileServiceServer).UploadFile(ctx, req.(*UploadFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UploadedFileService_GetFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UploadedFileServiceServer).GetFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.UploadedFileService/GetFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UploadedFileServiceServer).GetFile(ctx, req.(*GetFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UploadedFileService_UpdateFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UploadedFileServiceServer).UpdateFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.UploadedFileService/UpdateFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UploadedFileServiceServer).UpdateFile(ctx, req.(*UpdateFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UploadedFileService_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UploadedFileServiceServer).DeleteFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/booking_service.UploadedFileService/DeleteFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UploadedFileServiceServer).DeleteFile(ctx, req.(*DeleteFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _UploadedFileService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "booking_service.UploadedFileService",
+	HandlerType: (*UploadedFileServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UploadFile",
+			Handler:    _UploadedFileService_UploadFile_Handler,
+		},
+		{
+			MethodName: "GetFile",
+			Handler:    _UploadedFileService_GetFile_Handler,
+		},
+		{
+			MethodName: "UpdateFile",
+			Handler:    _UploadedFileService_UpdateFile_Handler,
+		},
+		{
+			MethodName: "DeleteFile",
+			Handler:    _UploadedFileService_DeleteFile_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "booking-service/booking_service.proto",
+}
+
 // DoctorNoteServiceClient is the client API for DoctorNoteService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
@@ -5272,7 +5786,7 @@ type DoctorNoteServiceClient interface {
 	CreateDoctorNote(ctx context.Context, in *CreateDoctorNoteRequest, opts ...grpc.CallOption) (*DoctorNote, error)
 	GetDoctorNote(ctx context.Context, in *GetDoctorNoteRequest, opts ...grpc.CallOption) (*DoctorNote, error)
 	UpdateDoctorNote(ctx context.Context, in *UpdateDoctorNoteRequest, opts ...grpc.CallOption) (*DoctorNote, error)
-	DeleteDoctorNote(ctx context.Context, in *DeleteDoctorNoteRequest, opts ...grpc.CallOption) (*IsDeleted, error)
+	DeleteDoctorNote(ctx context.Context, in *DeleteDoctorNoteRequest, opts ...grpc.CallOption) (*Status, error)
 }
 
 type doctorNoteServiceClient struct {
@@ -5310,8 +5824,8 @@ func (c *doctorNoteServiceClient) UpdateDoctorNote(ctx context.Context, in *Upda
 	return out, nil
 }
 
-func (c *doctorNoteServiceClient) DeleteDoctorNote(ctx context.Context, in *DeleteDoctorNoteRequest, opts ...grpc.CallOption) (*IsDeleted, error) {
-	out := new(IsDeleted)
+func (c *doctorNoteServiceClient) DeleteDoctorNote(ctx context.Context, in *DeleteDoctorNoteRequest, opts ...grpc.CallOption) (*Status, error) {
+	out := new(Status)
 	err := c.cc.Invoke(ctx, "/booking_service.DoctorNoteService/DeleteDoctorNote", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -5324,7 +5838,7 @@ type DoctorNoteServiceServer interface {
 	CreateDoctorNote(context.Context, *CreateDoctorNoteRequest) (*DoctorNote, error)
 	GetDoctorNote(context.Context, *GetDoctorNoteRequest) (*DoctorNote, error)
 	UpdateDoctorNote(context.Context, *UpdateDoctorNoteRequest) (*DoctorNote, error)
-	DeleteDoctorNote(context.Context, *DeleteDoctorNoteRequest) (*IsDeleted, error)
+	DeleteDoctorNote(context.Context, *DeleteDoctorNoteRequest) (*Status, error)
 }
 
 // UnimplementedDoctorNoteServiceServer can be embedded to have forward compatible implementations.
@@ -5340,7 +5854,7 @@ func (*UnimplementedDoctorNoteServiceServer) GetDoctorNote(ctx context.Context, 
 func (*UnimplementedDoctorNoteServiceServer) UpdateDoctorNote(ctx context.Context, req *UpdateDoctorNoteRequest) (*DoctorNote, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDoctorNote not implemented")
 }
-func (*UnimplementedDoctorNoteServiceServer) DeleteDoctorNote(ctx context.Context, req *DeleteDoctorNoteRequest) (*IsDeleted, error) {
+func (*UnimplementedDoctorNoteServiceServer) DeleteDoctorNote(ctx context.Context, req *DeleteDoctorNoteRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDoctorNote not implemented")
 }
 
@@ -6093,7 +6607,7 @@ var _FeedbackService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "booking-service/booking_service.proto",
 }
 
-func (m *DoctorAvailability) Marshal() (dAtA []byte, err error) {
+func (m *GetPatientRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -6103,12 +6617,133 @@ func (m *DoctorAvailability) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *DoctorAvailability) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetPatientRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *DoctorAvailability) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetPatientRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetPatientsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetPatientsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetPatientsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Page) > 0 {
+		i -= len(m.Page)
+		copy(dAtA[i:], m.Page)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Page)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Limit) > 0 {
+		i -= len(m.Limit)
+		copy(dAtA[i:], m.Limit)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Limit)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdatePatientRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdatePatientRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdatePatientRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Patient != nil {
+		{
+			size, err := m.Patient.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBookingService(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Status) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Status) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -6125,40 +6760,48 @@ func (m *DoctorAvailability) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x30
-	}
-	if len(m.AvailabilityTime) > 0 {
-		i -= len(m.AvailabilityTime)
-		copy(dAtA[i:], m.AvailabilityTime)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.AvailabilityTime)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.AvailabilityDate) > 0 {
-		i -= len(m.AvailabilityDate)
-		copy(dAtA[i:], m.AvailabilityDate)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.AvailabilityDate)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.DepartmentId) > 0 {
-		i -= len(m.DepartmentId)
-		copy(dAtA[i:], m.DepartmentId)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.DepartmentId)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.DoctorId) > 0 {
-		i -= len(m.DoctorId)
-		copy(dAtA[i:], m.DoctorId)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.DoctorId)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Id != 0 {
-		i = encodeVarintBookingService(dAtA, i, uint64(m.Id))
-		i--
 		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Patients) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Patients) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Patients) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Patient) > 0 {
+		for iNdEx := len(m.Patient) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Patient[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBookingService(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
 	}
 	return len(dAtA) - i, nil
 }
@@ -6233,6 +6876,447 @@ func (m *Patient) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.Id)
 		copy(dAtA[i:], m.Id)
 		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PatientUpdate) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PatientUpdate) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PatientUpdate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.PhoneNumber) > 0 {
+		i -= len(m.PhoneNumber)
+		copy(dAtA[i:], m.PhoneNumber)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.PhoneNumber)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.City) > 0 {
+		i -= len(m.City)
+		copy(dAtA[i:], m.City)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.City)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.Gender) > 0 {
+		i -= len(m.Gender)
+		copy(dAtA[i:], m.Gender)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Gender)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.BirthDate) > 0 {
+		i -= len(m.BirthDate)
+		copy(dAtA[i:], m.BirthDate)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.BirthDate)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.LastName) > 0 {
+		i -= len(m.LastName)
+		copy(dAtA[i:], m.LastName)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.LastName)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.FirstName) > 0 {
+		i -= len(m.FirstName)
+		copy(dAtA[i:], m.FirstName)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.FirstName)))
+		i--
+		dAtA[i] = 0x12
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *CreateDoctorAvailabilitys) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CreateDoctorAvailabilitys) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreateDoctorAvailabilitys) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Status {
+		i--
+		if m.Status {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x28
+	}
+	if len(m.AvailabilityTime) > 0 {
+		i -= len(m.AvailabilityTime)
+		copy(dAtA[i:], m.AvailabilityTime)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.AvailabilityTime)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.AvailabilityDate) > 0 {
+		i -= len(m.AvailabilityDate)
+		copy(dAtA[i:], m.AvailabilityDate)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.AvailabilityDate)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.DepartmentId) > 0 {
+		i -= len(m.DepartmentId)
+		copy(dAtA[i:], m.DepartmentId)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.DepartmentId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.DoctorId) > 0 {
+		i -= len(m.DoctorId)
+		copy(dAtA[i:], m.DoctorId)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.DoctorId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DoctorAvailabilitys) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DoctorAvailabilitys) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DoctorAvailabilitys) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.DoctorAvailability) > 0 {
+		for iNdEx := len(m.DoctorAvailability) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.DoctorAvailability[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBookingService(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetDoctorAvailabilityById) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetDoctorAvailabilityById) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetDoctorAvailabilityById) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdateDoctorAvailabilityById) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateDoctorAvailabilityById) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateDoctorAvailabilityById) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.DoctorAvailability != nil {
+		{
+			size, err := m.DoctorAvailability.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBookingService(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DoctorAvailability) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DoctorAvailability) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DoctorAvailability) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Status {
+		i--
+		if m.Status {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x30
+	}
+	if len(m.AvailabilityTime) > 0 {
+		i -= len(m.AvailabilityTime)
+		copy(dAtA[i:], m.AvailabilityTime)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.AvailabilityTime)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.AvailabilityDate) > 0 {
+		i -= len(m.AvailabilityDate)
+		copy(dAtA[i:], m.AvailabilityDate)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.AvailabilityDate)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.DepartmentId) > 0 {
+		i -= len(m.DepartmentId)
+		copy(dAtA[i:], m.DepartmentId)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.DepartmentId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.DoctorId) > 0 {
+		i -= len(m.DoctorId)
+		copy(dAtA[i:], m.DoctorId)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.DoctorId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Id != 0 {
+		i = encodeVarintBookingService(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetBookedAppointmentsByPatientIDResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetBookedAppointmentsByPatientIDResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetBookedAppointmentsByPatientIDResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.BookedAppointments) > 0 {
+		for iNdEx := len(m.BookedAppointments) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.BookedAppointments[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBookingService(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PatientID) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PatientID) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PatientID) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.PatientId) > 0 {
+		i -= len(m.PatientId)
+		copy(dAtA[i:], m.PatientId)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.PatientId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PatientsReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PatientsReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PatientsReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Page) > 0 {
+		i -= len(m.Page)
+		copy(dAtA[i:], m.Page)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Page)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Limit) > 0 {
+		i -= len(m.Limit)
+		copy(dAtA[i:], m.Limit)
+		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Limit)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -6490,7 +7574,7 @@ func (m *Create) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *IsDeleted) Marshal() (dAtA []byte, err error) {
+func (m *Archives) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -6500,12 +7584,12 @@ func (m *IsDeleted) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *IsDeleted) MarshalTo(dAtA []byte) (int, error) {
+func (m *Archives) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *IsDeleted) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Archives) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -6514,15 +7598,19 @@ func (m *IsDeleted) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.IsDeleted {
-		i--
-		if m.IsDeleted {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
+	if len(m.Archives) > 0 {
+		for iNdEx := len(m.Archives) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Archives[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBookingService(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
 		}
-		i--
-		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -7980,45 +9068,6 @@ func (m *SubmitFeedbackResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
-func (m *CreateDoctorAvailabilityRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CreateDoctorAvailabilityRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CreateDoctorAvailabilityRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.DoctorAvailability != nil {
-		{
-			size, err := m.DoctorAvailability.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintBookingService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
 func (m *GetDoctorAvailabilityRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -8047,273 +9096,6 @@ func (m *GetDoctorAvailabilityRequest) MarshalToSizedBuffer(dAtA []byte) (int, e
 		i = encodeVarintBookingService(dAtA, i, uint64(m.Id))
 		i--
 		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *GetDoctorAvailabilityRequest1) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *GetDoctorAvailabilityRequest1) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetDoctorAvailabilityRequest1) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UpdateDoctorAvailabilityRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdateDoctorAvailabilityRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateDoctorAvailabilityRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.DoctorAvailability != nil {
-		{
-			size, err := m.DoctorAvailability.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintBookingService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *DeleteDoctorAvailabilityRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *DeleteDoctorAvailabilityRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DeleteDoctorAvailabilityRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CreatePatientRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CreatePatientRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CreatePatientRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Patient != nil {
-		{
-			size, err := m.Patient.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintBookingService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *GetPatientRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *GetPatientRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetPatientRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UpdatePatientRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdatePatientRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdatePatientRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Patient != nil {
-		{
-			size, err := m.Patient.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintBookingService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *DeletePatientRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *DeletePatientRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DeletePatientRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintBookingService(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -9082,33 +9864,88 @@ func encodeVarintBookingService(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *DoctorAvailability) Size() (n int) {
+func (m *GetPatientRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Id != 0 {
-		n += 1 + sovBookingService(uint64(m.Id))
-	}
-	l = len(m.DoctorId)
+	l = len(m.Id)
 	if l > 0 {
 		n += 1 + l + sovBookingService(uint64(l))
 	}
-	l = len(m.DepartmentId)
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetPatientsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Limit)
 	if l > 0 {
 		n += 1 + l + sovBookingService(uint64(l))
 	}
-	l = len(m.AvailabilityDate)
+	l = len(m.Page)
 	if l > 0 {
 		n += 1 + l + sovBookingService(uint64(l))
 	}
-	l = len(m.AvailabilityTime)
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *UpdatePatientRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
 	if l > 0 {
 		n += 1 + l + sovBookingService(uint64(l))
 	}
+	if m.Patient != nil {
+		l = m.Patient.Size()
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Status) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	if m.Status {
 		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Patients) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Patient) > 0 {
+		for _, e := range m.Patient {
+			l = e.Size()
+			n += 1 + l + sovBookingService(uint64(l))
+		}
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -9147,6 +9984,215 @@ func (m *Patient) Size() (n int) {
 		n += 1 + l + sovBookingService(uint64(l))
 	}
 	l = len(m.PhoneNumber)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PatientUpdate) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.FirstName)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.LastName)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.BirthDate)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.Gender)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.City)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.PhoneNumber)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CreateDoctorAvailabilitys) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.DoctorId)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.DepartmentId)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.AvailabilityDate)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.AvailabilityTime)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.Status {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DoctorAvailabilitys) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.DoctorAvailability) > 0 {
+		for _, e := range m.DoctorAvailability {
+			l = e.Size()
+			n += 1 + l + sovBookingService(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetDoctorAvailabilityById) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *UpdateDoctorAvailabilityById) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.DoctorAvailability != nil {
+		l = m.DoctorAvailability.Size()
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DoctorAvailability) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovBookingService(uint64(m.Id))
+	}
+	l = len(m.DoctorId)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.DepartmentId)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.AvailabilityDate)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.AvailabilityTime)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.Status {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetBookedAppointmentsByPatientIDResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.BookedAppointments) > 0 {
+		for _, e := range m.BookedAppointments {
+			l = e.Size()
+			n += 1 + l + sovBookingService(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PatientID) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.PatientId)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PatientsReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Limit)
+	if l > 0 {
+		n += 1 + l + sovBookingService(uint64(l))
+	}
+	l = len(m.Page)
 	if l > 0 {
 		n += 1 + l + sovBookingService(uint64(l))
 	}
@@ -9284,14 +10330,17 @@ func (m *Create) Size() (n int) {
 	return n
 }
 
-func (m *IsDeleted) Size() (n int) {
+func (m *Archives) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.IsDeleted {
-		n += 2
+	if len(m.Archives) > 0 {
+		for _, e := range m.Archives {
+			l = e.Size()
+			n += 1 + l + sovBookingService(uint64(l))
+		}
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -10002,22 +11051,6 @@ func (m *SubmitFeedbackResponse) Size() (n int) {
 	return n
 }
 
-func (m *CreateDoctorAvailabilityRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.DoctorAvailability != nil {
-		l = m.DoctorAvailability.Size()
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
 func (m *GetDoctorAvailabilityRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -10026,126 +11059,6 @@ func (m *GetDoctorAvailabilityRequest) Size() (n int) {
 	_ = l
 	if m.Id != 0 {
 		n += 1 + sovBookingService(uint64(m.Id))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *GetDoctorAvailabilityRequest1) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *UpdateDoctorAvailabilityRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.DoctorAvailability != nil {
-		l = m.DoctorAvailability.Size()
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *DeleteDoctorAvailabilityRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *CreatePatientRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Patient != nil {
-		l = m.Patient.Size()
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *GetPatientRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *UpdatePatientRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.Patient != nil {
-		l = m.Patient.Size()
-		n += 1 + l + sovBookingService(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *DeletePatientRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovBookingService(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -10493,7 +11406,7 @@ func sovBookingService(x uint64) (n int) {
 func sozBookingService(x uint64) (n int) {
 	return sovBookingService(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *DoctorAvailability) Unmarshal(dAtA []byte) error {
+func (m *GetPatientRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -10516,17 +11429,17 @@ func (m *DoctorAvailability) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: DoctorAvailability: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetPatientRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DoctorAvailability: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetPatientRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 			}
-			m.Id = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowBookingService
@@ -10536,14 +11449,110 @@ func (m *DoctorAvailability) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Id |= int32(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetPatientsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetPatientsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetPatientsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Limit", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Limit = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DoctorId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Page", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -10571,11 +11580,62 @@ func (m *DoctorAvailability) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DoctorId = string(dAtA[iNdEx:postIndex])
+			m.Page = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdatePatientRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdatePatientRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdatePatientRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DepartmentId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -10603,13 +11663,13 @@ func (m *DoctorAvailability) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DepartmentId = string(dAtA[iNdEx:postIndex])
+			m.Id = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvailabilityDate", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Patient", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowBookingService
@@ -10619,57 +11679,80 @@ func (m *DoctorAvailability) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthBookingService
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthBookingService
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.AvailabilityDate = string(dAtA[iNdEx:postIndex])
+			if m.Patient == nil {
+				m.Patient = &PatientUpdate{}
+			}
+			if err := m.Patient.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvailabilityTime", wireType)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
 			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBookingService
 			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
+			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.AvailabilityTime = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 6:
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Status) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Status: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Status: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
 			}
@@ -10689,6 +11772,91 @@ func (m *DoctorAvailability) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.Status = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Patients) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Patients: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Patients: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Patient", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Patient = append(m.Patient, &Patient{})
+			if err := m.Patient[len(m.Patient)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipBookingService(dAtA[iNdEx:])
@@ -10963,6 +12131,1236 @@ func (m *Patient) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.PhoneNumber = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PatientUpdate) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PatientUpdate: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PatientUpdate: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FirstName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.FirstName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.LastName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BirthDate", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BirthDate = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Gender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Gender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field City", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.City = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PhoneNumber", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PhoneNumber = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CreateDoctorAvailabilitys) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CreateDoctorAvailabilitys: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CreateDoctorAvailabilitys: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DoctorId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DoctorId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DepartmentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DepartmentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AvailabilityDate", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AvailabilityDate = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AvailabilityTime", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AvailabilityTime = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Status = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DoctorAvailabilitys) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DoctorAvailabilitys: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DoctorAvailabilitys: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DoctorAvailability", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DoctorAvailability = append(m.DoctorAvailability, &DoctorAvailability{})
+			if err := m.DoctorAvailability[len(m.DoctorAvailability)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetDoctorAvailabilityById) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetDoctorAvailabilityById: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetDoctorAvailabilityById: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateDoctorAvailabilityById) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateDoctorAvailabilityById: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateDoctorAvailabilityById: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DoctorAvailability", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.DoctorAvailability == nil {
+				m.DoctorAvailability = &DoctorAvailability{}
+			}
+			if err := m.DoctorAvailability.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DoctorAvailability) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DoctorAvailability: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DoctorAvailability: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DoctorId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DoctorId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DepartmentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DepartmentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AvailabilityDate", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AvailabilityDate = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AvailabilityTime", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AvailabilityTime = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Status = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetBookedAppointmentsByPatientIDResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetBookedAppointmentsByPatientIDResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetBookedAppointmentsByPatientIDResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BookedAppointments", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BookedAppointments = append(m.BookedAppointments, &BookedAppointment{})
+			if err := m.BookedAppointments[len(m.BookedAppointments)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PatientID) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PatientID: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PatientID: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PatientId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PatientId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBookingService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PatientsReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBookingService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PatientsReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PatientsReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Limit", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Limit = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Page", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBookingService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Page = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -11860,7 +14258,7 @@ func (m *Create) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *IsDeleted) Unmarshal(dAtA []byte) error {
+func (m *Archives) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -11883,17 +14281,17 @@ func (m *IsDeleted) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: IsDeleted: wiretype end group for non-group")
+			return fmt.Errorf("proto: Archives: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: IsDeleted: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Archives: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IsDeleted", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Archives", wireType)
 			}
-			var v int
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowBookingService
@@ -11903,12 +14301,26 @@ func (m *IsDeleted) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.IsDeleted = bool(v != 0)
+			if msglen < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBookingService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Archives = append(m.Archives, &Archive{})
+			if err := m.Archives[len(m.Archives)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipBookingService(dAtA[iNdEx:])
@@ -15969,93 +18381,6 @@ func (m *SubmitFeedbackResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *CreateDoctorAvailabilityRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowBookingService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CreateDoctorAvailabilityRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CreateDoctorAvailabilityRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DoctorAvailability", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.DoctorAvailability == nil {
-				m.DoctorAvailability = &DoctorAvailability{}
-			}
-			if err := m.DoctorAvailability.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipBookingService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
 func (m *GetDoctorAvailabilityRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -16104,663 +18429,6 @@ func (m *GetDoctorAvailabilityRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipBookingService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *GetDoctorAvailabilityRequest1) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowBookingService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: GetDoctorAvailabilityRequest1: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetDoctorAvailabilityRequest1: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipBookingService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UpdateDoctorAvailabilityRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowBookingService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateDoctorAvailabilityRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateDoctorAvailabilityRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DoctorAvailability", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.DoctorAvailability == nil {
-				m.DoctorAvailability = &DoctorAvailability{}
-			}
-			if err := m.DoctorAvailability.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipBookingService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *DeleteDoctorAvailabilityRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowBookingService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: DeleteDoctorAvailabilityRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DeleteDoctorAvailabilityRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipBookingService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CreatePatientRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowBookingService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CreatePatientRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CreatePatientRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Patient", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Patient == nil {
-				m.Patient = &Patient{}
-			}
-			if err := m.Patient.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipBookingService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *GetPatientRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowBookingService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: GetPatientRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetPatientRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipBookingService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UpdatePatientRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowBookingService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdatePatientRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdatePatientRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Patient", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Patient == nil {
-				m.Patient = &Patient{}
-			}
-			if err := m.Patient.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipBookingService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *DeletePatientRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowBookingService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: DeletePatientRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DeletePatientRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowBookingService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthBookingService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipBookingService(dAtA[iNdEx:])

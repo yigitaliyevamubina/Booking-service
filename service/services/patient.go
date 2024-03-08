@@ -3,53 +3,56 @@ package services
 import (
 	pb "Booking-service/genproto/booking-service"
 	"context"
-	"errors"
-	"fmt"
 )
 
-func (s *BookingService) CreatePatient(ctx context.Context, req *pb.CreatePatientRequest) (*pb.Patient, error) {
-	patient, err := s.storage.Booking().CreatePatient(ctx, req)
+func (s *BookingService) CreatePatient(ctx context.Context, req *pb.Patient) (*pb.Patient, error) {
+	patient, err := s.storage.Booking().CreatePatient(req)
 	if err != nil {
-		s.logger.Error("Failed to create patient in the database:")
-		return nil, fmt.Errorf("failed to create patient: %w", err)
+		return nil, err
 	}
 	if patient == nil {
-		return nil, errors.New("failed to create patient: returned patient is nil")
+		return nil, err
 	}
 	return patient, nil
 }
 
 func (s *BookingService) GetPatient(ctx context.Context, req *pb.GetPatientRequest) (*pb.Patient, error) {
-	patient, err := s.storage.Booking().GetPatient(ctx, req)
+	patient, err := s.storage.Booking().GetPatient(req)
 	if err != nil {
-		s.logger.Error("Failed to fetch patient from the database:")
-		return nil, fmt.Errorf("failed to get patient: %w", err)
+		return nil, err
 	}
 	if patient == nil {
-		return nil, errors.New("failed to get patient: patient not found")
+		return nil, err
 	}
 	return patient, nil
 }
 
+func (s *BookingService) GetPatients(ctx context.Context, req *pb.PatientsReq) (*pb.Patients, error) {
+	patient, err := s.storage.Booking().GetPatients(req)
+	if err != nil {
+		return nil, err
+	}
+	if patient == nil {
+		return nil, err
+	}
+	return patient, nil
+}
 func (s *BookingService) UpdatePatient(ctx context.Context, req *pb.UpdatePatientRequest) (*pb.Patient, error) {
-	patient, err := s.storage.Booking().UpdatePatient(ctx, req)
+	patient, err := s.storage.Booking().UpdatePatient(req)
 	if err != nil {
-		s.logger.Error("Failed to update patient in the database:")
-		return nil, fmt.Errorf("failed to update patient: %w", err)
+		return nil, err
 	}
 	if patient == nil {
-		return nil, errors.New("failed to update patient: patient not found")
+		return nil, err
 	}
 	return patient, nil
 }
 
-func (s *BookingService) DeletePatient(ctx context.Context, req *pb.DeletePatientRequest) (del *pb.IsDeleted, err error) {
-	_, err = s.storage.Booking().DeletePatient(ctx, req)
+func (s *BookingService) DeletePatient(ctx context.Context, req *pb.GetPatientRequest) (del *pb.Status, err error) {
+	t, err := s.storage.Booking().DeletePatient(req)
 	if err != nil {
-		del.IsDeleted = false
-		return del, fmt.Errorf("failed to delete patient: %w", err)
+		return nil, err
 	}
-	del.IsDeleted = true
 
-	return del, nil
+	return &pb.Status{Status: t}, nil
 }

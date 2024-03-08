@@ -6,37 +6,49 @@ option go_package = "booking_service";
 
 
 // Services
+// Patients
+service PatientService {
+  rpc CreatePatient(Patient) returns (Patient);
+  rpc GetPatient(GetPatientRequest) returns (Patient);
+  rpc GetPatients(PatientsReq) returns (Patients);
+  rpc UpdatePatient(UpdatePatientRequest) returns (Patient);
+  rpc DeletePatient(GetPatientRequest) returns (Status);
+}
 
 // Doctor's availability
 service DoctorAvailabilityService {
-  rpc CreateDoctorAvailability(CreateDoctorAvailabilityRequest) returns (DoctorAvailability);
-  rpc GetDoctorAvailability(GetDoctorAvailabilityRequest1) returns (DoctorAvailability);
-  rpc UpdateDoctorAvailability(UpdateDoctorAvailabilityRequest) returns (DoctorAvailability);
-  rpc DeleteDoctorAvailability(DeleteDoctorAvailabilityRequest) returns (IsDeleted);
+  rpc CreateDoctorAvailability(CreateDoctorAvailabilitys) returns (DoctorAvailability);
+  rpc GetDoctorAvailability(GetDoctorAvailabilityById) returns (DoctorAvailability);
+  rpc GetDoctorAvailabilityByDoctorId(GetDoctorAvailabilityById) returns (DoctorAvailabilitys);
+  rpc UpdateDoctorAvailability(UpdateDoctorAvailabilityById) returns (DoctorAvailability);
+  rpc DeleteDoctorAvailability(GetDoctorAvailabilityById) returns (Status);
 }
 
-// Patients
-service PatientService {
-  rpc CreatePatient(CreatePatientRequest) returns (Patient);
-  rpc GetPatient(GetPatientRequest) returns (Patient);
-  rpc UpdatePatient(UpdatePatientRequest) returns (Patient);
-  rpc DeletePatient(DeletePatientRequest) returns (IsDeleted);
-}
 
+// Patient payment
+service PatientPaymentService {
+  rpc MakePayment(MakePaymentRequest) returns (PatientPayment);
+  rpc GetPayment(GetPaymentRequest) returns (PatientPayment);
+  rpc UpdatePayment(UpdatePaymentRequest) returns (PatientPayment);
+  rpc DeletePayment(DeletePaymentRequest) returns (Status);
+}
 // Booked appointments
 service BookedAppointmentService {
   rpc CreateBookedAppointment(CreateBookedAppointmentRequest) returns (BookedAppointment);
   rpc GetBookedAppointment(GetBookedAppointmentRequest) returns (BookedAppointment);
+  rpc GetBookedAppointmentsByPatientID(PatientID) returns (GetBookedAppointmentsByPatientIDResponse);
+  rpc GetBookedAppointmentsByDoctorID(GetBookedAppointmentRequest) returns (GetBookedAppointmentsByPatientIDResponse);
   rpc UpdateBookedAppointment(UpdateBookedAppointmentRequest) returns (BookedAppointment);
-  rpc DeleteBookedAppointment(DeleteBookedAppointmentRequest) returns (IsDeleted);
+  rpc DeleteBookedAppointment(DeleteBookedAppointmentRequest) returns (Status);
 }
 
 // Archive
 service ArchiveService {
   rpc CreateArchive(InsertArchive) returns (Archive);
   rpc GetArchive(GetArchiveRequest) returns (Archive);
+  rpc GetArchiveByPatientID(GetArchiveRequest) returns (Archives);
   rpc UpdateArchive(UpdateArchiveRequest) returns (Archive);
-  rpc DeleteArchive(DeleteArchiveRequest) returns (IsDeleted);
+  rpc DeleteArchive(DeleteArchiveRequest) returns (Status);
 }
 
 // Uploaded files
@@ -44,23 +56,17 @@ service UploadedFileService {
   rpc UploadFile(UploadFileRequest) returns (UploadedFile);
   rpc GetFile(GetFileRequest) returns (UploadedFile);
   rpc UpdateFile(UpdateFileRequest) returns (UploadedFile);
-  rpc DeleteFile(DeleteFileRequest) returns (IsDeleted);
+  rpc DeleteFile(DeleteFileRequest) returns (Status);
 }
 
-// Patient payment
-service PatientPaymentService {
-  rpc MakePayment(MakePaymentRequest) returns (PatientPayment);
-  rpc GetPayment(GetPaymentRequest) returns (PatientPayment);
-  rpc UpdatePayment(UpdatePaymentRequest) returns (PatientPayment);
-  rpc DeletePayment(DeletePaymentRequest) returns (IsDeleted);
-}
+
 
 // Doctor notes
 service DoctorNoteService {
   rpc CreateDoctorNote(CreateDoctorNoteRequest) returns (DoctorNote);
   rpc GetDoctorNote(GetDoctorNoteRequest) returns (DoctorNote);
   rpc UpdateDoctorNote(UpdateDoctorNoteRequest) returns (DoctorNote);
-  rpc DeleteDoctorNote(DeleteDoctorNoteRequest) returns (IsDeleted);
+  rpc DeleteDoctorNote(DeleteDoctorNoteRequest) returns (Status);
 }
 
 // Additional services
@@ -104,27 +110,125 @@ service FeedbackService {
   rpc SubmitFeedback(SubmitFeedbackRequest) returns (SubmitFeedbackResponse);
 }
 
-// Doctor's availability
+
+//-------------------------------------------------------------
+
+message GetPatientRequest {
+  string id = 1;  
+}
+
+message GetPatientsRequest {
+  string limit = 1;
+  string page = 2;
+}
+
+message UpdatePatientRequest {
+  string id = 1;
+  PatientUpdate patient = 2;
+}
+
+
+message Status {
+  bool status = 1;
+}
+
+message Patients {
+  repeated Patient patient = 1;
+}
+
+message Patient {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string birth_date = 4;
+  string gender = 5;
+  string city = 6;
+  string phone_number = 7;
+}
+message PatientUpdate {
+  string first_name = 2;
+  string last_name = 3;
+  string birth_date = 4;
+  string gender = 5;
+  string city = 6;
+  string phone_number = 7;
+}
+
+//-------------------------------------------------------------
+message CreateDoctorAvailabilitys {
+  string doctor_id = 1;
+  string department_id = 2;
+  string availability_date = 3;
+  string availability_time = 4;
+  bool status = 5;
+}
+
+message DoctorAvailabilitys {
+  repeated DoctorAvailability doctor_availability  = 1;
+}
+
+message GetDoctorAvailabilityById {
+  string id = 1;
+}
+
+message UpdateDoctorAvailabilityById {
+  string id = 1;
+  DoctorAvailability doctor_availability = 2;
+}
+
 message DoctorAvailability {
-    int32 id = 1;
-    string doctor_id = 2;
-    string department_id = 3;
-    string availability_date = 4;
-    string availability_time = 5;
-    bool status = 6;
+  int32 id = 1;
+  string doctor_id = 2;
+  string department_id = 3;
+  string availability_date = 4;
+  string availability_time = 5;
+  bool status = 6;
+}
+
+//-------------------------------------------------------------
+
+//-------------------------------------------------------------
+
+//-------------------------------------------------------------
+
+//-------------------------------------------------------------
+
+//-------------------------------------------------------------
+
+//-------------------------------------------------------------
+
+//-------------------------------------------------------------
+
+//-------------------------------------------------------------
+
+//-------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+message GetBookedAppointmentsByPatientIDResponse {
+  repeated BookedAppointment booked_appointments = 1;
+}
+message PatientID {
+  string patient_id = 1;
+}
+
+
+
+
+  message PatientsReq {
+    string limit = 1;
+    string page = 2;
   }
-  
-  // Patients
-  message Patient {
-    string id = 1;
-    string first_name = 2;
-    string last_name = 3;
-    string birth_date = 4;
-    string gender = 5;
-    string city = 6;
-    string phone_number = 7;
-  }
-  
+
   
   // Booked appointments
   message BookedAppointment {
@@ -159,10 +263,10 @@ message DoctorAvailability {
     int32 visits_count = 11;
   }
 
-  message IsDeleted {
-    bool is_deleted = 1;
+  message Archives {
+    repeated Archive archives = 1;
   }
-
+  
   // Archive
   message Archive {
     int32 id = 1;
@@ -356,50 +460,14 @@ message DoctorAvailability {
     bool success = 1;
   }
 
-  // Request message for creating a doctor's availability
-  message CreateDoctorAvailabilityRequest {
-    DoctorAvailability doctor_availability = 1;
-  }
-  
   // Request message for getting doctor's availability
   message GetDoctorAvailabilityRequest {
     int32 id = 1;
   }
   
-  message GetDoctorAvailabilityRequest1 {
-    string id = 1;
-  }
-  // Request message for updating doctor's availability
-  message UpdateDoctorAvailabilityRequest {
-    string id = 1;
-    DoctorAvailability doctor_availability = 2;
-  }
-  
-  // Request message for deleting doctor's availability
-  message DeleteDoctorAvailabilityRequest {
-    string id = 1;
-  }
-  
-  // Request message for creating a patient
-  message CreatePatientRequest {
-    Patient patient = 1;
-  }
-  
-  // Request message for getting a patient
-  message GetPatientRequest {
-    string id = 1;
-  }
-  
-  // Request message for updating a patient
-  message UpdatePatientRequest {
-    string id = 1;
-    Patient patient = 2;
-  }
-  
-  // Request message for deleting a patient
-  message DeletePatientRequest {
-    string id = 1;
-  }
+
+
+
   
   // Request message for creating a booked appointment
   message CreateBookedAppointmentRequest {

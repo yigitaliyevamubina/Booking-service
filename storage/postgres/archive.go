@@ -120,6 +120,62 @@ func (r *bookingRepo) GetArchive(ctx context.Context, req *pb.GetArchiveRequest)
 	return &archive, nil
 }
 
+
+func (r *bookingRepo) GetArchiveByPatientID(ctx context.Context, req *pb.GetArchiveRequest) (*pb.Archives, error) {
+    query := `
+        SELECT 
+            id, 
+            department_id, 
+            doctor_id, 
+            patient_id, 
+            patient_token, 
+            patient_problem, 
+            consultation_type, 
+            booked_date, 
+            booked_time, 
+            appointment_id, 
+            status, 
+            visits_count
+        FROM 
+            archive
+        WHERE 
+            patient_id = $1
+    `
+    rows, err := r.db.QueryContext(ctx, query, req.Id)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var archives []*pb.Archive
+    for rows.Next() {
+        var archive pb.Archive
+        err := rows.Scan(
+            &archive.Id,
+            &archive.DepartmentId,
+            &archive.DoctorId,
+            &archive.PatientId,
+            &archive.PatientToken,
+            &archive.PatientProblem,
+            &archive.ConsultationType,
+            &archive.BookedDate,
+            &archive.BookedTime,
+            &archive.AppointmentId,
+            &archive.Status,
+            &archive.VisitsCount,
+        )
+        if err != nil {
+            return nil, err
+        }
+        archives = append(archives, &archive)
+    }
+    if err := rows.Err(); err != nil {
+        return nil, err
+    }
+
+    return &pb.Archives{Archives: archives}, nil
+}
+
 func (r *bookingRepo) UpdateArchive(ctx context.Context, req *pb.UpdateArchiveRequest) (*pb.Archive, error) {
 
 	query := `
@@ -192,7 +248,7 @@ func (r *bookingRepo) UpdateArchive(ctx context.Context, req *pb.UpdateArchiveRe
 	return &archive, nil
 }
 
-func (r *bookingRepo) DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRequest) (del *pb.IsDeleted, err error) {
+func (r *bookingRepo) DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRequest) (del *pb.Status, err error) {
 
 	query := `UPDATE archive
 			SET deleted_at = $1
@@ -200,12 +256,11 @@ func (r *bookingRepo) DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRe
 	_, err = r.db.Exec(query, time.Now(), req.Id)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			del.IsDeleted = false
-			return del, errors.New("archive not found")
+			return nil, errors.New("archive not found")
 		}
 		return nil, err
 	}
-	del.IsDeleted = true
+	del.Status = true
 	
 	return del, nil
 }
