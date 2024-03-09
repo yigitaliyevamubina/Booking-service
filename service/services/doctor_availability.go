@@ -5,7 +5,6 @@ import (
 	pb "Booking-service/genproto/booking-service"
 )
 
-// DoctorAvailabilityService Methods
 func (s *BookingService) CreateDoctorAvailability(ctx context.Context, req *pb.CreateDoctorAvailabilitys) (*pb.DoctorAvailability, error) {
 	doctorAvailability, err := s.storage.Booking().CreateDoctorAvailability(req)
 	if err != nil {
@@ -30,7 +29,6 @@ func (s *BookingService) GetDoctorAvailabilityByDoctorId(ctx context.Context, re
 	return doctorAvailability, nil
 }
 
-
 func (s *BookingService) UpdateDoctorAvailability(ctx context.Context, req *pb.UpdateDoctorAvailabilityById) (*pb.DoctorAvailability, error) {
 	doctorAvailability, err := s.storage.Booking().UpdateDoctorAvailability(req)
 	if err != nil {
@@ -40,11 +38,10 @@ func (s *BookingService) UpdateDoctorAvailability(ctx context.Context, req *pb.U
 }
 
 func (s *BookingService) DeleteDoctorAvailability(ctx context.Context, req *pb.GetDoctorAvailabilityById) (del *pb.Status, err error) {
-	_, err = s.storage.Booking().DeleteDoctorAvailability(req)
+	t, err := s.storage.Booking().DeleteDoctorAvailability(req)
 	if err != nil {
 		return nil, err
 	}
-	del.Status = true
-
-	return del, nil
+	
+	return &pb.Status{Status: t}, nil
 }

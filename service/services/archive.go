@@ -5,9 +5,8 @@ import (
 	"context"
 )
 
-// GetArchive retrieves an archive entry
-func (s *BookingService) GetArchive(ctx context.Context, req *pb.GetArchiveRequest) (*pb.Archive, error) {
-	archive, err := s.storage.Booking().GetArchive(ctx, req)
+func (s *BookingService) CreateArchive(ctx context.Context, req *pb.CreateArchiveReq) (*pb.Archive, error) {
+	archive, err := s.storage.Booking().CreateArchive(req)
 	if err != nil {
 		return nil, err
 	}
@@ -15,9 +14,18 @@ func (s *BookingService) GetArchive(ctx context.Context, req *pb.GetArchiveReque
 	return archive, nil
 }
 
-func (s *BookingService) GetArchiveByPatientID(ctx context.Context, req *pb.GetArchiveRequest) (*pb.Archives, error) {
+func (s *BookingService) GetArchive(ctx context.Context, req *pb.GetArchiveReq) (*pb.Archive, error) {
+	archive, err := s.storage.Booking().GetArchive(req)
+	if err != nil {
+		return nil, err
+	}
 
-	archive, err := s.storage.Booking().GetArchiveByPatientID(ctx, req)
+	return archive, nil
+}
+
+func (s *BookingService) GetArchivesByPatientID(ctx context.Context, req *pb.GetArchiveReq) (*pb.Archives, error) {
+
+	archive, err := s.storage.Booking().GetArchivesByPatientID(req)
 	if err != nil {
 		return nil, err
 	}
@@ -26,9 +34,8 @@ func (s *BookingService) GetArchiveByPatientID(ctx context.Context, req *pb.GetA
 
 }
 
-// UpdateArchive updates an existing archive entry
 func (s *BookingService) UpdateArchive(ctx context.Context, req *pb.UpdateArchiveRequest) (*pb.Archive, error) {
-	archive, err := s.storage.Booking().UpdateArchive(ctx, req)
+	archive, err := s.storage.Booking().UpdateArchive(req)
 	if err != nil {
 		return nil, err
 	}
@@ -36,12 +43,10 @@ func (s *BookingService) UpdateArchive(ctx context.Context, req *pb.UpdateArchiv
 	return archive, nil
 }
 
-// DeleteArchive deletes an archive entry
-func (s *BookingService) DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRequest) (del *pb.Status, err error) {
-	if _, err := s.storage.Booking().DeleteArchive(ctx, req); err != nil {
+func (s *BookingService) DeleteArchive(ctx context.Context, req *pb.GetArchiveReq) (del *pb.Status, err error) {
+	t, err := s.storage.Booking().DeleteArchive(req)
+	if err != nil {
 		return nil, err
 	}
-	del.Status = true
-
-	return del, nil
+	return &pb.Status{Status: t}, nil
 }

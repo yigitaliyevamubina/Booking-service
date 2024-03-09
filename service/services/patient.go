@@ -27,7 +27,7 @@ func (s *BookingService) GetPatient(ctx context.Context, req *pb.GetPatientReque
 	return patient, nil
 }
 
-func (s *BookingService) GetPatients(ctx context.Context, req *pb.PatientsReq) (*pb.Patients, error) {
+func (s *BookingService) GetPatients(ctx context.Context, req *pb.GetPatientsRequest) (*pb.Patients, error) {
 	patient, err := s.storage.Booking().GetPatients(req)
 	if err != nil {
 		return nil, err
@@ -37,6 +37,7 @@ func (s *BookingService) GetPatients(ctx context.Context, req *pb.PatientsReq) (
 	}
 	return patient, nil
 }
+
 func (s *BookingService) UpdatePatient(ctx context.Context, req *pb.UpdatePatientRequest) (*pb.Patient, error) {
 	patient, err := s.storage.Booking().UpdatePatient(req)
 	if err != nil {

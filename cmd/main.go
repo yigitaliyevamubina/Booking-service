@@ -28,7 +28,7 @@ func main() {
 	}
 
 	userService := services.NewBookingService(connDB, log)
-	
+
 	lis, err := net.Listen("tcp", cfg.RPCPort)
 	if err != nil {
 		log.Fatal("Error while listening: %v", logger.Error(err))
@@ -39,6 +39,9 @@ func main() {
 	pb.RegisterDoctorAvailabilityServiceServer(s, userService)
 	pb.RegisterBookedAppointmentServiceServer(s, userService)
 	pb.RegisterArchiveServiceServer(s, userService)
+	pb.RegisterDoctorNoteServiceServer(s, userService)
+	pb.RegisterPatientPaymentServiceServer(s,userService)
+	pb.RegisterUploadedFileServiceServer(s,userService)
 	log.Info("main: server running",
 		logger.String("port", cfg.RPCPort))
 

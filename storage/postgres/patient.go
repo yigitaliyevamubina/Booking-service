@@ -3,6 +3,7 @@ package postgres
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -21,15 +22,17 @@ func (r *bookingRepo) CreatePatient(req *pb.Patient) (resp *pb.Patient, err erro
 			birth_date,
 			gender,
 			city, 
-			phone_number
-		) VALUES ($1, $2, $3, $4, $5, $6, $7)
+			phone_number,
+			created_at
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
 	`, req.Id,
 		req.FirstName,
 		req.LastName,
 		req.BirthDate,
 		req.Gender,
 		req.City,
-		req.PhoneNumber)
+		req.PhoneNumber,
+		time.Now())
 	if err != nil {
 		return nil, err
 	}
@@ -45,6 +48,7 @@ func (r *bookingRepo) CreatePatient(req *pb.Patient) (resp *pb.Patient, err erro
 func (r *bookingRepo) GetPatient(req *pb.GetPatientRequest) (*pb.Patient, error) {
 
 	var patient pb.Patient
+	var updatedAtPtr *string
 	err := r.db.QueryRow(`
 		SELECT 
 			id, 
@@ -53,7 +57,9 @@ func (r *bookingRepo) GetPatient(req *pb.GetPatientRequest) (*pb.Patient, error)
 			birth_date,
 			gender, 
 			city, 
-			phone_number
+			phone_number,
+			created_at,
+			updated_at
 		FROM patients
 		WHERE id = $1 AND deleted_at IS NULL
 	`, req.Id).Scan(
@@ -63,7 +69,10 @@ func (r *bookingRepo) GetPatient(req *pb.GetPatientRequest) (*pb.Patient, error)
 		&patient.BirthDate,
 		&patient.Gender,
 		&patient.City,
-		&patient.PhoneNumber)
+		&patient.PhoneNumber,
+		&patient.CreateAt,
+		&updatedAtPtr,
+	)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -72,10 +81,14 @@ func (r *bookingRepo) GetPatient(req *pb.GetPatientRequest) (*pb.Patient, error)
 		return nil, err
 	}
 
+	if updatedAtPtr != nil {
+		patient.UpdateAt = *updatedAtPtr
+	}
+
 	return &patient, nil
 }
 
-func (r *bookingRepo) GetPatients(req *pb.PatientsReq) (*pb.Patients, error) {
+func (r *bookingRepo) GetPatients(req *pb.GetPatientsRequest) (*pb.Patients, error) {
 
 	limit, err := strconv.ParseInt(req.Limit, 10, 64)
 	if err != nil {
@@ -95,7 +108,9 @@ func (r *bookingRepo) GetPatients(req *pb.PatientsReq) (*pb.Patients, error) {
             birth_date,
             gender, 
             city, 
-            phone_number
+            phone_number,
+			created_at,
+			updated_at
         FROM patients
 		WHERE deleted_at IS NULL
         ORDER BY id
@@ -111,6 +126,7 @@ func (r *bookingRepo) GetPatients(req *pb.PatientsReq) (*pb.Patients, error) {
 
 	for rows.Next() {
 		var patient pb.Patient
+		var updatedAtPtr *string
 		err := rows.Scan(
 			&patient.Id,
 			&patient.FirstName,
@@ -119,10 +135,18 @@ func (r *bookingRepo) GetPatients(req *pb.PatientsReq) (*pb.Patients, error) {
 			&patient.Gender,
 			&patient.City,
 			&patient.PhoneNumber,
+			&patient.CreateAt,
+			&updatedAtPtr,
 		)
 		if err != nil {
+			fmt.Println(err)
 			return nil, err
 		}
+
+		if updatedAtPtr != nil {
+			patient.UpdateAt = *updatedAtPtr
+		}
+
 		patients = append(patients, &patient)
 	}
 	if err := rows.Err(); err != nil {
@@ -145,14 +169,16 @@ func (r *bookingRepo) UpdatePatient(req *pb.UpdatePatientRequest) (*pb.Patient, 
 			birth_date = $3, 
 			gender = $4, 
 			city = $5, 
-			phone_number = $6
-		WHERE id = $7 AND deleted_at IS NULL
+			phone_number = $6,
+			updated_at = $7
+		WHERE id = $8 AND deleted_at IS NULL
 	`, req.Patient.FirstName,
 		req.Patient.LastName,
 		req.Patient.BirthDate,
 		req.Patient.Gender,
 		req.Patient.City,
 		req.Patient.PhoneNumber,
+		time.Now(),
 		req.Id)
 	if err != nil {
 		return nil, err

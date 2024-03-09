@@ -1,7 +1,6 @@
 package postgres
 
 import (
-	"context"
 	"database/sql"
 	"errors"
 	"time"
@@ -9,14 +8,13 @@ import (
 	pb "Booking-service/genproto/booking-service"
 
 	_ "github.com/lib/pq"
-	"github.com/spf13/cast"
 )
 
-
-func (r *bookingRepo) CreateArchive(ctx context.Context, req *pb.InsertArchive) (*pb.Archive, error) {
+func (r *bookingRepo) CreateArchive(req *pb.CreateArchiveReq) (*pb.Archive, error) {
 	resp := &pb.Archive{}
-	err := r.db.QueryRowContext(ctx, `
+	err := r.db.QueryRow(`
     INSERT INTO archive (
+		id,
 		department_id, 
 		doctor_id, 
 		patient_id, 
@@ -28,8 +26,9 @@ func (r *bookingRepo) CreateArchive(ctx context.Context, req *pb.InsertArchive) 
 		appointment_id, 
 		status, 
 		visits_count, 
-		created_at)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+		created_at
+	)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
 	RETURNING 
 		id, 
 		department_id, 
@@ -44,17 +43,20 @@ func (r *bookingRepo) CreateArchive(ctx context.Context, req *pb.InsertArchive) 
 		status, 
 		visits_count, 
 		created_at`,
-		req.Insert.DepartmentId,
-		req.Insert.DoctorId,
-		req.Insert.PatientId,
-		req.Insert.PatientToken,
-		req.Insert.PatientProblem,
-		req.Insert.ConsultationType,
-		req.Insert.BookedDate,
-		req.Insert.BookedTime,
-		req.Insert.AppointmentId,
-		cast.ToString(req.Insert.Status),
-		req.Insert.VisitsCount, time.Now()).Scan(&resp.Id,
+		req.Id,
+		req.DepartmentId,
+		req.DoctorId,
+		req.PatientId,
+		req.PatientToken,
+		req.PatientProblem,
+		req.ConsultationType,
+		req.BookedDate,
+		req.BookedTime,
+		req.AppointmentId,
+		req.Status,
+		req.VisitsCount,
+		time.Now()).Scan(
+		&resp.Id,
 		&resp.DepartmentId,
 		&resp.DoctorId,
 		&resp.PatientId,
@@ -75,10 +77,11 @@ func (r *bookingRepo) CreateArchive(ctx context.Context, req *pb.InsertArchive) 
 	return resp, nil
 }
 
-func (r *bookingRepo) GetArchive(ctx context.Context, req *pb.GetArchiveRequest) (*pb.Archive, error) {
-
+func (r *bookingRepo) GetArchive(req *pb.GetArchiveReq) (*pb.Archive, error) {
+	var updatedAtPtr *string
 	query := `
-		SELECT id, 
+		SELECT 
+		id, 
 		department_id, 
 		doctor_id, 
 		patient_id, 
@@ -90,12 +93,12 @@ func (r *bookingRepo) GetArchive(ctx context.Context, req *pb.GetArchiveRequest)
 		appointment_id, 
 		status, 
 		visits_count, 
-		created_at
+		created_at,
+		updated_at
 		FROM archive
-		WHERE patient_id = $1
-		AND deleted_at IS NULL`
+		WHERE patient_id = $1 AND deleted_at IS NULL`
 	var archive pb.Archive
-	err := r.db.QueryRowContext(ctx, query, req.Id).Scan(
+	err := r.db.QueryRow(query, req.Id).Scan(
 		&archive.Id,
 		&archive.DepartmentId,
 		&archive.DoctorId,
@@ -109,6 +112,7 @@ func (r *bookingRepo) GetArchive(ctx context.Context, req *pb.GetArchiveRequest)
 		&archive.Status,
 		&archive.VisitsCount,
 		&archive.CreateAt,
+		&updatedAtPtr,
 	)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -117,12 +121,15 @@ func (r *bookingRepo) GetArchive(ctx context.Context, req *pb.GetArchiveRequest)
 		return nil, err
 	}
 
+	if updatedAtPtr != nil {
+		archive.UpdateAt = *updatedAtPtr
+	}
+
 	return &archive, nil
 }
 
-
-func (r *bookingRepo) GetArchiveByPatientID(ctx context.Context, req *pb.GetArchiveRequest) (*pb.Archives, error) {
-    query := `
+func (r *bookingRepo) GetArchivesByPatientID(req *pb.GetArchiveReq) (*pb.Archives, error) {
+	query := `
         SELECT 
             id, 
             department_id, 
@@ -135,66 +142,73 @@ func (r *bookingRepo) GetArchiveByPatientID(ctx context.Context, req *pb.GetArch
             booked_time, 
             appointment_id, 
             status, 
-            visits_count
+            visits_count,
+			created_at,
+			updated_at
         FROM 
             archive
         WHERE 
-            patient_id = $1
+            patient_id = $1 AND deleted_at IS NULL
     `
-    rows, err := r.db.QueryContext(ctx, query, req.Id)
-    if err != nil {
-        return nil, err
-    }
-    defer rows.Close()
+	rows, err := r.db.Query(query, req.Id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
 
-    var archives []*pb.Archive
-    for rows.Next() {
-        var archive pb.Archive
-        err := rows.Scan(
-            &archive.Id,
-            &archive.DepartmentId,
-            &archive.DoctorId,
-            &archive.PatientId,
-            &archive.PatientToken,
-            &archive.PatientProblem,
-            &archive.ConsultationType,
-            &archive.BookedDate,
-            &archive.BookedTime,
-            &archive.AppointmentId,
-            &archive.Status,
-            &archive.VisitsCount,
-        )
-        if err != nil {
-            return nil, err
-        }
-        archives = append(archives, &archive)
-    }
-    if err := rows.Err(); err != nil {
-        return nil, err
-    }
+	var archives []*pb.Archive
+	for rows.Next() {
+		var updatedAtPtr *string
+		var archive pb.Archive
+		err := rows.Scan(
+			&archive.Id,
+			&archive.DepartmentId,
+			&archive.DoctorId,
+			&archive.PatientId,
+			&archive.PatientToken,
+			&archive.PatientProblem,
+			&archive.ConsultationType,
+			&archive.BookedDate,
+			&archive.BookedTime,
+			&archive.AppointmentId,
+			&archive.Status,
+			&archive.VisitsCount,
+			&archive.CreateAt,
+			&updatedAtPtr,
+		)
+		if err != nil {
+			return nil, err
+		}
 
-    return &pb.Archives{Archives: archives}, nil
+		if updatedAtPtr != nil {
+			archive.UpdateAt = *updatedAtPtr
+		}
+		archives = append(archives, &archive)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return &pb.Archives{Archives: archives}, nil
 }
 
-func (r *bookingRepo) UpdateArchive(ctx context.Context, req *pb.UpdateArchiveRequest) (*pb.Archive, error) {
+func (r *bookingRepo) UpdateArchive(req *pb.UpdateArchiveRequest) (*pb.Archive, error) {
 
 	query := `
 		UPDATE archive
-		SET id = $2, 
-		department_id = $3,
-		doctor_id = $4, 
-		patient_id = $5, 
-		patient_token = $6, 
-		patient_problem = $7, 
-		consultation_type = $8, 
-		booked_date = $9, 
-		booked_time = $10, 
-		appointment_id = $11, 
-		status = $12, 
-		visits_count = $13, 
-		updated_at = $14
-		WHERE patient_id = $1 AND deleted_at IS NULL
-		RETURNING id, 
+		SET
+		patient_token = $1, 
+		patient_problem = $2, 
+		consultation_type = $3, 
+		booked_date = $4, 
+		booked_time = $5, 
+		appointment_id = $6, 
+		status = $7, 
+		visits_count = $8, 
+		updated_at = $9
+		WHERE patient_id = $10 AND deleted_at IS NULL
+		RETURNING 
+		id, 
 		department_id, 
 		doctor_id, 
 		patient_id, 
@@ -207,14 +221,11 @@ func (r *bookingRepo) UpdateArchive(ctx context.Context, req *pb.UpdateArchiveRe
 		status, 
 		visits_count, 
 		created_at, 
-		updated_at`
+		updated_at
+		`
+
 	var archive pb.Archive
-	err := r.db.QueryRowContext(ctx, query,
-		req.Id,
-		req.Archive.Id,
-		req.Archive.DepartmentId,
-		req.Archive.DoctorId,
-		req.Archive.PatientId,
+	err := r.db.QueryRow(query,
 		req.Archive.PatientToken,
 		req.Archive.PatientProblem,
 		req.Archive.ConsultationType,
@@ -222,7 +233,9 @@ func (r *bookingRepo) UpdateArchive(ctx context.Context, req *pb.UpdateArchiveRe
 		req.Archive.BookedTime,
 		req.Archive.AppointmentId,
 		req.Archive.Status,
-		req.Archive.VisitsCount, time.Now()).Scan(
+		req.Archive.VisitsCount,
+		time.Now(),
+		req.Id).Scan(
 		&archive.Id,
 		&archive.DepartmentId,
 		&archive.DoctorId,
@@ -248,19 +261,23 @@ func (r *bookingRepo) UpdateArchive(ctx context.Context, req *pb.UpdateArchiveRe
 	return &archive, nil
 }
 
-func (r *bookingRepo) DeleteArchive(ctx context.Context, req *pb.DeleteArchiveRequest) (del *pb.Status, err error) {
+func (r *bookingRepo) DeleteArchive(req *pb.GetArchiveReq) (bool, error) {
 
-	query := `UPDATE archive
-			SET deleted_at = $1
-			WHERE patient_id = $2`
-	_, err = r.db.Exec(query, time.Now(), req.Id)
+	result, err := r.db.Exec(`
+	UPDATE archive
+	SET deleted_at = $1
+	WHERE patient_id = $2 AND deleted_at IS NULL
+	`, time.Now(), req.Id)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, errors.New("archive not found")
+			return false, err
 		}
-		return nil, err
+		return false, err
 	}
-	del.Status = true
-	
-	return del, nil
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		return false, err
+	}
+
+	return true, nil
 }

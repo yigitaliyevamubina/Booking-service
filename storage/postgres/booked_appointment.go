@@ -1,7 +1,8 @@
 package postgres
 
 import (
-	"context"
+	"database/sql"
+	"errors"
 	"fmt"
 	"log"
 	"time"
@@ -11,10 +12,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func (r *bookingRepo) CreateBookedAppointment(ctx context.Context, req *pb.CreateBookedAppointmentRequest) (*pb.BookedAppointment, error) {
+func (r *bookingRepo) CreateBookedAppointment(req *pb.CreateBookedAppointments) (*pb.BookedAppointment, error) {
 	var ba pb.BookedAppointment
-	err := r.db.QueryRowContext(ctx, `
+	err := r.db.QueryRow(`
         INSERT INTO booked_appointments (
+			id,
 			department_id, 
 			doctor_id, 
 			patient_id, 
@@ -25,10 +27,12 @@ func (r *bookingRepo) CreateBookedAppointment(ctx context.Context, req *pb.Creat
 			expires_at, 
 			token,
 			patient_status,
-			status
+			status,
+			created_at
 		)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-		RETURNING id, 
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+		RETURNING 
+			id, 
 			department_id, 
 			doctor_id, 
 			patient_id, 
@@ -39,20 +43,25 @@ func (r *bookingRepo) CreateBookedAppointment(ctx context.Context, req *pb.Creat
 			expires_at, 
 			token, 
 			patient_status, 
-			status
-	 `, req.BookedAppointment.DepartmentId,
-		req.BookedAppointment.DoctorId,
-		req.BookedAppointment.PatientId,
-		req.BookedAppointment.AppointmentDate,
-		req.BookedAppointment.AppointmentTime,
-		req.BookedAppointment.Type,
-		req.BookedAppointment.Duration,
-		req.BookedAppointment.ExpiresAt,
-		req.BookedAppointment.Token,
-		req.BookedAppointment.PatientStatus,
-		req.BookedAppointment.Status).Scan(
-		&ba.Id, &ba.DepartmentId,
-		&ba.DoctorId, &ba.PatientId,
+			status,
+			created_at
+	 `,	req.Id,
+	 	req.DepartmentId,
+		req.DoctorId,
+		req.PatientId,
+		req.AppointmentDate,
+		req.AppointmentTime,
+		req.Type,
+		req.Duration,
+		req.ExpiresAt,
+		req.Token,
+		req.PatientStatus,
+		req.Status,
+		time.Now()).Scan(
+		&ba.Id, 
+		&ba.DepartmentId,
+		&ba.DoctorId, 
+		&ba.PatientId,
 		&ba.AppointmentDate,
 		&ba.AppointmentTime,
 		&ba.Type,
@@ -60,7 +69,9 @@ func (r *bookingRepo) CreateBookedAppointment(ctx context.Context, req *pb.Creat
 		&ba.ExpiresAt,
 		&ba.Token,
 		&ba.PatientStatus,
-		&ba.Status)
+		&ba.Status,
+		&ba.CreateAt,
+	)
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -69,9 +80,10 @@ func (r *bookingRepo) CreateBookedAppointment(ctx context.Context, req *pb.Creat
 	return &ba, nil
 }
 
-func (r *bookingRepo) GetBookedAppointment(ctx context.Context, req *pb.GetBookedAppointmentRequest) (*pb.BookedAppointment, error) {
+func (r *bookingRepo) GetBookedAppointment(req *pb.GetRequest) (*pb.BookedAppointment, error) {
 	var ba pb.BookedAppointment
-	err := r.db.QueryRowContext(ctx, `
+	var updatedAtPtr *string
+	err := r.db.QueryRow(`
         SELECT 
 			id, 
 			department_id, 
@@ -84,32 +96,40 @@ func (r *bookingRepo) GetBookedAppointment(ctx context.Context, req *pb.GetBooke
 			expires_at, 
 			token, 
 			patient_status, 
-			status
+			status,
+			created_at,
+			updated_at
         FROM booked_appointments
         	WHERE patient_id = $1 AND deleted_at IS NULL
-    `, req.Id).Scan(
+    `,  req.Id).Scan(
 		&ba.Id,
 		&ba.DepartmentId,
 		&ba.DoctorId,
 		&ba.PatientId,
 		&ba.AppointmentDate,
 		&ba.AppointmentTime,
-		&ba.Type, 
+		&ba.Type,
 		&ba.Duration,
 		&ba.ExpiresAt,
 		&ba.Token,
 		&ba.PatientStatus,
 		&ba.Status,
+		&ba.CreateAt,
+		&updatedAtPtr,
 	)
 	if err != nil {
 		log.Println(err)
 		return nil, err
 	}
+
+	if updatedAtPtr != nil {
+		ba.UpdateAt = *updatedAtPtr
+	}
 	return &ba, nil
 }
 
-func (r *bookingRepo) GetBookedAppointmentsByPatientID(ctx context.Context, patientID *pb.PatientID) (*pb.GetBookedAppointmentsByPatientIDResponse, error) {
-    appointments, err := r.db.QueryContext(ctx, `SELECT 
+func (r *bookingRepo) UpdatePatientStatusByToken(patientID *pb.UpdRequest) (*pb.GetBookedAppointments, error) {
+	appointments, err := r.db.Query(`SELECT 
         id, 
         department_id, 
         doctor_id, 
@@ -121,48 +141,50 @@ func (r *bookingRepo) GetBookedAppointmentsByPatientID(ctx context.Context, pati
         expires_at, 
         token, 
         patient_status, 
-        status
+        status,
+		created_at,
+		updated_at
     FROM booked_appointments
-    WHERE patient_id = $1 AND deleted_at IS NULL`, patientID.PatientId)
-    if err != nil {
+    WHERE patient_id = $1 AND deleted_at IS NULL`, patientID.Token)
+	if err != nil {
 		fmt.Println(err)
-        return nil, err
-    }
-    defer appointments.Close()
+		return nil, err
+	}
+	defer appointments.Close()
 
-    // Create a new response object
-    bookedAppointments := &pb.GetBookedAppointmentsByPatientIDResponse{}
+	// Create a new response object
+	bookedAppointments := &pb.GetBookedAppointments{}
 
-    for appointments.Next() {
-        var appointment pb.BookedAppointment
-        err := appointments.Scan(
-            &appointment.Id,
-            &appointment.DepartmentId,
-            &appointment.DoctorId,
-            &appointment.PatientId,
-            &appointment.AppointmentDate,
-            &appointment.AppointmentTime,
-            &appointment.Type,
-            &appointment.Duration,
-            &appointment.ExpiresAt,
-            &appointment.Token,
-            &appointment.PatientStatus,
-            &appointment.Status)
-        if err != nil {
+	for appointments.Next() {
+		var appointment pb.BookedAppointment
+		err := appointments.Scan(
+			&appointment.Id,
+			&appointment.DepartmentId,
+			&appointment.DoctorId,
+			&appointment.PatientId,
+			&appointment.AppointmentDate,
+			&appointment.AppointmentTime,
+			&appointment.Type,
+			&appointment.Duration,
+			&appointment.ExpiresAt,
+			&appointment.Token,
+			&appointment.PatientStatus,
+			&appointment.Status,
+			&appointment.CreateAt,
+			&appointment.UpdateAt,
+		)
+		if err != nil {
 			fmt.Println(err)
-            return nil, err
-        }
+			return nil, err
+		}
+		bookedAppointments.BookedAppointments = append(bookedAppointments.BookedAppointments, &appointment)
+	}
 
-        // Append each appointment to the response
-        bookedAppointments.BookedAppointments = append(bookedAppointments.BookedAppointments, &appointment)
-    }
-
-    return bookedAppointments, nil
+	return bookedAppointments, nil
 }
 
-
-func (r *bookingRepo) GetBookedAppointmentsByDoctorID(ctx context.Context, doctorID *pb.GetBookedAppointmentRequest) (*pb.GetBookedAppointmentsByPatientIDResponse, error) {
-    appointments, err := r.db.QueryContext(ctx, `SELECT 
+func (r *bookingRepo) GetBookedAppointmentsByDoctorID(doctorID *pb.GetRequest) (*pb.GetBookedAppointments, error) {
+	appointments, err := r.db.Query(`SELECT 
         id, 
         department_id, 
         doctor_id, 
@@ -174,63 +196,123 @@ func (r *bookingRepo) GetBookedAppointmentsByDoctorID(ctx context.Context, docto
         expires_at, 
         token, 
         patient_status, 
-        status
+        status,
+		created_at,
+		updated_at
     FROM booked_appointments
     WHERE doctor_id = $1 AND deleted_at IS NULL`, doctorID.Id)
-    if err != nil {
-        return nil, err
-    }
-    defer appointments.Close()
+	if err != nil {
+		return nil, err
+	}
+	defer appointments.Close()
 
-    bookedAppointments := &pb.GetBookedAppointmentsByPatientIDResponse{}
+	bookedAppointments := &pb.GetBookedAppointments{}
 
-    for appointments.Next() {
-        var appointment pb.BookedAppointment
-        err := appointments.Scan(
-            &appointment.Id,
-            &appointment.DepartmentId,
-            &appointment.DoctorId,
-            &appointment.PatientId,
-            &appointment.AppointmentDate,
-            &appointment.AppointmentTime,
-            &appointment.Type,
-            &appointment.Duration,
-            &appointment.ExpiresAt,
-            &appointment.Token,
-            &appointment.PatientStatus,
-            &appointment.Status)
-        if err != nil {
-            return nil, err
-        }
+	for appointments.Next() {
+		var appointment pb.BookedAppointment
+		var updatedAtPtr *string
+		err := appointments.Scan(
+			&appointment.Id,
+			&appointment.DepartmentId,
+			&appointment.DoctorId,
+			&appointment.PatientId,
+			&appointment.AppointmentDate,
+			&appointment.AppointmentTime,
+			&appointment.Type,
+			&appointment.Duration,
+			&appointment.ExpiresAt,
+			&appointment.Token,
+			&appointment.PatientStatus,
+			&appointment.Status,
+			&appointment.CreateAt,
+			&updatedAtPtr,
+		)
+		if err != nil {
+			return nil, err
+		}
 
-        // Append each appointment to the response
-        bookedAppointments.BookedAppointments = append(bookedAppointments.BookedAppointments, &appointment)
-    }
+		if updatedAtPtr != nil {
+			appointment.UpdateAt = *updatedAtPtr
+		}
 
-    return bookedAppointments, nil
+		bookedAppointments.BookedAppointments = append(bookedAppointments.BookedAppointments, &appointment)
+	}
+
+	return bookedAppointments, nil
 }
 
+func (r *bookingRepo) GetBookedAppointmentsByPatientID(doctorID *pb.GetRequest) (*pb.GetBookedAppointments, error) {
+	appointments, err := r.db.Query(`SELECT 
+        id, 
+        department_id, 
+        doctor_id, 
+        patient_id, 
+        appointment_date, 
+        appointment_time, 
+        type, 
+        duration, 
+        expires_at, 
+        token, 
+        patient_status, 
+        status,
+		created_at,
+		updated_at
+    FROM booked_appointments
+    WHERE patient_id = $1 AND deleted_at IS NULL`, doctorID.Id)
+	if err != nil {
+		return nil, err
+	}
+	defer appointments.Close()
 
+	bookedAppointments := &pb.GetBookedAppointments{}
 
+	for appointments.Next() {
+		var appointment pb.BookedAppointment
+		var updatedAtPtr *string
+		err := appointments.Scan(
+			&appointment.Id,
+			&appointment.DepartmentId,
+			&appointment.DoctorId,
+			&appointment.PatientId,
+			&appointment.AppointmentDate,
+			&appointment.AppointmentTime,
+			&appointment.Type,
+			&appointment.Duration,
+			&appointment.ExpiresAt,
+			&appointment.Token,
+			&appointment.PatientStatus,
+			&appointment.Status,
+			&appointment.CreateAt,
+			&updatedAtPtr,
+		)
+		if err != nil {
+			return nil, err
+		}
+		if updatedAtPtr != nil {
+			appointment.UpdateAt = *updatedAtPtr
+		}
+		
+		bookedAppointments.BookedAppointments = append(bookedAppointments.BookedAppointments, &appointment)
+	}
 
-func (r *bookingRepo) UpdateBookedAppointment(ctx context.Context, req *pb.UpdateBookedAppointmentRequest) (*pb.BookedAppointment, error) {
+	return bookedAppointments, nil
+}
+
+func (r *bookingRepo) UpdateBookedAppointment(req *pb.UpdateBookedAppointmentRequest) (*pb.BookedAppointment, error) {
 	var ba pb.BookedAppointment
-	err := r.db.QueryRowContext(ctx, `
+	err := r.db.QueryRow(`
         UPDATE booked_appointments
         	SET 
-				id = $2, 
-				department_id = $3,
-				doctor_id = $4, 
-				patient_id = $5, 
-				appointment_date = $6, 
-				appointment_time = $7, 
-				type = $8, 
-				duration = $9, 
-				expires_at = $10, 
-				token = $11, 
-				patient_status = $12, 
-				status = $13
-        	WHERE patient_id = $1 AND deleted_at IS NULL
+				appointment_date = $1, 
+				appointment_time = $2, 
+				type = $3, 
+				duration = $4, 
+				expires_at = $5, 
+				token = $6, 
+				patient_status = $7, 
+				status = $8,
+				updated_at = $9
+        	WHERE patient_id = $10 AND deleted_at IS NULL
         	RETURNING 
 				id, 
 				department_id, 
@@ -243,12 +325,10 @@ func (r *bookingRepo) UpdateBookedAppointment(ctx context.Context, req *pb.Updat
 				expires_at, 
 				token, 
 				patient_status, 
-				status
-     `, req.Id,
-		req.BookedAppointment.Id,
-		req.BookedAppointment.DepartmentId,
-		req.BookedAppointment.DoctorId,
-		req.BookedAppointment.PatientId,
+				status,
+				created_at,
+				updated_at
+     `, 
 		req.BookedAppointment.AppointmentDate,
 		req.BookedAppointment.AppointmentTime,
 		req.BookedAppointment.Type,
@@ -256,8 +336,9 @@ func (r *bookingRepo) UpdateBookedAppointment(ctx context.Context, req *pb.Updat
 		req.BookedAppointment.ExpiresAt,
 		req.BookedAppointment.Token,
 		req.BookedAppointment.PatientStatus,
-		req.BookedAppointment.Status).
-		Scan(
+		req.BookedAppointment.Status,
+		time.Now(),
+		req.Id).Scan(
 			&ba.Id,
 			&ba.DepartmentId,
 			&ba.DoctorId,
@@ -269,6 +350,8 @@ func (r *bookingRepo) UpdateBookedAppointment(ctx context.Context, req *pb.Updat
 			&ba.Token,
 			&ba.PatientStatus,
 			&ba.Status,
+			&ba.CreateAt,
+			&ba.UpdateAt,
 		)
 	if err != nil {
 		return nil, err
@@ -276,33 +359,22 @@ func (r *bookingRepo) UpdateBookedAppointment(ctx context.Context, req *pb.Updat
 	return &ba, nil
 }
 
-// func (r *bookingRepo) DeleteBookedAppointment(ctx context.Context, req *pb.DeleteBookedAppointmentRequest) (del *pb.IsDeleted, err error) {
-// 	fmt.Println("MANA>>>>",req.Id)
-
-// 	_, err = r.db.Exec(`
-//         UPDATE booked_appointments
-//         SET deleted_at = $1
-//         WHERE patient_id = $2
-//     `, time.Now(), req.Id)
-// 	if err != nil {
-// 		fmt.Println("MANA>>>>", err)
-// 		return nil, err
-// 	}
-// 	fmt.Println("MANA>>>>",del)
-// 	//del.IsDeleted = true
-// 	return del, nil
-// }
-
-func (r *bookingRepo) DeleteBookedAppointment(ctx context.Context, req *pb.DeleteBookedAppointmentRequest) (del *pb.Status, err error) {
-	_, err = r.db.Exec(`
+func (r *bookingRepo) DeleteBookedAppointment(req *pb.GetRequest) (bool, error) {
+	result, err := r.db.Exec(`
 		UPDATE booked_appointments
         SET deleted_at = $1
-        WHERE patient_id = $2
+        WHERE patient_id = $2 AND deleted_at IS NULL
 	`, time.Now(), req.Id)
 	if err != nil {
-		return nil,err
+		if errors.Is(err, sql.ErrNoRows) {
+			return false, err
+		}
+		return false, err
+	}
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		return false, err
 	}
 
-	// Soft delete successful, return nil
-	return del,nil
+	return true, nil
 }

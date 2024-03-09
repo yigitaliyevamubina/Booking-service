@@ -4,7 +4,7 @@
 -- Bu bemorlarga mavjud bo'shliqlar asosida uchrashuvlarni 
 -- rejalashtirish imkonini beradi.
 CREATE TABLE doctor_availability (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY,
   doctor_id UUID NOT NULL,
   department_id UUID NOT NULL,
   availability_date DATE NOT NULL,
@@ -59,7 +59,7 @@ CREATE INDEX first_name_idx ON patients(last_name, first_name);
 CREATE TYPE type_enum AS ENUM ('offline', 'online');
 CREATE TYPE status_enum AS ENUM('scheduled', 'completed', 'missed');
 CREATE TABLE booked_appointments (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY,
   department_id UUID NOT NULL,
   doctor_id UUID NOT NULL,
   patient_id UUID,
@@ -94,7 +94,7 @@ CREATE INDEX patient_status_idx ON booked_appointments(patient_status);
 CREATE TYPE consultation_type_enum AS ENUM ('online', 'offline');
 CREATE TYPE status_archive AS ENUM('completed', 'missed');
 CREATE TABLE archive (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY,
   department_id UUID NOT NULL,
   doctor_id UUID NOT NULL,
   patient_id UUID NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE archive (
   consultation_type consultation_type_enum,
   booked_date DATE,
   booked_time TIME,
-  appointment_id SERIAL NOT NULL,
+  appointment_id UUID NOT NULL,
   status status_archive,
   visits_count INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -122,7 +122,7 @@ CREATE INDEX appointment_id_idx ON archive(appointment_id);
 CREATE TABLE uploaded_files (
   file_id UUID NOT NULL,
   patient_id UUID REFERENCES patients(id),
-  request_id INT NOT NULL,
+  request_id UUID NOT NULL,
   file BYTEA NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,
@@ -136,8 +136,8 @@ CREATE TABLE uploaded_files (
 -- to'lovlarni muayyan uchrashuvlarga bog'laydi va to'lov turi, 
 -- miqdori va holati kabi ma'lumotlarni saqlaydi.
 CREATE TABLE patient_payment (
-  id SERIAL PRIMARY KEY,
-  appointment_id SERIAL REFERENCES booked_appointments(id), 
+  id UUID PRIMARY KEY,
+  appointment_id UUID REFERENCES booked_appointments(id), 
   patient_id UUID REFERENCES patients(id),  
   type type_enums NOT NULL,
   amount FLOAT NOT NULL,
@@ -158,8 +158,8 @@ CREATE TABLE patient_payment (
 -- yozuvlarni boshqarishda moslashuvchanlikni ta'minlaydi.
 CREATE TYPE note_enum AS ENUM ('prescription', 'diagnosis');
 CREATE TABLE doctor_notes (
-  id SERIAL PRIMARY KEY,
-  appointment_id SERIAL REFERENCES booked_appointments(id),
+  id UUID PRIMARY KEY,
+  appointment_id UUID REFERENCES booked_appointments(id),
   doctor_id UUID NOT NULL,
   patient_id UUID REFERENCES patients(id),
   note_type note_enum,

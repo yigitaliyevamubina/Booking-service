@@ -8,7 +8,7 @@ import (
 
 // Config ...
 type Config struct {
-	Environment       string // develop, staging, production
+	Environment       string 
 	PostgresHost      string
 	PostgresPort      int
 	PostgresDatabase  string
@@ -20,7 +20,6 @@ type Config struct {
 	ReviewServicePort int
 }
 
-// Load loads environment vars and inflates Config
 func Load() Config {
 	c := Config{}
 

@@ -1,7 +1,7 @@
 --CREATE TYPE note_enum AS ENUM ('prescription', 'diagnosis');
 
 CREATE TABLE doctor_notes (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY,
   appointment_id INT REFERENCES booked_appointments(id),
   doctor_id UUID NOT NULL,
   patient_id UUID REFERENCES patients(id),

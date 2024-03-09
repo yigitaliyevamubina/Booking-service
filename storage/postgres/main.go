@@ -10,5 +10,6 @@ type bookingRepo struct {
 }
 
 func NewBookingRepo(db *sqlx.DB) *bookingRepo {
+	
 	return &bookingRepo{db: db}
 }

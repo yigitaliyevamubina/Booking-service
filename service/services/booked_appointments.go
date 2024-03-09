@@ -5,9 +5,8 @@ import (
 	"context"
 )
 
-// // BookedAppointmentService Methods
-func (s *BookingService) CreateBookedAppointment(ctx context.Context, req *pb.CreateBookedAppointmentRequest) (*pb.BookedAppointment, error) {
-	BookedAppointment, err := s.storage.Booking().CreateBookedAppointment(ctx, req)
+func (s *BookingService) CreateBookedAppointment(ctx context.Context, req *pb.CreateBookedAppointments) (*pb.BookedAppointment, error) {
+	BookedAppointment, err := s.storage.Booking().CreateBookedAppointment(req)
 	if err != nil {
 		return nil, err
 	}
@@ -15,8 +14,8 @@ func (s *BookingService) CreateBookedAppointment(ctx context.Context, req *pb.Cr
 	return BookedAppointment, nil
 }
 
-func (s *BookingService) GetBookedAppointment(ctx context.Context, req *pb.GetBookedAppointmentRequest) (*pb.BookedAppointment, error) {
-	BookedAppointment, err := s.storage.Booking().GetBookedAppointment(ctx, req)
+func (s *BookingService) GetBookedAppointment(ctx context.Context, req *pb.GetRequest) (*pb.BookedAppointment, error) {
+	BookedAppointment, err := s.storage.Booking().GetBookedAppointment(req)
 	if err != nil {
 		return nil, err
 	}
@@ -24,19 +23,18 @@ func (s *BookingService) GetBookedAppointment(ctx context.Context, req *pb.GetBo
 	return BookedAppointment, nil
 }
 
-func (s *BookingService) GetBookedAppointmentsByPatientID(ctx context.Context, patientID *pb.PatientID) (*pb.GetBookedAppointmentsByPatientIDResponse, error) {
+func (s *BookingService) GetBookedAppointmentsByPatientID(ctx context.Context, patientID *pb.GetRequest) (*pb.GetBookedAppointments, error) {
 
-	BookedAppointment, err := s.storage.Booking().GetBookedAppointmentsByPatientID(ctx, patientID)
+	BookedAppointment, err := s.storage.Booking().GetBookedAppointmentsByPatientID(patientID)
 	if err != nil {
 		return nil, err
 	}
 
 	return BookedAppointment, nil
-
 }
 
-func (s *BookingService) GetBookedAppointmentsByDoctorID(ctx context.Context, doctorID *pb.GetBookedAppointmentRequest) (*pb.GetBookedAppointmentsByPatientIDResponse, error) {
-	BookedAppointment, err := s.storage.Booking().GetBookedAppointmentsByDoctorID(ctx, doctorID)
+func (s *BookingService) GetBookedAppointmentsByDoctorID(ctx context.Context, doctorID *pb.GetRequest) (*pb.GetBookedAppointments, error) {
+	BookedAppointment, err := s.storage.Booking().GetBookedAppointmentsByDoctorID(doctorID)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +43,7 @@ func (s *BookingService) GetBookedAppointmentsByDoctorID(ctx context.Context, do
 }
 
 func (s *BookingService) UpdateBookedAppointment(ctx context.Context, req *pb.UpdateBookedAppointmentRequest) (*pb.BookedAppointment, error) {
-	BookedAppointment, err := s.storage.Booking().UpdateBookedAppointment(ctx, req)
+	BookedAppointment, err := s.storage.Booking().UpdateBookedAppointment(req)
 	if err != nil {
 		return nil, err
 	}
@@ -53,12 +51,20 @@ func (s *BookingService) UpdateBookedAppointment(ctx context.Context, req *pb.Up
 	return BookedAppointment, nil
 }
 
-func (s *BookingService) DeleteBookedAppointment(ctx context.Context, req *pb.DeleteBookedAppointmentRequest) (del *pb.Status, err error) {
-    _, err = s.storage.Booking().DeleteBookedAppointment(ctx, req)
+func (s *BookingService) UpdatePatientStatusByToken(ctx context.Context, req *pb.UpdRequest) (*pb.GetBookedAppointments, error) {
+	BookedAppointment, err := s.storage.Booking().UpdatePatientStatusByToken(req)
+	if err != nil {
+		return nil, err
+	}
+
+	return BookedAppointment, nil
+}
+
+func (s *BookingService) DeleteBookedAppointment(ctx context.Context, req *pb.GetRequest) (del *pb.Status, err error) {
+    t, err := s.storage.Booking().DeleteBookedAppointment(req)
     if err != nil {
         return nil, err
     }
-	del.Status = true
-    return del, nil
+	
+	return &pb.Status{Status: t}, nil
 }
-

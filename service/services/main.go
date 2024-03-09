@@ -15,6 +15,9 @@ type BookingService struct {
 	pb.UnimplementedDoctorAvailabilityServiceServer
 	pb.UnimplementedBookedAppointmentServiceServer
 	pb.UnimplementedArchiveServiceServer
+	pb.UnimplementedPatientPaymentServiceServer
+	pb.UnimplementedUploadedFileServiceServer
+	pb.UnimplementedDoctorNoteServiceServer
 }
 
 func NewBookingService(db *sqlx.DB, log l.Logger) *BookingService {
