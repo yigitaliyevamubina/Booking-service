@@ -4,7 +4,6 @@ import (
 	pb "Booking-service/genproto/booking-service"
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
 )
 
@@ -56,7 +55,6 @@ func (r *bookingRepo) MakePayment(request *pb.PatientPayment) (*pb.PatientPaymen
 	)
 
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
@@ -214,7 +212,7 @@ func (r *bookingRepo) DeletePayment(request *pb.GetPaymentReq) (bool, error) {
 		UPDATE patient_payment
 		SET deleted_at = $1
 		WHERE patient_id = $2 AND deleted_at IS NULL
-	`, 	time.Now(), request.Id)
+	`, time.Now(), request.Id)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return false, err

@@ -1,10 +1,13 @@
 CREATE TABLE doctor_availability (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY,
   doctor_id UUID NOT NULL,
   department_id UUID NOT NULL,
   availability_date DATE NOT NULL,
   availability_time TIME NOT NULL,
-  status BOOLEAN NOT NULL
+  status BOOLEAN NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
+  deleted_at TIMESTAMP
 );
 
 CREATE UNIQUE INDEX unique_availability_idx 

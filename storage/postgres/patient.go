@@ -14,25 +14,27 @@ import (
 
 func (r *bookingRepo) CreatePatient(req *pb.Patient) (resp *pb.Patient, err error) {
 
+	currentTime := time.Now()
+
 	_, err = r.db.Exec(`
-		INSERT INTO patients (
-			id, 
-			first_name, 
-			last_name, 
-			birth_date,
-			gender,
-			city, 
-			phone_number,
-			created_at
-		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
-	`, req.Id,
+        INSERT INTO patients (
+            id, 
+            first_name, 
+            last_name, 
+            birth_date,
+            gender,
+            city, 
+            phone_number,
+            created_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+    `, req.Id,
 		req.FirstName,
 		req.LastName,
 		req.BirthDate,
 		req.Gender,
 		req.City,
 		req.PhoneNumber,
-		time.Now())
+		currentTime)
 	if err != nil {
 		return nil, err
 	}

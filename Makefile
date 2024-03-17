@@ -1,5 +1,5 @@
 CURRENT_DIR := $(shell pwd)
-DB_URL := postgres://bobo:1234@localhost:5432/bookingdb?sslmode=disable
+DB_URL := postgres://postgres:1234@localhost:5544/bookingdb?sslmode=disable
 
 proto-gen:
 	chmod +x ./scripts/genproto.sh

@@ -51,7 +51,7 @@ func (s *BookingService) UpdateBookedAppointment(ctx context.Context, req *pb.Up
 	return BookedAppointment, nil
 }
 
-func (s *BookingService) UpdatePatientStatusByToken(ctx context.Context, req *pb.UpdRequest) (*pb.GetBookedAppointments, error) {
+func (s *BookingService) UpdatePatientStatusByToken(ctx context.Context, req *pb.UpdRequest) (*pb.BookedAppointment, error) {
 	BookedAppointment, err := s.storage.Booking().UpdatePatientStatusByToken(req)
 	if err != nil {
 		return nil, err

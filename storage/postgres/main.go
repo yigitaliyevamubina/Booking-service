@@ -1,15 +1,13 @@
 package postgres
 
 import (
-	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
+    "github.com/jmoiron/sqlx"
 )
 
 type bookingRepo struct {
-	db *sqlx.DB
+    db *sqlx.DB
 }
 
 func NewBookingRepo(db *sqlx.DB) *bookingRepo {
-	
-	return &bookingRepo{db: db}
+    return &bookingRepo{db: db}
 }

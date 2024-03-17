@@ -1,4 +1,4 @@
---CREATE TYPE gender_enum AS ENUM ('male', 'female', 'other');
+CREATE TYPE gender_enum AS ENUM ('male', 'female', 'other');
 
 CREATE TABLE patients (
   id UUID PRIMARY KEY,
@@ -8,8 +8,11 @@ CREATE TABLE patients (
   gender gender_enum,
   city VARCHAR(50),
   country VARCHAR(50),
-  phone_number VARCHAR(15) NOT NULL
+  phone_number VARCHAR(15) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
+  deleted_at TIMESTAMP
 );
 
-CREATE INDEX first_name_idx ON patients(last_name, first_name);
 
+CREATE INDEX first_name_idx ON patients(last_name, first_name);

@@ -1,15 +1,15 @@
---CREATE TYPE consultation_type_enum AS ENUM ('online', 'offline');
+CREATE TYPE status_archive AS ENUM('completed', 'missed');
 CREATE TABLE archive (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY,
   department_id UUID NOT NULL,
   doctor_id UUID NOT NULL,
   patient_id UUID NOT NULL,
   patient_token VARCHAR(10),
-  patient_problem TEXT,
-  consultation_type consultation_type_enum,
+  consultation_type type_enum,
   booked_date DATE,
   booked_time TIME,
-  appointment_id INT NOT NULL,
+  appointment_id UUID NOT NULL,
+  status status_archive,
   visits_count INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,

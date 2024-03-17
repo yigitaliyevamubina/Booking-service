@@ -3,6 +3,7 @@ package postgres
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"time"
 
 	pb "Booking-service/genproto/booking-service"
@@ -134,35 +135,30 @@ func (r *bookingRepo) GetFilesByPatientID(request *pb.GetFileRequest) (*pb.Uploa
 }
 
 func (r *bookingRepo) UpdateFile(request *pb.UpdateFileRequest) (resp *pb.UploadedFile, err error) {
+	fmt.Println(request.UploadedFile)
 	query := `
 		UPDATE uploaded_files
 		SET 
 			file = $1, 
 			updated_at = $2
-		WHERE patient_id = $3
-		RETURNING 
-			file_id, 
-			patient_id, 
-			request_id,
-			file,
-			created_at,
-			updated_at
+		WHERE patient_id = $3 AND deleted_at IS NULL
 	`
-	err = r.db.QueryRow(query,
+	_, err = r.db.Exec(query,
 		request.UploadedFile.File,
-		request.UploadedFile.UpdateAt,
-		request.FileId).Scan(
-		&resp.FileId,
-		&resp.PatientId,
-		&resp.RequestId,
-		&resp.File,
-		&resp.CreateAt,
-		&resp.UpdateAt,
+		time.Now(), 
+		request.PatientId,
 	)
+
+	 if err != nil {
+		return nil, err
+	 }
+
+	resp, err = r.GetFileByPatientID(&pb.GetFileRequest{FileId: request.PatientId})
+
 	if err != nil {
 		return nil, err
 	}
-
+	 
 	return resp, nil
 }
 

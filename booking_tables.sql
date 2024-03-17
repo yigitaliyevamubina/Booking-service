@@ -91,7 +91,6 @@ CREATE INDEX patient_status_idx ON booked_appointments(patient_status);
 -- identifikatorlari, uchrashuv tafsilotlari va 
 -- maslahat turi haqidagi ma'lumotlar saqlanadi.
 -- Archive Table
-CREATE TYPE consultation_type_enum AS ENUM ('online', 'offline');
 CREATE TYPE status_archive AS ENUM('completed', 'missed');
 CREATE TABLE archive (
   id UUID PRIMARY KEY,
@@ -99,8 +98,7 @@ CREATE TABLE archive (
   doctor_id UUID NOT NULL,
   patient_id UUID NOT NULL,
   patient_token VARCHAR(10),
-  patient_problem TEXT,
-  consultation_type consultation_type_enum,
+  consultation_type type_enum,
   booked_date DATE,
   booked_time TIME,
   appointment_id UUID NOT NULL,
@@ -175,14 +173,14 @@ CREATE INDEX doctor_patient_id_idx ON doctor_notes(doctor_id, patient_id);
 
 ------------------------------------------------------------------------------
 
+
 CREATE OR REPLACE FUNCTION archive_completed_or_missed_appointments()
 RETURNS TRIGGER AS $$
 BEGIN
     IF OLD.status = 'completed' OR OLD.status = 'missed' THEN
-        INSERT INTO archive (department_id, doctor_id, patient_id, patient_token, patient_problem, consultation_type, booked_date, booked_time, appointment_id, visits_count)
-        VALUES (OLD.department_id, OLD.doctor_id, OLD.patient_id, OLD.token, OLD.patient_problem, OLD.type, OLD.appointment_date, OLD.appointment_time, OLD.id, 1);
-        
-        DELETE FROM booked_appointments WHERE id = OLD.id;
+        INSERT INTO archive (id,department_id, doctor_id, patient_id, patient_token, consultation_type, booked_date, booked_time, appointment_id,status, visits_count,created_at,updated_at,deleted_at)
+        VALUES (OLD.Id, OLD.department_id, OLD.doctor_id, OLD.patient_id, OLD.token, OLD.type, OLD.appointment_date, OLD.appointment_time, OLD.status, 1, OLD.created_at, OLD.updated_at, OLD.deleted_at);
+        DELETE FROM booked_appointments WHERE patient_id = OLD.patient_id;
     END IF;
     RETURN NULL;
 END;
@@ -192,3 +190,23 @@ CREATE TRIGGER trigger_archive_completed_or_missed
 AFTER UPDATE ON booked_appointments
 FOR EACH ROW
 EXECUTE FUNCTION archive_completed_or_missed_appointments();
+
+
+
+
+
+CREATE OR REPLACE FUNCTION archive_completed_appointment()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.status = 'completed' OR NEW.status = 'missed' THEN
+        INSERT INTO archive (id, department_id, doctor_id, patient_id, patient_token, consultation_type, booked_date, booked_time, appointment_id, status, visits_count, created_at)
+        VALUES (NEW.id, NEW.department_id, NEW.doctor_id, NEW.patient_id, NEW.token, NEW.type, NEW.appointment_date, NEW.appointment_time, NEW.id, NEW.status, 0, CURRENT_TIMESTAMP);
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_archive_completed_appointment
+AFTER UPDATE OF status ON booked_appointments
+FOR EACH ROW
+EXECUTE FUNCTION archive_completed_appointment();

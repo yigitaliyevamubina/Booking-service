@@ -25,7 +25,7 @@ type BookingStorageI interface {
 	GetBookedAppointmentsByPatientID(*pb.GetRequest) (*pb.GetBookedAppointments, error)
 	GetBookedAppointmentsByDoctorID(*pb.GetRequest) (*pb.GetBookedAppointments, error)
 	UpdateBookedAppointment(*pb.UpdateBookedAppointmentRequest) (*pb.BookedAppointment, error)
-	UpdatePatientStatusByToken(*pb.UpdRequest) (*pb.GetBookedAppointments, error)
+	UpdatePatientStatusByToken(*pb.UpdRequest) (*pb.BookedAppointment, error)
 	DeleteBookedAppointment(*pb.GetRequest) (bool, error)
 
 	// PatientPaymentService Methods

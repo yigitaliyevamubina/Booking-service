@@ -31,7 +31,7 @@ service BookedAppointmentService {
   rpc GetBookedAppointmentsByPatientID(GetRequest) returns (GetBookedAppointments);
   rpc GetBookedAppointmentsByDoctorID(GetRequest) returns (GetBookedAppointments);
   rpc UpdateBookedAppointment(UpdateBookedAppointmentRequest) returns (BookedAppointment);
-  rpc UpdatePatientStatusByToken(UpdRequest) returns (GetBookedAppointments);
+  rpc UpdatePatientStatusByToken(UpdRequest) returns (BookedAppointment);
   rpc DeleteBookedAppointment(GetRequest) returns (Status);
 }
 
@@ -209,6 +209,7 @@ message GetRequest {
 
 message UpdRequest {
   string token = 1;
+  UpdateBookedAppointment booked_appointment = 2;
 }
 
 message UpdateBookedAppointment {
@@ -347,9 +348,14 @@ message UploadedFiles {
   string file_id = 1;
 }
 
+message UpdUploadedFile {
+  bytes file = 1;
+  string update_at = 2;
+}
+
 message UpdateFileRequest {
-  string file_id = 1;
-  UploadedFile uploaded_file = 2;
+  string patient_id = 1;
+  UpdUploadedFile uploaded_file = 2;
 }
 
 // DOCTOR NOTES
